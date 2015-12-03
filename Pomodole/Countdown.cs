@@ -72,5 +72,10 @@ namespace Pomodole
         {
             return currentSecond;
         }
+
+        public int GetHour()
+        {
+            return 0;
+        }
     }
 }
