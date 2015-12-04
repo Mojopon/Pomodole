@@ -10,25 +10,16 @@ using System.Windows;
 
 namespace Pomodole
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : IMainWindowViewModel
     {
         public ICommand StartCommand { get; private set; }
 
-        public string Minute
-        {
-            get { return ShapeTimeNumber(pomodoro.GetMinute()); }
-        }
+        public string Minute { get { return MessageManager.Minute; } }
+        public string Second { get { return MessageManager.Second; } }
+        public string PomodoroSetMessage { get { return MessageManager.PomodoroSetMessage; } }
+        public string StartButtonMessage { get { return MessageManager.StartButtonMessage; } }
 
-        public string Second
-        {
-            get { return ShapeTimeNumber(pomodoro.GetSecond()); }
-        }
-
-        public string PomodoroSet
-        {
-            get { return pomodoro.GetRepeatTimeLeft().ToString(); }
-        }
-
+        public MainWindowMessageManager MessageManager { get; private set; }
         private IPomodoro pomodoro;
         private ITickTimer tickTimer;
         public bool TimerRunning { get; private set; }
@@ -39,6 +30,8 @@ namespace Pomodole
             pomodoro.OnSwitchToTask += new Action(OnSwitchToTaskEvent);
             pomodoro.OnSwitchToLongBreak += new Action(OnSwitchToLongBreakEvent);
             pomodoro.OnCompletePomodoro += new Action(OnCompletePomodoroEvent);
+
+            MessageManager = new MainWindowMessageManager(pomodoro);
 
             tickTimer = new TickTimer(50);
             tickTimer.OnTick += new Action(OnTick);
@@ -90,17 +83,7 @@ namespace Pomodole
             pomodoro.Tick();
             NotifyPropertyChanged("Minute");
             NotifyPropertyChanged("Second");
-            NotifyPropertyChanged("PomodoroSet");
-        }
-
-        private string ShapeTimeNumber(int time)
-        {
-            if (time < 10)
-            {
-                return "0" + time.ToString();
-            }
-
-            return time.ToString();
+            NotifyPropertyChanged("PomodoroSetMessage");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

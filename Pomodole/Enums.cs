@@ -17,10 +17,17 @@ namespace Pomodole
         English,
     }
 
+    public enum PomodoroPhases
+    {
+        Task,
+        Break,
+        LongBreak,
+    }
+
     public enum Message
     {
         StartButton,
-        PomodoroLeftSetMessage,
-        PomodoroRightSetMessage,
+        LeftPomodoroSetMessage,
+        RightPomodoroSetMessage,
     }
 }

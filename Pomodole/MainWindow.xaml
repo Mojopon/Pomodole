@@ -23,17 +23,10 @@
                 <ColumnDefinition Width="98*"/>
                 <ColumnDefinition Width="97*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="buttonStart" Content="Start" Grid.Column="1" HorizontalAlignment="Center" Margin="11,42,11,12" VerticalAlignment="Center" Width="76" Command="{Binding StartCommand}"/>
-            <StackPanel HorizontalAlignment="Center" Height="40" VerticalAlignment="Top" Width="280" Grid.ColumnSpan="3" Margin="6,0">
-                <Grid Margin="0,0,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4.6*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="4.6*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label x:Name="labelLeftPomodoroSetMessage" Content="Label" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center"/>
-                    <Label x:Name="labelRightPomodoroSetMessage" Content="Label" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Center" Grid.Column="2"/>
-                    <Label x:Name="labelPomodoroSetMessage" Content="{Binding PomodoroSet}" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="25"/>
+            <Button x:Name="buttonStart" Content="{Binding StartButtonMessage}" Grid.Column="1" HorizontalAlignment="Center" Margin="11,42,11,12" VerticalAlignment="Center" Width="76" Command="{Binding StartCommand}"/>
+            <StackPanel Name="centerStackPanel" HorizontalAlignment="Center" Height="40" VerticalAlignment="Top" Width="280" Grid.ColumnSpan="3" Margin="6,0">
+                <Grid Height="{Binding ElementName=centerStackPanel, Path=Height}" Width="{Binding ElementName=centerStackPanel, Path=Width}">
+                    <Label x:Name="label1" Content="{Binding PomodoroSetMessage}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"/>
                 </Grid>
             </StackPanel>
         </Grid>

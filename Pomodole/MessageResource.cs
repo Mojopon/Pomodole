@@ -8,7 +8,7 @@ namespace Pomodole
 {
     public static class MessageResource
     {
-        private static Language currentLanguage = Language.English;
+        private static Language currentLanguage = Language.Japanese;
 
         public static string GetMessageFor(Message message)
         {
@@ -20,8 +20,8 @@ namespace Pomodole
                         switch(message)
                         {
                             case Message.StartButton:               return "スタート";
-                            case Message.PomodoroLeftSetMessage:    return "残り";
-                            case Message.PomodoroRightSetMessage:   return "ポモドーロ";
+                            case Message.LeftPomodoroSetMessage:    return "残り";
+                            case Message.RightPomodoroSetMessage:   return "ポモドーロ";
                         }
                     }
                     return "";
@@ -33,8 +33,8 @@ namespace Pomodole
                         switch(message)
                         {
                             case Message.StartButton: return "Start";
-                            case Message.PomodoroLeftSetMessage: return "Long Break Until";
-                            case Message.PomodoroRightSetMessage: return "Pomodoro";
+                            case Message.LeftPomodoroSetMessage: return "Long Break Until";
+                            case Message.RightPomodoroSetMessage: return "Pomodoro";
                         }
                     }
                     return "";
