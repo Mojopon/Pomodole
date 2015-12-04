@@ -20,18 +20,13 @@ namespace Pomodole
     /// </summary>
     public partial class MainWindow : Window
     {
-        private PomodoroViewModel pomodoroViewModel;
+        private IApplicationController applicationController;
         public MainWindow()
         {
             InitializeComponent();
 
-            var pomodoroConfig = new PomodoroConfig(5, 3, 2, 10);
-            Pomodoro newPomodoro = new Pomodoro();
-            newPomodoro.Configure(pomodoroConfig);
-
-            pomodoroViewModel = new PomodoroViewModel(newPomodoro);
-
-            TimerGrid.DataContext = pomodoroViewModel;
+            applicationController = ApplicationController.GetInstance();
+            MainWindowGrid.DataContext = applicationController.GetViewModel(ViewModelFor.MainWindow);
         }
     }
 }

@@ -58,7 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ApplicationController.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="IApplicationController.cs" />
     <Compile Include="ITickTimer.cs" />
     <Compile Include="TickTimer.cs" />
     <Page Include="MainWindow.xaml">
@@ -81,7 +83,7 @@
   <ItemGroup>
     <Compile Include="Pomodoro.cs" />
     <Compile Include="PomodoroConfig.cs" />
-    <Compile Include="PomodoroViewModel.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

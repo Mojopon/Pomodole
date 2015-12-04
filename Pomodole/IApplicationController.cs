@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
-    public enum ViewModelFor
+    public interface IApplicationController
     {
-        MainWindow,
+        object GetViewModel(ViewModelFor viewModel);
     }
 }

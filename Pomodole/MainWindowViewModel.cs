@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace Pomodole
 {
-    public class PomodoroViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
         public ICommand StartCommand { get; private set; }
 
@@ -27,7 +27,7 @@ namespace Pomodole
         private IPomodoro pomodoro;
         private ITickTimer tickTimer;
         public bool TimerRunning { get; private set; }
-        public PomodoroViewModel(IPomodoro pomodoro)
+        public MainWindowViewModel(IPomodoro pomodoro)
         {
             this.pomodoro = pomodoro;
             tickTimer = new TickTimer(50);
@@ -75,8 +75,8 @@ namespace Pomodole
 
         class StartCommandImpl : ICommand
         {
-            private PomodoroViewModel viewModel;
-            public StartCommandImpl(PomodoroViewModel viewModel)
+            private MainWindowViewModel viewModel;
+            public StartCommandImpl(MainWindowViewModel viewModel)
             {
                 this.viewModel = viewModel;
             }
