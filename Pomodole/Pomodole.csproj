@@ -62,6 +62,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="IApplicationController.cs" />
     <Compile Include="ITickTimer.cs" />
+    <Compile Include="MessageResource.cs" />
     <Compile Include="TickTimer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

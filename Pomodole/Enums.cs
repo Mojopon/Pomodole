@@ -10,4 +10,17 @@ namespace Pomodole
     {
         MainWindow,
     }
+
+    public enum Language
+    {
+        Japanese,
+        English,
+    }
+
+    public enum Message
+    {
+        StartButton,
+        PomodoroLeftSetMessage,
+        PomodoroRightSetMessage,
+    }
 }
