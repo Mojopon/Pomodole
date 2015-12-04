@@ -24,6 +24,11 @@ namespace Pomodole
             get { return ShapeTimeNumber(pomodoro.GetSecond()); }
         }
 
+        public string PomodoroSet
+        {
+            get { return pomodoro.GetRepeatTimeLeft().ToString(); }
+        }
+
         private IPomodoro pomodoro;
         private ITickTimer tickTimer;
         public bool TimerRunning { get; private set; }
@@ -54,28 +59,29 @@ namespace Pomodole
 
         void OnSwitchToTaskEvent()
         {
-            tickTimer.Stop();
+            Stop();
             MessageBox.Show("Switch to task");
-            tickTimer.Start();
+            Start();
         }
 
         void OnSwitchToBreakEvent()
         {
-            tickTimer.Stop();
+            Stop();
             MessageBox.Show("Switch to break");
-            tickTimer.Start();
+            Start();
         }
 
         void OnSwitchToLongBreakEvent()
         {
-            tickTimer.Stop();
+            Stop();
             MessageBox.Show("Switch to Long break");
-            tickTimer.Start();
+            NotifyPropertyChanged("PomodoroSet");
+            Start();
         }
 
         void OnCompletePomodoroEvent()
         {
-            tickTimer.Stop();
+            Stop();
             MessageBox.Show("Pomodoro Completed");
         }
 
@@ -84,6 +90,7 @@ namespace Pomodole
             pomodoro.Tick();
             NotifyPropertyChanged("Minute");
             NotifyPropertyChanged("Second");
+            NotifyPropertyChanged("PomodoroSet");
         }
 
         private string ShapeTimeNumber(int time)

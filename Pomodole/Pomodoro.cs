@@ -66,6 +66,10 @@ namespace Pomodole
                 {
                     SwitchBreakCountdownToTaskCountdown();
                 }
+                else if(currentCountdown == longBreakCountdown)
+                {
+                    CompletePomodoro();
+                }
             }
         }
 

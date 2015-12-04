@@ -66,7 +66,14 @@ namespace PomodoleTest
         [Test]
         public void ShouldSwitchTaskToLongBreakWhenRepeatEnd()
         {
+            bool onSwitchToLongBreakEventCalled = false;
+            pomodoro.OnSwitchToLongBreak += new Action(() => onSwitchToLongBreakEventCalled = true);
+            bool onCompletePomodoroEventCalled = false;
+            pomodoro.OnCompletePomodoro += new Action(() => onCompletePomodoroEventCalled = true);
+
             Assert.AreEqual(2, pomodoro.GetRepeatTimeLeft());
+            Assert.IsFalse(onSwitchToLongBreakEventCalled);
+            Assert.IsFalse(onCompletePomodoroEventCalled);
             for (int j = 0; j < 2; j++)
             {
                 for (int i = 0; i < 120; i++)
@@ -75,23 +82,38 @@ namespace PomodoleTest
                 }
                 Assert.AreEqual(1, pomodoro.GetMinute());
                 Assert.AreEqual(0, pomodoro.GetSecond());
+                Assert.IsFalse(onSwitchToLongBreakEventCalled);
+                Assert.IsFalse(onCompletePomodoroEventCalled);
                 for (int i = 0; i < 60; i++)
                 {
                     pomodoro.Tick();
                 }
                 Assert.AreEqual(2, pomodoro.GetMinute());
                 Assert.AreEqual(0, pomodoro.GetSecond());
+                Assert.IsFalse(onSwitchToLongBreakEventCalled);
+                Assert.IsFalse(onCompletePomodoroEventCalled);
             }
 
             Assert.AreEqual(0, pomodoro.GetRepeatTimeLeft());
             Assert.AreEqual(2, pomodoro.GetMinute());
             Assert.AreEqual(0, pomodoro.GetSecond());
+            Assert.IsFalse(onSwitchToLongBreakEventCalled);
+            Assert.IsFalse(onCompletePomodoroEventCalled);
             for (int i = 0; i < 120; i++)
             {
                 pomodoro.Tick();
             }
             Assert.AreEqual(3, pomodoro.GetMinute());
             Assert.AreEqual(0, pomodoro.GetSecond());
+            Assert.IsTrue(onSwitchToLongBreakEventCalled);
+            Assert.IsFalse(onCompletePomodoroEventCalled);
+            for (int i = 0; i < 180; i++)
+            {
+                pomodoro.Tick();
+            }
+            Assert.AreEqual(2, pomodoro.GetMinute());
+            Assert.AreEqual(0, pomodoro.GetSecond());
+            Assert.IsTrue(onCompletePomodoroEventCalled);
         }
     }
 }

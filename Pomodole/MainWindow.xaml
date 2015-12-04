@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pomodole"
         mc:Ignorable="d"
-        Title="MainWindow" Height="200" Width="300">
-    <Grid Margin="0,0,0,67" Name="MainWindowGrid">
+        Title="MainWindow" Height="212.834" Width="300">
+    <Grid Margin="0,0,0,93" Name="MainWindowGrid">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -17,13 +17,25 @@
         </Grid.ColumnDefinitions>
         <Label x:Name="labelMinute" Content="{Binding Minute}" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="50"/>
         <Label x:Name="labelSecond" Content="{Binding Second}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="50" Grid.Column="2"/>
-        <Grid HorizontalAlignment="Left" Height="68" Margin="0,103,0,-68" VerticalAlignment="Top" Width="292" Grid.ColumnSpan="3">
+        <Grid HorizontalAlignment="Center" Height="93" Margin="0,90,0,-93" VerticalAlignment="Center" Width="292" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3.3*"/>
-                <ColumnDefinition Width="3.3*"/>
-                <ColumnDefinition Width="3.3*"/>
+                <ColumnDefinition Width="97*"/>
+                <ColumnDefinition Width="98*"/>
+                <ColumnDefinition Width="97*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="buttonStart" Content="Start" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Command="{Binding StartCommand}"/>
+            <Button x:Name="buttonStart" Content="Start" Grid.Column="1" HorizontalAlignment="Center" Margin="11,42,11,12" VerticalAlignment="Center" Width="76" Command="{Binding StartCommand}"/>
+            <StackPanel HorizontalAlignment="Center" Height="40" VerticalAlignment="Top" Width="280" Grid.ColumnSpan="3" Margin="6,0">
+                <Grid Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4.6*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="4.6*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="labelLeftPomodoroSetMessage" Content="Label" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                    <Label x:Name="labelRightPomodoroSetMessage" Content="Label" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Center" Grid.Column="2"/>
+                    <Label x:Name="labelPomodoroSetMessage" Content="{Binding PomodoroSet}" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="25"/>
+                </Grid>
+            </StackPanel>
         </Grid>
         <Label x:Name="label" Content=":" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="50"/>
 
