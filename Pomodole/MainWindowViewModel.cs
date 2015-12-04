@@ -30,6 +30,11 @@ namespace Pomodole
         public MainWindowViewModel(IPomodoro pomodoro)
         {
             this.pomodoro = pomodoro;
+            pomodoro.OnSwitchToBreak += new Action(OnSwitchToBreakEvent);
+            pomodoro.OnSwitchToTask += new Action(OnSwitchToTaskEvent);
+            pomodoro.OnSwitchToLongBreak += new Action(OnSwitchToLongBreakEvent);
+            pomodoro.OnCompletePomodoro += new Action(OnCompletePomodoroEvent);
+
             tickTimer = new TickTimer(50);
             tickTimer.OnTick += new Action(OnTick);
             StartCommand = new StartCommandImpl(this);
@@ -45,6 +50,33 @@ namespace Pomodole
         {
             tickTimer.Stop();
             TimerRunning = false;
+        }
+
+        void OnSwitchToTaskEvent()
+        {
+            tickTimer.Stop();
+            MessageBox.Show("Switch to task");
+            tickTimer.Start();
+        }
+
+        void OnSwitchToBreakEvent()
+        {
+            tickTimer.Stop();
+            MessageBox.Show("Switch to break");
+            tickTimer.Start();
+        }
+
+        void OnSwitchToLongBreakEvent()
+        {
+            tickTimer.Stop();
+            MessageBox.Show("Switch to Long break");
+            tickTimer.Start();
+        }
+
+        void OnCompletePomodoroEvent()
+        {
+            tickTimer.Stop();
+            MessageBox.Show("Pomodoro Completed");
         }
 
         public void OnTick()

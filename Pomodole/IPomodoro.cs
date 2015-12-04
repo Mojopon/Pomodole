@@ -8,5 +8,11 @@ namespace Pomodole
 {
     public interface IPomodoro : ICountdownTimer
     {
+        event Action OnSwitchToBreak;
+        event Action OnSwitchToTask;
+        event Action OnSwitchToLongBreak;
+        event Action OnCompletePomodoro;
+
+        int GetRepeatTimeLeft();
     }
 }

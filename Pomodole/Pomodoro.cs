@@ -12,6 +12,8 @@ namespace Pomodole
 
         public event Action OnSwitchToBreak;
         public event Action OnSwitchToTask;
+        public event Action OnSwitchToLongBreak;
+        public event Action OnCompletePomodoro;
 
         private Countdown taskCountdown;
         private Countdown breakCountdown;
@@ -19,6 +21,16 @@ namespace Pomodole
         private Countdown longBreakCountdown;
 
         public Pomodoro() { }
+
+        public Pomodoro(bool flag)
+        {
+            taskCountdown = new Countdown(0,2);
+            breakCountdown = new Countdown(0,1);
+            repeatTime = 2;
+            longBreakCountdown = new Countdown(0,3);
+
+            Reset();
+        }
 
         public void Configure(IPomodoroConfig config)
         {
@@ -59,20 +71,32 @@ namespace Pomodole
 
         void SwitchTaskCountdownToBreakCountdown()
         {
-            if (OnSwitchToBreak != null) OnSwitchToBreak();
-
+            if (repeatTimeLeft <= 0)
+            {
+                if (OnSwitchToLongBreak != null) OnSwitchToLongBreak();
+                currentCountdown = longBreakCountdown;
+            }
+            else
+            {
+                if (OnSwitchToBreak != null) OnSwitchToBreak();
+                currentCountdown = breakCountdown;
+            }
             taskCountdown.Reset();
-            currentCountdown = breakCountdown;
         }
 
         void SwitchBreakCountdownToTaskCountdown()
         {
-            if (OnSwitchToTask != null) OnSwitchToTask();
-
             repeatTimeLeft--;
-            breakCountdown.Reset();
-
+            if (OnSwitchToTask != null) OnSwitchToTask();
             currentCountdown = taskCountdown;
+
+            breakCountdown.Reset();
+        }
+
+        void CompletePomodoro()
+        {
+            if (OnCompletePomodoro != null) OnCompletePomodoro();
+            Reset();
         }
 
         public int GetMinute()
@@ -83,6 +107,11 @@ namespace Pomodole
         public int GetSecond()
         {
             return currentCountdown.GetSecond();
+        }
+
+        public int GetRepeatTimeLeft()
+        {
+            return repeatTimeLeft;
         }
     }
 }

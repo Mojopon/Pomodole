@@ -34,8 +34,8 @@ namespace Pomodole
         object SetupViewModelForMainWindow()
         {
             var pomodoroConfig = new PomodoroConfig(5, 3, 2, 10);
-            var newPomodoro = new Pomodoro();
-            newPomodoro.Configure(pomodoroConfig);
+            var newPomodoro = new Pomodoro(true);
+            //newPomodoro.Configure(pomodoroConfig);
 
             var pomodoroViewModel = new MainWindowViewModel(newPomodoro);
 
