@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Threading;
+using System.Windows.Input;
+using System.Windows;
 
 namespace Pomodole
 {
     public class PomodoroViewModel : INotifyPropertyChanged
     {
+        public ICommand StartCommand { get; private set; }
+
         public string Minute
         {
             get { return ShapeTimeNumber(pomodoro.GetMinute()); }
@@ -22,14 +26,28 @@ namespace Pomodole
 
         private IPomodoro pomodoro;
         private ITickTimer tickTimer;
+        public bool TimerRunning { get; private set; }
         public PomodoroViewModel(IPomodoro pomodoro)
         {
             this.pomodoro = pomodoro;
             tickTimer = new TickTimer(50);
-            tickTimer.OnTick += new Action(OnProgressTime);
+            tickTimer.OnTick += new Action(OnTick);
+            StartCommand = new StartCommandImpl(this);
         }
 
-        public void OnProgressTime()
+        public void Start()
+        {
+            tickTimer.Start();
+            TimerRunning = true;
+        }
+
+        public void Stop()
+        {
+            tickTimer.Stop();
+            TimerRunning = false;
+        }
+
+        public void OnTick()
         {
             pomodoro.Tick();
             NotifyPropertyChanged("Minute");
@@ -52,6 +70,26 @@ namespace Pomodole
             if(PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        class StartCommandImpl : ICommand
+        {
+            private PomodoroViewModel viewModel;
+            public StartCommandImpl(PomodoroViewModel viewModel)
+            {
+                this.viewModel = viewModel;
+            }
+
+            public event EventHandler CanExecuteChanged;
+            public bool CanExecute(object parameter)
+            {
+                return !viewModel.TimerRunning;
+            }
+
+            public void Execute(object parameter)
+            {
+                viewModel.Start();
             }
         }
     }
