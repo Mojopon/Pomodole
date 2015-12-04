@@ -33,10 +33,5 @@ namespace Pomodole
 
             TimerGrid.DataContext = pomodoroViewModel;
         }
-
-        private void buttonStart_Click(object sender, RoutedEventArgs e)
-        {
-            pomodoroViewModel.OnProgressTime();
-        }
     }
 }
