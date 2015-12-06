@@ -20,9 +20,25 @@ namespace Pomodole
 
         public string PomodoroSetMessage
         {
-            get { return string.Format("{0} {1} {2}", MessageResource.GetMessageFor(Message.LeftPomodoroSetMessage),
-                                                      pomodoro.GetRepeatTimeLeft().ToString(),
-                                                      MessageResource.GetMessageFor(Message.RightPomodoroSetMessage)); }
+            get
+            {
+                // display pomodoro set time left
+                if (pomodoro.GetRepeatTimeLeft() > 0)
+                    return string.Format("{0} {1} {2}", MessageResource.GetMessageFor(Message.LeftPomodoroSetMessage),
+                                                          pomodoro.GetRepeatTimeLeft().ToString(),
+                                                          MessageResource.GetMessageFor(Message.RightPomodoroSetMessage));
+
+                // return AlmostLongBreak message or LongBreakMessage when pomodoro set is 0
+                if (pomodoro.CurrentPhase == PomodoroPhase.Task)
+                {
+                    return MessageResource.GetMessageFor(Message.AlmostLongBreakMessage);
+                }
+                else
+                {
+                    return MessageResource.GetMessageFor(Message.LongBreakMessage);
+                }
+
+            }
         }
 
         public string StartButtonMessage

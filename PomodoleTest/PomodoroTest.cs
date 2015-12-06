@@ -33,6 +33,7 @@ namespace PomodoleTest
         {
             Assert.AreEqual(2, pomodoro.GetMinute());
             Assert.AreEqual(0, pomodoro.GetSecond());
+            Assert.AreEqual(PomodoroPhase.Task, pomodoro.CurrentPhase);
             pomodoro.Tick();
             Assert.AreEqual(1, pomodoro.GetMinute());
             Assert.AreEqual(59, pomodoro.GetSecond());
@@ -46,6 +47,7 @@ namespace PomodoleTest
             pomodoro.OnSwitchToBreak += new Action(() => onSwitchToBreakEventCalled = true);
             pomodoro.Tick();
             Assert.IsTrue(onSwitchToBreakEventCalled);
+            Assert.AreEqual(PomodoroPhase.Break, pomodoro.CurrentPhase);
 
             Assert.IsFalse(pomodoro.CountdownEnd);
             Assert.AreEqual(1, pomodoro.GetMinute());
@@ -105,6 +107,7 @@ namespace PomodoleTest
             }
             Assert.AreEqual(3, pomodoro.GetMinute());
             Assert.AreEqual(0, pomodoro.GetSecond());
+            Assert.AreEqual(PomodoroPhase.LongBreak, pomodoro.CurrentPhase);
             Assert.IsTrue(onSwitchToLongBreakEventCalled);
             Assert.IsFalse(onCompletePomodoroEventCalled);
             for (int i = 0; i < 180; i++)

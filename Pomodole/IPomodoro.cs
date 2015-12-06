@@ -14,6 +14,6 @@ namespace Pomodole
         event Action OnCompletePomodoro;
 
         int GetRepeatTimeLeft();
-        PomodoroPhases CurrentPhase { get; }
+        PomodoroPhase CurrentPhase { get; }
     }
 }

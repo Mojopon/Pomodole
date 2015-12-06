@@ -10,7 +10,7 @@ namespace Pomodole
     {
         public bool CountdownEnd { get; private set; }
 
-        public PomodoroPhases CurrentPhase { get; private set; }
+        public PomodoroPhase CurrentPhase { get; private set; }
 
         public event Action OnSwitchToBreak;
         public event Action OnSwitchToTask;
@@ -53,7 +53,7 @@ namespace Pomodole
             repeatTimeLeft = repeatTime;
 
             currentCountdown = taskCountdown;
-            CurrentPhase = PomodoroPhases.Task;
+            CurrentPhase = PomodoroPhase.Task;
         }
 
         public void Tick()
@@ -82,13 +82,13 @@ namespace Pomodole
             {
                 if (OnSwitchToLongBreak != null) OnSwitchToLongBreak();
                 currentCountdown = longBreakCountdown;
-                CurrentPhase = PomodoroPhases.LongBreak;
+                CurrentPhase = PomodoroPhase.LongBreak;
             }
             else
             {
                 if (OnSwitchToBreak != null) OnSwitchToBreak();
                 currentCountdown = breakCountdown;
-                CurrentPhase = PomodoroPhases.Break;
+                CurrentPhase = PomodoroPhase.Break;
             }
             taskCountdown.Reset();
         }
@@ -98,7 +98,7 @@ namespace Pomodole
             repeatTimeLeft--;
             if (OnSwitchToTask != null) OnSwitchToTask();
             currentCountdown = taskCountdown;
-            CurrentPhase = PomodoroPhases.Task;
+            CurrentPhase = PomodoroPhase.Task;
 
             breakCountdown.Reset();
         }

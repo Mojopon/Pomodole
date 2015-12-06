@@ -17,7 +17,7 @@ namespace Pomodole
         English,
     }
 
-    public enum PomodoroPhases
+    public enum PomodoroPhase
     {
         Task,
         Break,
@@ -29,5 +29,7 @@ namespace Pomodole
         StartButton,
         LeftPomodoroSetMessage,
         RightPomodoroSetMessage,
+        AlmostLongBreakMessage,
+        LongBreakMessage,
     }
 }
