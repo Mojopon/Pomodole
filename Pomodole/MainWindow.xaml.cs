@@ -27,7 +27,8 @@ namespace Pomodole
             InitializeComponent();
 
             applicationController = ApplicationController.GetInstance();
-            MainWindowGrid.DataContext = applicationController.GetViewModel(ViewModelFor.MainWindow);
+            var viewModel = applicationController.GetViewModel(ViewModelFor.MainWindow);
+            DataContext = viewModel;
         }
     }
 }

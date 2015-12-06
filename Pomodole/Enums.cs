@@ -26,7 +26,9 @@ namespace Pomodole
 
     public enum Message
     {
-        StartButton,
+        MainButtonStartmessage,
+        MainButtonStopMessage,
+        MainButtonResumeMessage,
         LeftPomodoroSetMessage,
         RightPomodoroSetMessage,
         AlmostLongBreakMessage,

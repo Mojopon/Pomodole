@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shell;
 
 namespace Pomodole
 {
     public interface IMainWindowViewModel : INotifyPropertyChanged, IMainWindowViewElements
     {
-        int Progress { get; }
+        double Progress { get; }
+        TaskbarItemProgressState ProgressState { get; }
     }
 }

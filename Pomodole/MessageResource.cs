@@ -19,11 +19,20 @@ namespace Pomodole
                     {
                         switch(message)
                         {
-                            case Message.StartButton:               return "スタート";
-                            case Message.LeftPomodoroSetMessage:    return "小休止まで";
-                            case Message.RightPomodoroSetMessage:   return "ポモドーロ";
-                            case Message.AlmostLongBreakMessage:    return "この後小休止";
-                            case Message.LongBreakMessage:          return "小休止中";
+                            case Message.MainButtonStartmessage:
+                                return "スタート";
+                            case Message.MainButtonStopMessage:
+                                return "ストップ";
+                            case Message.MainButtonResumeMessage:
+                                return "再開";
+                            case Message.LeftPomodoroSetMessage:
+                                return "小休止まで";
+                            case Message.RightPomodoroSetMessage:
+                                return "ポモドーロ";
+                            case Message.AlmostLongBreakMessage:
+                                return "この後小休止";
+                            case Message.LongBreakMessage:
+                                return "小休止中";
                         }
                     }
                     return "";
@@ -34,11 +43,20 @@ namespace Pomodole
                     {
                         switch(message)
                         {
-                            case Message.StartButton:               return "Start";
-                            case Message.LeftPomodoroSetMessage:    return "Long Break Until";
-                            case Message.RightPomodoroSetMessage:   return "Pomodoro";
-                            case Message.AlmostLongBreakMessage:    return "Long Break After This";
-                            case Message.LongBreakMessage:          return "Taking Long Break";
+                            case Message.MainButtonStartmessage:
+                                return "Start";
+                            case Message.MainButtonStopMessage:
+                                return "Stop";
+                            case Message.MainButtonResumeMessage:
+                                return "Resume";
+                            case Message.LeftPomodoroSetMessage:
+                                return "Long Break Until";
+                            case Message.RightPomodoroSetMessage:
+                                return "Pomodoro";
+                            case Message.AlmostLongBreakMessage:
+                                return "Long Break After This";
+                            case Message.LongBreakMessage:
+                                return "Taking Long Break";
                         }
                     }
                     return "";

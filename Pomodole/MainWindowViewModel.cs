@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Windows.Threading;
 using System.Windows.Input;
 using System.Windows;
+using System.Windows.Shell;
 
 namespace Pomodole
 {
@@ -19,10 +20,8 @@ namespace Pomodole
         public string PomodoroSetMessage { get { return MessageManager.PomodoroSetMessage; } }
         public string StartButtonMessage { get { return MessageManager.StartButtonMessage; } }
 
-        public int Progress { get {
-                return (int)(pomodoro.Progress * 100);
-            }
-        }
+        public double Progress { get { return pomodoro.Progress; } }
+        public TaskbarItemProgressState ProgressState { get; private set; }
 
         public MainWindowMessageManager MessageManager { get; private set; }
         private IPomodoro pomodoro;
@@ -48,17 +47,20 @@ namespace Pomodole
         {
             tickTimer.Start();
             TimerRunning = true;
+            ProgressState = TaskbarItemProgressState.Normal;
         }
 
         public void Stop()
         {
             tickTimer.Stop();
             TimerRunning = false;
+            ProgressState = TaskbarItemProgressState.Paused;
         }
 
         void OnSwitchToTaskEvent()
         {
             Stop();
+            UpdatePropeties();
             MessageBox.Show("Switch to task");
             Start();
         }
@@ -66,6 +68,7 @@ namespace Pomodole
         void OnSwitchToBreakEvent()
         {
             Stop();
+            UpdatePropeties();
             MessageBox.Show("Switch to break");
             Start();
         }
@@ -73,6 +76,7 @@ namespace Pomodole
         void OnSwitchToLongBreakEvent()
         {
             Stop();
+            UpdatePropeties();
             MessageBox.Show("Switch to Long break");
             NotifyPropertyChanged("PomodoroSet");
             Start();
@@ -81,16 +85,24 @@ namespace Pomodole
         void OnCompletePomodoroEvent()
         {
             Stop();
+            UpdatePropeties();
             MessageBox.Show("Pomodoro Completed");
+            ProgressState = TaskbarItemProgressState.None;
         }
 
         public void OnTick()
         {
             pomodoro.Tick();
+            UpdatePropeties();
+        }
+
+        private void UpdatePropeties()
+        {
             NotifyPropertyChanged("Minute");
             NotifyPropertyChanged("Second");
             NotifyPropertyChanged("PomodoroSetMessage");
             NotifyPropertyChanged("Progress");
+            NotifyPropertyChanged("ProgressState");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

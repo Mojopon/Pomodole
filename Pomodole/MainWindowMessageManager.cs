@@ -43,7 +43,7 @@ namespace Pomodole
 
         public string StartButtonMessage
         {
-            get { return MessageResource.GetMessageFor(Message.StartButton); }
+            get { return MessageResource.GetMessageFor(Message.MainButtonStartmessage); }
         }
 
         private IPomodoro pomodoro;
