@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="98*"/>
                 <ColumnDefinition Width="97*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="buttonStart" Content="{Binding StartButtonMessage}" Grid.Column="1" HorizontalAlignment="Center" Margin="11,42,11,12" VerticalAlignment="Center" Width="76" Command="{Binding StartCommand}"/>
+            <Button x:Name="buttonStart" Content="{Binding MainButtonMessage}" Grid.Column="1" HorizontalAlignment="Center" Margin="11,42,11,12" VerticalAlignment="Center" Width="76" Command="{Binding StartCommand}"/>
             <StackPanel Name="centerStackPanel" HorizontalAlignment="Center" Height="40" VerticalAlignment="Top" Width="280" Grid.ColumnSpan="3" Margin="6,0">
                 <Grid Height="{Binding ElementName=centerStackPanel, Path=Height}" Width="{Binding ElementName=centerStackPanel, Path=Width}">
                     <Label x:Name="label1" Content="{Binding PomodoroSetMessage}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"/>

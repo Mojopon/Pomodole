@@ -19,9 +19,13 @@ namespace Pomodole
 
     public enum PomodoroPhase
     {
-        Task,
-        Break,
-        LongBreak,
+        NotRunning,
+        RunningTask,
+        WaitingSwitchToBreak,
+        RunningBreak,
+        WaitingSwitchToTask,
+        WaitingSwitchToLongBreak,
+        RunningLongBreak,
     }
 
     public enum Message

@@ -18,7 +18,7 @@ namespace Pomodole
         public string Minute { get { return MessageManager.Minute; } }
         public string Second { get { return MessageManager.Second; } }
         public string PomodoroSetMessage { get { return MessageManager.PomodoroSetMessage; } }
-        public string StartButtonMessage { get { return MessageManager.StartButtonMessage; } }
+        public string MainButtonMessage { get { return MessageManager.MainButtonMessage; } }
 
         public double Progress { get { return pomodoro.Progress; } }
         public TaskbarItemProgressState ProgressState { get; private set; }
@@ -100,6 +100,7 @@ namespace Pomodole
         {
             NotifyPropertyChanged("Minute");
             NotifyPropertyChanged("Second");
+            NotifyPropertyChanged("MainButtonMessage");
             NotifyPropertyChanged("PomodoroSetMessage");
             NotifyPropertyChanged("Progress");
             NotifyPropertyChanged("ProgressState");

@@ -8,7 +8,7 @@ namespace Pomodole
 {
     public interface IMainWindowViewElements
     {
-        string StartButtonMessage { get; }
+        string MainButtonMessage { get; }
         string Minute { get; }
         string Second { get; }
         string PomodoroSetMessage { get; }

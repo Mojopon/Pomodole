@@ -29,21 +29,38 @@ namespace Pomodole
                                                           MessageResource.GetMessageFor(Message.RightPomodoroSetMessage));
 
                 // return AlmostLongBreak message or LongBreakMessage when pomodoro set is 0
-                if (pomodoro.CurrentPhase == PomodoroPhase.Task)
+                switch(pomodoro.CurrentPhase)
                 {
-                    return MessageResource.GetMessageFor(Message.AlmostLongBreakMessage);
+                    case PomodoroPhase.RunningTask:
+                    case PomodoroPhase.WaitingSwitchToLongBreak:
+                        return MessageResource.GetMessageFor(Message.AlmostLongBreakMessage);
+                    case PomodoroPhase.RunningLongBreak:
+                        return MessageResource.GetMessageFor(Message.LongBreakMessage);
+                    default:
+                        return "";
                 }
-                else
-                {
-                    return MessageResource.GetMessageFor(Message.LongBreakMessage);
-                }
-
             }
         }
 
-        public string StartButtonMessage
+        public string MainButtonMessage
         {
-            get { return MessageResource.GetMessageFor(Message.MainButtonStartmessage); }
+            get
+            {
+                switch(pomodoro.CurrentPhase)
+                {
+                    case PomodoroPhase.NotRunning:
+                    default:
+                        return MessageResource.GetMessageFor(Message.MainButtonStartmessage);
+                    case PomodoroPhase.RunningTask:
+                    case PomodoroPhase.RunningBreak:
+                    case PomodoroPhase.RunningLongBreak:
+                        return MessageResource.GetMessageFor(Message.MainButtonStopMessage);
+                    case PomodoroPhase.WaitingSwitchToTask:
+                    case PomodoroPhase.WaitingSwitchToBreak:
+                    case PomodoroPhase.WaitingSwitchToLongBreak:
+                        return MessageResource.GetMessageFor(Message.MainButtonResumeMessage);
+                }
+            }
         }
 
         private IPomodoro pomodoro;

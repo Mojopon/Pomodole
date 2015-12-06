@@ -27,10 +27,10 @@ namespace Pomodole
 
         public Pomodoro(bool flag)
         {
-            taskCountdown = new Countdown(0,2);
-            breakCountdown = new Countdown(0,1);
+            taskCountdown = new Countdown(0,4);
+            breakCountdown = new Countdown(0,3);
             repeatTime = 2;
-            longBreakCountdown = new Countdown(0,3);
+            longBreakCountdown = new Countdown(0,5);
 
             Reset();
         }
@@ -54,7 +54,7 @@ namespace Pomodole
             repeatTimeLeft = repeatTime;
 
             currentCountdown = taskCountdown;
-            CurrentPhase = PomodoroPhase.Task;
+            CurrentPhase = PomodoroPhase.NotRunning;
         }
 
         public void Tick()
@@ -75,21 +75,36 @@ namespace Pomodole
                     CompletePomodoro();
                 }
             }
+            else
+            {
+                if (currentCountdown == taskCountdown)
+                {
+                    CurrentPhase = PomodoroPhase.RunningTask;
+                }
+                else if (currentCountdown == breakCountdown)
+                {
+                    CurrentPhase = PomodoroPhase.RunningBreak;
+                }
+                else if (currentCountdown == longBreakCountdown)
+                {
+                    CurrentPhase = PomodoroPhase.RunningLongBreak;
+                }
+            }
         }
 
         void SwitchTaskCountdownToBreakCountdown()
         {
             if (repeatTimeLeft <= 0)
             {
+                CurrentPhase = PomodoroPhase.WaitingSwitchToLongBreak;
                 if (OnSwitchToLongBreak != null) OnSwitchToLongBreak();
                 currentCountdown = longBreakCountdown;
-                CurrentPhase = PomodoroPhase.LongBreak;
             }
             else
             {
+                CurrentPhase = PomodoroPhase.WaitingSwitchToBreak;
                 if (OnSwitchToBreak != null) OnSwitchToBreak();
                 currentCountdown = breakCountdown;
-                CurrentPhase = PomodoroPhase.Break;
             }
             taskCountdown.Reset();
         }
@@ -97,15 +112,16 @@ namespace Pomodole
         void SwitchBreakCountdownToTaskCountdown()
         {
             repeatTimeLeft--;
+            CurrentPhase = PomodoroPhase.WaitingSwitchToTask;
             if (OnSwitchToTask != null) OnSwitchToTask();
             currentCountdown = taskCountdown;
-            CurrentPhase = PomodoroPhase.Task;
 
             breakCountdown.Reset();
         }
 
         void CompletePomodoro()
         {
+            CurrentPhase = PomodoroPhase.NotRunning;
             if (OnCompletePomodoro != null) OnCompletePomodoro();
             Reset();
         }
