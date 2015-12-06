@@ -14,6 +14,7 @@ namespace Pomodole
         private int currentSecond;
 
         public bool CountdownEnd { get; private set; }
+        public double Progress { get { return GetProgress(); } }
 
         public Countdown(int startMinute, int startSecond)
         {
@@ -76,6 +77,24 @@ namespace Pomodole
         public int GetHour()
         {
             return 0;
+        }
+
+        private double GetProgress()
+        {
+            var currentProgress = 1 - (GetTotalCurrentTimeSecond() / GetTotalStartTimeSecond());
+            if (currentProgress > 1) currentProgress = 1;
+            if (currentProgress < 0) currentProgress = 0;
+            return currentProgress;
+        }
+
+        private double GetTotalStartTimeSecond()
+        {
+            return startSecond + startMinute * 60;
+        }
+
+        private double GetTotalCurrentTimeSecond()
+        {
+            return currentSecond + currentMinute * 60;
         }
     }
 }

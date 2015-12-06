@@ -9,6 +9,7 @@ namespace Pomodole
     public interface ICountdownTimer
     {
         bool CountdownEnd { get; }
+        double Progress { get; }
 
         void Tick();
         void Reset();

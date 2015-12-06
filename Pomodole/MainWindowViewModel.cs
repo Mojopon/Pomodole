@@ -19,10 +19,16 @@ namespace Pomodole
         public string PomodoroSetMessage { get { return MessageManager.PomodoroSetMessage; } }
         public string StartButtonMessage { get { return MessageManager.StartButtonMessage; } }
 
+        public int Progress { get {
+                return (int)(pomodoro.Progress * 100);
+            }
+        }
+
         public MainWindowMessageManager MessageManager { get; private set; }
         private IPomodoro pomodoro;
         private ITickTimer tickTimer;
         public bool TimerRunning { get; private set; }
+
         public MainWindowViewModel(IPomodoro pomodoro)
         {
             this.pomodoro = pomodoro;
@@ -84,6 +90,7 @@ namespace Pomodole
             NotifyPropertyChanged("Minute");
             NotifyPropertyChanged("Second");
             NotifyPropertyChanged("PomodoroSetMessage");
+            NotifyPropertyChanged("Progress");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

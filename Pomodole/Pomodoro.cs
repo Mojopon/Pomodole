@@ -9,6 +9,7 @@ namespace Pomodole
     public class Pomodoro : IPomodoro
     {
         public bool CountdownEnd { get; private set; }
+        public double Progress { get { return currentCountdown.Progress; } }
 
         public PomodoroPhase CurrentPhase { get; private set; }
 

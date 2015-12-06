@@ -9,5 +9,6 @@ namespace Pomodole
 {
     public interface IMainWindowViewModel : INotifyPropertyChanged, IMainWindowViewElements
     {
+        int Progress { get; }
     }
 }

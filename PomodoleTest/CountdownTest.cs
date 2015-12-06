@@ -44,5 +44,32 @@ namespace PomodoleTest
             Assert.AreEqual(0, countdown.GetSecond());
             Assert.AreEqual(10, countdown.GetMinute());
         }
+
+        [Test]
+        public void ShouldReturnCurrentProgressPercentage()
+        {
+            countdown = new Countdown(1, 40);
+            Assert.AreEqual(0, countdown.Progress);
+            countdown.Tick();
+            Assert.That(countdown.Progress, Is.EqualTo(0.01d).Within(0.001d));
+
+            for(int i = 0; i < 99; i++)
+            {
+                Assert.That(countdown.Progress, Is.EqualTo(0.01d + ((double)i / 100)).Within(0.001d));
+
+                countdown.Tick();
+            }
+            Assert.AreEqual(1, countdown.Progress);
+            countdown.Tick();
+            Assert.AreEqual(1, countdown.Progress);
+
+            countdown = new Countdown(2, 80);
+            for(int i = 0; i < 100; i++)
+            {
+                Assert.That(countdown.Progress, Is.EqualTo((double)i / 100).Within(0.001d));
+                countdown.Tick();
+                countdown.Tick();
+            }
+        }
     }
 }

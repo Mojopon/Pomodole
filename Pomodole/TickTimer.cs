@@ -36,7 +36,6 @@ namespace Pomodole
         {
             progress += (long)(DateTime.Now - lastUpdate).TotalMilliseconds;
             lastUpdate = DateTime.Now;
-            Console.WriteLine("Progress: {0}", progress);
             if (progress > 1000)
             {
                 progress -= 1000;
