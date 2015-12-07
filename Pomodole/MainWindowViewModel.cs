@@ -80,6 +80,12 @@ namespace Pomodole
         // Properties for Data binding
         public double Progress { get { return pomodoro.Progress; } }
         public TaskbarItemProgressState ProgressState { get; private set; }
+        public Point GradiationEndpoint {
+            get
+            {
+                return new Point(Progress, 0);
+            }
+        }
         public string Minute { get { return PomodoleHelper.ShapeTimeNumber(pomodoro.GetMinute()); } }
         public string Second { get { return PomodoleHelper.ShapeTimeNumber(pomodoro.GetSecond()); } }
         public string PomodoroSetMessage
@@ -122,6 +128,7 @@ namespace Pomodole
             NotifyPropertyChanged("PomodoroSetMessage");
             NotifyPropertyChanged("Progress");
             NotifyPropertyChanged("ProgressState");
+            NotifyPropertyChanged("GradiationEndpoint");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

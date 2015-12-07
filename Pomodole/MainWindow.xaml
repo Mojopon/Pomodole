@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="212.834" Width="300">
     <Window.Background>
-        <LinearGradientBrush EndPoint="0,0" StartPoint="0,0">
-            <GradientStop Color="Black"/>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="{Binding GradiationEndpoint}">
+            <GradientStop Color="#FFFFDBDB" Offset="1"/>
             <GradientStop Color="White" Offset="1"/>
         </LinearGradientBrush>
     </Window.Background>
