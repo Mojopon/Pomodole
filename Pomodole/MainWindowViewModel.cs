@@ -13,17 +13,6 @@ namespace Pomodole
 {
     public class MainWindowViewModel : IMainWindowViewModel
     {
-        public ICommand StartCommand { get; private set; }
-
-        public string Minute { get { return MessageManager.Minute; } }
-        public string Second { get { return MessageManager.Second; } }
-        public string PomodoroSetMessage { get { return MessageManager.PomodoroSetMessage; } }
-        public string MainButtonMessage { get { return MessageManager.MainButtonMessage; } }
-
-        public double Progress { get { return pomodoro.Progress; } }
-        public TaskbarItemProgressState ProgressState { get; private set; }
-
-        public MainWindowMessageManager MessageManager { get; private set; }
         private IPomodoro pomodoro;
         private ITickTimer tickTimer;
         public bool TimerRunning { get; private set; }
@@ -35,9 +24,7 @@ namespace Pomodole
             pomodoro.OnSwitchToTask += new Action(OnSwitchToTaskEvent);
             pomodoro.OnSwitchToLongBreak += new Action(OnSwitchToLongBreakEvent);
             pomodoro.OnCompletePomodoro += new Action(OnCompletePomodoroEvent);
-
-            MessageManager = new MainWindowMessageManager(pomodoro);
-
+            
             tickTimer = new TickTimer(50);
             tickTimer.OnTick += new Action(OnTick);
             StartCommand = new StartCommandImpl(this);
@@ -48,6 +35,7 @@ namespace Pomodole
             tickTimer.Start();
             TimerRunning = true;
             ProgressState = TaskbarItemProgressState.Normal;
+            UpdatePropeties();
         }
 
         public void Stop()
@@ -55,45 +43,75 @@ namespace Pomodole
             tickTimer.Stop();
             TimerRunning = false;
             ProgressState = TaskbarItemProgressState.Paused;
+            UpdatePropeties();
         }
 
         void OnSwitchToTaskEvent()
         {
             Stop();
             UpdatePropeties();
-            MessageBox.Show("Switch to task");
-            Start();
         }
 
         void OnSwitchToBreakEvent()
         {
             Stop();
             UpdatePropeties();
-            MessageBox.Show("Switch to break");
-            Start();
         }
 
         void OnSwitchToLongBreakEvent()
         {
             Stop();
             UpdatePropeties();
-            MessageBox.Show("Switch to Long break");
-            NotifyPropertyChanged("PomodoroSet");
-            Start();
         }
 
         void OnCompletePomodoroEvent()
         {
             Stop();
             UpdatePropeties();
-            MessageBox.Show("Pomodoro Completed");
-            ProgressState = TaskbarItemProgressState.None;
+            ProgressState = TaskbarItemProgressState.Paused;
         }
 
         public void OnTick()
         {
             pomodoro.Tick();
             UpdatePropeties();
+        }
+
+        // Properties for Data binding
+        public double Progress { get { return pomodoro.Progress; } }
+        public TaskbarItemProgressState ProgressState { get; private set; }
+        public string Minute { get { return PomodoleHelper.ShapeTimeNumber(pomodoro.GetMinute()); } }
+        public string Second { get { return PomodoleHelper.ShapeTimeNumber(pomodoro.GetSecond()); } }
+        public string PomodoroSetMessage
+        {
+            get
+            {
+                // display pomodoro set time left
+                if (pomodoro.GetRepeatTimeLeft() > 0)
+                    return string.Format("{0} {1} {2}", MessageResource.GetMessageFor(Message.LeftPomodoroSetMessage),
+                                                          pomodoro.GetRepeatTimeLeft().ToString(),
+                                                          MessageResource.GetMessageFor(Message.RightPomodoroSetMessage));
+
+                // return AlmostLongBreak message or LongBreakMessage when pomodoro set is 0
+                switch (pomodoro.CurrentPhase)
+                {
+                    case PomodoroPhase.RunningTask:
+                    case PomodoroPhase.WaitingSwitchToLongBreak:
+                        return MessageResource.GetMessageFor(Message.AlmostLongBreakMessage);
+                    case PomodoroPhase.RunningLongBreak:
+                        return MessageResource.GetMessageFor(Message.LongBreakMessage);
+                    default:
+                        return "";
+                }
+            }
+        }
+        public string MainButtonMessage
+        {
+            get
+            {
+                if (!TimerRunning) return MessageResource.GetMessageFor(Message.MainButtonStartmessage);
+                else return MessageResource.GetMessageFor(Message.MainButtonStopMessage);
+            }
         }
 
         private void UpdatePropeties()
@@ -115,6 +133,7 @@ namespace Pomodole
             }
         }
 
+        public ICommand StartCommand { get; private set; }
         class StartCommandImpl : ICommand
         {
             private MainWindowViewModel viewModel;

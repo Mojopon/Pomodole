@@ -31,7 +31,10 @@ namespace PomodoleTest
             countdown.Tick();
             Assert.AreEqual(0, countdown.GetSecond());
             Assert.AreEqual(0, countdown.GetMinute());
+            countdown.Tick();
             Assert.IsTrue(countdown.CountdownEnd);
+            Assert.AreEqual(0, countdown.GetSecond());
+            Assert.AreEqual(0, countdown.GetMinute());
         }
 
         [Test]

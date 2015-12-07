@@ -26,6 +26,7 @@ namespace Pomodole
         WaitingSwitchToTask,
         WaitingSwitchToLongBreak,
         RunningLongBreak,
+        Completed,
     }
 
     public enum Message

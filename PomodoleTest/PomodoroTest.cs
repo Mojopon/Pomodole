@@ -39,7 +39,7 @@ namespace PomodoleTest
             Assert.AreEqual(59, pomodoro.GetSecond());
             Assert.AreEqual(PomodoroPhase.RunningTask, pomodoro.CurrentPhase);
 
-            for (int i = 0; i < 118; i++)
+            for (int i = 0; i < 119; i++)
             {
                 pomodoro.Tick();
             }
@@ -52,11 +52,12 @@ namespace PomodoleTest
             Assert.AreEqual(1, pomodoro.GetMinute());
             Assert.AreEqual(0, pomodoro.GetSecond());
             Assert.AreEqual(PomodoroPhase.WaitingSwitchToBreak, pomodoro.CurrentPhase);
+            Assert.AreEqual(1, pomodoro.Progress);
 
             bool onSwitchToTaskEventCalled = false;
             pomodoro.OnSwitchToTask += new Action(() => onSwitchToTaskEventCalled = true);
 
-            for (int i = 0; i < 59; i++)
+            for (int i = 0; i < 60; i++)
             {
                 pomodoro.Tick();
                 Assert.AreEqual(PomodoroPhase.RunningBreak, pomodoro.CurrentPhase);
@@ -67,6 +68,7 @@ namespace PomodoleTest
             Assert.AreEqual(2, pomodoro.GetMinute());
             Assert.AreEqual(0, pomodoro.GetSecond());
             Assert.AreEqual(PomodoroPhase.WaitingSwitchToTask, pomodoro.CurrentPhase);
+            Assert.AreEqual(1, pomodoro.Progress);
         }
         [Test]
         public void ShouldSwitchTaskToLongBreakWhenRepeatEnd()
@@ -81,7 +83,8 @@ namespace PomodoleTest
             Assert.IsFalse(onCompletePomodoroEventCalled);
             for (int j = 0; j < 2; j++)
             {
-                for (int i = 0; i < 120; i++)
+                // Timer should tick for one second when started so we need one more second for every spans
+                for (int i = 0; i < 121; i++)
                 {
                     pomodoro.Tick();
                 }
@@ -89,7 +92,7 @@ namespace PomodoleTest
                 Assert.AreEqual(0, pomodoro.GetSecond());
                 Assert.IsFalse(onSwitchToLongBreakEventCalled);
                 Assert.IsFalse(onCompletePomodoroEventCalled);
-                for (int i = 0; i < 60; i++)
+                for (int i = 0; i < 61; i++)
                 {
                     pomodoro.Tick();
                 }
@@ -104,16 +107,17 @@ namespace PomodoleTest
             Assert.AreEqual(0, pomodoro.GetSecond());
             Assert.IsFalse(onSwitchToLongBreakEventCalled);
             Assert.IsFalse(onCompletePomodoroEventCalled);
-            for (int i = 0; i < 120; i++)
+            for (int i = 0; i < 121; i++)
             {
                 pomodoro.Tick();
             }
             Assert.AreEqual(3, pomodoro.GetMinute());
             Assert.AreEqual(0, pomodoro.GetSecond());
             Assert.AreEqual(PomodoroPhase.WaitingSwitchToLongBreak, pomodoro.CurrentPhase);
+            Assert.AreEqual(1, pomodoro.Progress);
             Assert.IsTrue(onSwitchToLongBreakEventCalled);
             Assert.IsFalse(onCompletePomodoroEventCalled);
-            for (int i = 0; i < 179; i++)
+            for (int i = 0; i < 180; i++)
             {
                 pomodoro.Tick();
                 Assert.AreEqual(PomodoroPhase.RunningLongBreak, pomodoro.CurrentPhase);
@@ -122,7 +126,8 @@ namespace PomodoleTest
             Assert.AreEqual(2, pomodoro.GetMinute());
             Assert.AreEqual(0, pomodoro.GetSecond());
             Assert.IsTrue(onCompletePomodoroEventCalled);
-            Assert.AreEqual(PomodoroPhase.NotRunning, pomodoro.CurrentPhase);
+            Assert.AreEqual(PomodoroPhase.Completed, pomodoro.CurrentPhase);
+            Assert.AreEqual(1, pomodoro.Progress);
         }
     }
 }

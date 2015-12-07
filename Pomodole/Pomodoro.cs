@@ -9,7 +9,20 @@ namespace Pomodole
     public class Pomodoro : IPomodoro
     {
         public bool CountdownEnd { get; private set; }
-        public double Progress { get { return currentCountdown.Progress; } }
+        public double Progress { get
+            {
+                switch(CurrentPhase)
+                {
+                    case PomodoroPhase.WaitingSwitchToTask:
+                    case PomodoroPhase.WaitingSwitchToBreak:
+                    case PomodoroPhase.WaitingSwitchToLongBreak:
+                    case PomodoroPhase.Completed:
+                        return 1;
+                }
+
+                return currentCountdown.Progress;
+            }
+        }
 
         public PomodoroPhase CurrentPhase { get; private set; }
 
@@ -121,9 +134,9 @@ namespace Pomodole
 
         void CompletePomodoro()
         {
-            CurrentPhase = PomodoroPhase.NotRunning;
             if (OnCompletePomodoro != null) OnCompletePomodoro();
             Reset();
+            CurrentPhase = PomodoroPhase.Completed;
         }
 
         public int GetMinute()

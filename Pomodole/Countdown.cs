@@ -39,8 +39,6 @@ namespace Pomodole
 
         private void ProgressSecond()
         {
-            currentSecond--;
-
             if (currentSecond <= 0)
             {
                 ProgressMinute();
@@ -50,6 +48,8 @@ namespace Pomodole
                 }
                 currentSecond = 60 + currentSecond;
             }
+
+            currentSecond--;
         }
 
         private bool ProgressMinute()

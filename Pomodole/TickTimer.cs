@@ -23,6 +23,7 @@ namespace Pomodole
         {
             lastUpdate = DateTime.Now;
             dispatcherTimer.Start();
+            if(OnTick != null) OnTick();
         }
 
         public void Stop()
@@ -39,10 +40,7 @@ namespace Pomodole
             if (progress > 1000)
             {
                 progress -= 1000;
-                if(OnTick != null)
-                {
-                    OnTick();
-                }
+                if(OnTick != null) OnTick(); 
             }
         }
     }

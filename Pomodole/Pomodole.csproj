@@ -61,10 +61,8 @@
     <Compile Include="ApplicationController.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="IApplicationController.cs" />
-    <Compile Include="IMainWindowViewElements.cs" />
     <Compile Include="IMainWindowViewModel.cs" />
     <Compile Include="ITickTimer.cs" />
-    <Compile Include="MainWindowMessageManager.cs" />
     <Compile Include="MessageResource.cs" />
     <Compile Include="PomodoleHelper.cs" />
     <Compile Include="TickTimer.cs" />
