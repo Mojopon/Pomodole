@@ -39,4 +39,10 @@ namespace Pomodole
         AlmostLongBreakMessage,
         LongBreakMessage,
     }
+
+    public enum ServiceProviderType
+    {
+        Production,
+        Test,
+    }
 }

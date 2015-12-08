@@ -13,16 +13,37 @@ namespace Pomodole
         {
             if(applicationController == null)
             {
-                applicationController = new ApplicationController();
+                applicationController = new ApplicationController(ServiceProvider.GetInstance());
+                applicationController.Initialize();
             }
             return applicationController;
         }
 
+        private IServiceProvider serviceProvider;
+
+        private List<IViewModel> viewModels;
         private ConfigManager configManager;
-        private ApplicationController()
+        private ApplicationController(IServiceProvider serviceProvider)
+        {
+            this.serviceProvider = serviceProvider;
+            viewModels = new List<IViewModel>();
+        }
+
+        private void Initialize()
         {
             configManager = new ConfigManager();
             configManager.SetupPomodoroConfig(25, 5, 3, 15);
+
+            SetupViewModelForMainWindow();
+        }
+
+
+        private IMainWindowViewModel mainWindowViewModel;
+        void SetupViewModelForMainWindow()
+        {
+            mainWindowViewModel = serviceProvider.GetMainWindowViewModel();
+            mainWindowViewModel.Configure(configManager);
+            viewModels.Add(mainWindowViewModel);
         }
 
         public object GetViewModel(ViewModelFor viewModel)
@@ -30,21 +51,10 @@ namespace Pomodole
             switch(viewModel)
             {
                 case ViewModelFor.MainWindow:
-                    return SetupViewModelForMainWindow();
+                    return mainWindowViewModel;
                 default:
                     return null;
             }
-        }
-
-        object SetupViewModelForMainWindow()
-        {
-            var pomodoroConfig = new PomodoroConfig(5, 3, 2, 10);
-            var newPomodoro = new Pomodoro();
-            newPomodoro.Configure(configManager);
-
-            var pomodoroViewModel = new MainWindowViewModel(newPomodoro);
-
-            return pomodoroViewModel;
         }
     }
 }

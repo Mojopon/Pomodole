@@ -62,13 +62,19 @@
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="IApplicationController.cs" />
+    <Compile Include="IApplicationMessage.cs" />
     <Compile Include="IConfigManager.cs" />
     <Compile Include="IConfigurable.cs" />
     <Compile Include="IMainWindowViewModel.cs" />
     <Compile Include="IPomodoroConfigUser.cs" />
+    <Compile Include="IServiceProvider.cs" />
     <Compile Include="ITickTimer.cs" />
+    <Compile Include="IViewModel.cs" />
     <Compile Include="MessageResource.cs" />
     <Compile Include="PomodoleHelper.cs" />
+    <Compile Include="ProductionServiceProvider.cs" />
+    <Compile Include="ServiceProvider.cs" />
+    <Compile Include="TestServiceProvider.cs" />
     <Compile Include="TickTimer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

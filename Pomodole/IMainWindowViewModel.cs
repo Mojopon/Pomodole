@@ -8,7 +8,7 @@ using System.Windows.Shell;
 
 namespace Pomodole
 {
-    public interface IMainWindowViewModel : INotifyPropertyChanged
+    public interface IMainWindowViewModel : IViewModel, INotifyPropertyChanged, IConfigurable
     {
         double Progress { get; }
         TaskbarItemProgressState ProgressState { get; }

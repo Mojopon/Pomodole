@@ -133,6 +133,11 @@ namespace Pomodole
             }
         }
 
+        public void Configure(IConfigManager configManager)
+        {
+            pomodoro.Configure(configManager);
+        }
+
         public ICommand StartCommand { get; private set; }
         class StartCommandImpl : ICommand
         {
