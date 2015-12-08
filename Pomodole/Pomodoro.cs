@@ -38,26 +38,6 @@ namespace Pomodole
 
         public Pomodoro() { }
 
-        public Pomodoro(bool flag)
-        {
-            taskCountdown = new Countdown(0,4);
-            breakCountdown = new Countdown(0,3);
-            repeatTime = 2;
-            longBreakCountdown = new Countdown(0,5);
-
-            Reset();
-        }
-
-        public void Configure(IPomodoroConfig config)
-        {
-            taskCountdown = new Countdown(config.TaskTime);
-            breakCountdown = new Countdown(config.BreakTime);
-            repeatTime = config.RepeatTime;
-            longBreakCountdown = new Countdown(config.LongBreakTime);
-
-            Reset();
-        }
-
         private Countdown currentCountdown;
         private int repeatTimeLeft;
         public void Reset()
@@ -152,6 +132,21 @@ namespace Pomodole
         public int GetRepeatTimeLeft()
         {
             return repeatTimeLeft;
+        }
+
+        public void Configure(IConfigManager config)
+        {
+            config.ExecuteConfigurationFor(this as IPomodoroConfigUser);
+        }
+
+        public void ConfigurePomodoroRelatives(IPomodoroConfig pomodoroConfig)
+        {
+            taskCountdown = new Countdown(pomodoroConfig.TaskTime);
+            breakCountdown = new Countdown(pomodoroConfig.BreakTime);
+            repeatTime = pomodoroConfig.RepeatTime;
+            longBreakCountdown = new Countdown(pomodoroConfig.LongBreakTime);
+
+            Reset();
         }
     }
 }

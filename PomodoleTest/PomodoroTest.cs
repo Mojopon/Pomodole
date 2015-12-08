@@ -25,7 +25,7 @@ namespace PomodoleTest
 
             var pomodoroConfig = new PomodoroConfig(task, shortBreak, repeat, longBreak);
 
-            pomodoro.Configure(pomodoroConfig);
+            pomodoro.ConfigurePomodoroRelatives(pomodoroConfig);
         }
 
         [Test]

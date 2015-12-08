@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigManagerTest.cs" />
     <Compile Include="CountdownTest.cs" />
     <Compile Include="PomodoroTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

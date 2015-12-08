@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
-    public interface IPomodoro : ICountdownTimer
+    public interface IPomodoro : ICountdownTimer, IConfigurable, IPomodoroConfigUser
     {
         event Action OnSwitchToBreak;
         event Action OnSwitchToTask;

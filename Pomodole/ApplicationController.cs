@@ -18,7 +18,12 @@ namespace Pomodole
             return applicationController;
         }
 
-        private ApplicationController() { }
+        private ConfigManager configManager;
+        private ApplicationController()
+        {
+            configManager = new ConfigManager();
+            configManager.SetupPomodoroConfig(25, 5, 3, 15);
+        }
 
         public object GetViewModel(ViewModelFor viewModel)
         {
@@ -34,8 +39,8 @@ namespace Pomodole
         object SetupViewModelForMainWindow()
         {
             var pomodoroConfig = new PomodoroConfig(5, 3, 2, 10);
-            var newPomodoro = new Pomodoro(true);
-            //newPomodoro.Configure(pomodoroConfig);
+            var newPomodoro = new Pomodoro();
+            newPomodoro.Configure(configManager);
 
             var pomodoroViewModel = new MainWindowViewModel(newPomodoro);
 

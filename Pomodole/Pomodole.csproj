@@ -59,9 +59,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApplicationController.cs" />
+    <Compile Include="ConfigManager.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="IApplicationController.cs" />
+    <Compile Include="IConfigManager.cs" />
+    <Compile Include="IConfigurable.cs" />
     <Compile Include="IMainWindowViewModel.cs" />
+    <Compile Include="IPomodoroConfigUser.cs" />
     <Compile Include="ITickTimer.cs" />
     <Compile Include="MessageResource.cs" />
     <Compile Include="PomodoleHelper.cs" />
