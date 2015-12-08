@@ -11,19 +11,23 @@ namespace Pomodole
         private static ApplicationController applicationController;
         public static IApplicationController GetInstance()
         {
+            return GetInstance(ServiceProvider.GetInstance());
+        }
+        public static IApplicationController GetInstance(IPomodoleServiceProvider serviceProvider)
+        {
             if(applicationController == null)
             {
-                applicationController = new ApplicationController(ServiceProvider.GetInstance());
+                applicationController = new ApplicationController(serviceProvider);
                 applicationController.Initialize();
             }
             return applicationController;
         }
 
-        private IServiceProvider serviceProvider;
+        private IPomodoleServiceProvider serviceProvider;
 
         private List<IViewModel> viewModels;
         private ConfigManager configManager;
-        private ApplicationController(IServiceProvider serviceProvider)
+        private ApplicationController(IPomodoleServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
             viewModels = new List<IViewModel>();
@@ -54,6 +58,14 @@ namespace Pomodole
                     return mainWindowViewModel;
                 default:
                     return null;
+            }
+        }
+
+        public void SendMessage(IApplicationMessage message)
+        {
+            foreach(IViewModel viewModel in viewModels)
+            {
+                message.Execute(viewModel);
             }
         }
     }

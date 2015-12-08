@@ -9,5 +9,6 @@ namespace Pomodole
     public interface IApplicationController
     {
         object GetViewModel(ViewModelFor viewModel);
+        void SendMessage(IApplicationMessage message);
     }
 }

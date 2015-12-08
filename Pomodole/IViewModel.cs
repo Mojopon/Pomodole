@@ -8,5 +8,6 @@ namespace Pomodole
 {
     public interface IViewModel
     {
+        
     }
 }

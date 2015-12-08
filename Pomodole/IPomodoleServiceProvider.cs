@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
-    public interface IServiceProvider
+    public interface IPomodoleServiceProvider
     {
         IMainWindowViewModel GetMainWindowViewModel();
     }

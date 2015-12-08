@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
-    public abstract class ServiceProvider : IServiceProvider
+    public abstract class ServiceProvider : IPomodoleServiceProvider
     {
-        public static IServiceProvider GetInstance()
+        public static IPomodoleServiceProvider GetInstance()
         {
             return GetInstance(ServiceProviderType.Production);
         }
 
-        public static IServiceProvider GetInstance(ServiceProviderType providerType)
+        public static IPomodoleServiceProvider GetInstance(ServiceProviderType providerType)
         {
             switch (providerType)
             {

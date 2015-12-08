@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="ApplicationController.cs" />
     <Compile Include="ConfigManager.cs" />
+    <Compile Include="ChangeConfigurationMessage.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="IApplicationController.cs" />
     <Compile Include="IApplicationMessage.cs" />
@@ -67,7 +68,7 @@
     <Compile Include="IConfigurable.cs" />
     <Compile Include="IMainWindowViewModel.cs" />
     <Compile Include="IPomodoroConfigUser.cs" />
-    <Compile Include="IServiceProvider.cs" />
+    <Compile Include="IPomodoleServiceProvider.cs" />
     <Compile Include="ITickTimer.cs" />
     <Compile Include="IViewModel.cs" />
     <Compile Include="MessageResource.cs" />
