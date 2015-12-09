@@ -13,10 +13,14 @@ namespace Pomodole
     {
         double Progress { get; }
         TaskbarItemProgressState ProgressState { get; }
-        Point GradiationEndpoint { get; }
+        Point BackgroundGradiationEndpoint { get; }
+        System.Windows.Media.Color BackgroundStartColor { get; }
+        System.Windows.Media.Color BackgroundEndColor { get; }
+
         string Minute { get; }
         string Second { get; }
         string PomodoroSetMessage { get; }
         string MainButtonMessage { get; }
+
     }
 }

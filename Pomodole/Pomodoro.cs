@@ -65,6 +65,7 @@ namespace Pomodole
             taskCountdown.Reset();
             breakCountdown.Reset();
             repeatTimeLeft = repeatTime;
+            longBreakCountdown.Reset();
 
             currentCountdown = taskCountdown;
             CurrentPhase = PomodoroPhase.NotRunning;
