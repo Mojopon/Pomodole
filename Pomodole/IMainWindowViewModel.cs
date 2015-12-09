@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Shell;
 
 namespace Pomodole
@@ -12,9 +13,14 @@ namespace Pomodole
     {
         double Progress { get; }
         TaskbarItemProgressState ProgressState { get; }
+        Point BackgroundGradiationEndpoint { get; }
+        System.Windows.Media.Color BackgroundStartColor { get; }
+        System.Windows.Media.Color BackgroundEndColor { get; }
+
         string Minute { get; }
         string Second { get; }
         string PomodoroSetMessage { get; }
         string MainButtonMessage { get; }
+
     }
 }

@@ -10,7 +10,7 @@ namespace Pomodole
     {
         private static Language currentLanguage = Language.Japanese;
 
-        public static string GetMessageFor(Message message)
+        public static string GetMessageFor(Message message, params string[] elements)
         {
             switch(currentLanguage)
             {
@@ -25,14 +25,18 @@ namespace Pomodole
                                 return "ストップ";
                             case Message.MainButtonResumeMessage:
                                 return "再開";
-                            case Message.LeftPomodoroSetMessage:
-                                return "小休止まで";
-                            case Message.RightPomodoroSetMessage:
-                                return "ポモドーロ";
+                            case Message.DisplayPomodoroSetMessage:
+                                return string.Format("残り {0} ポモドーロ", elements[0]);
                             case Message.AlmostLongBreakMessage:
                                 return "この後小休止";
                             case Message.LongBreakMessage:
                                 return "小休止中";
+                            case Message.StartTaskMessage:
+                                return "タスクを開始";
+                            case Message.StartBreakMessage:
+                                return "休憩を開始";
+                            case Message.StartLongBreakMessage:
+                                return "小休止を開始";
                         }
                     }
                     return "";
@@ -49,14 +53,18 @@ namespace Pomodole
                                 return "Stop";
                             case Message.MainButtonResumeMessage:
                                 return "Resume";
-                            case Message.LeftPomodoroSetMessage:
-                                return "Long Break Until";
-                            case Message.RightPomodoroSetMessage:
-                                return "Pomodoro";
+                            case Message.DisplayPomodoroSetMessage:
+                                return string.Format("{0} Pomodoros Left", elements[0]);
                             case Message.AlmostLongBreakMessage:
                                 return "Long Break After This";
                             case Message.LongBreakMessage:
                                 return "Taking Long Break";
+                            case Message.StartTaskMessage:
+                                return "Start Task";
+                            case Message.StartBreakMessage:
+                                return "Take a break";
+                            case Message.StartLongBreakMessage:
+                                return "Take a long break";
                         }
                     }
                     return "";

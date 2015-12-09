@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pomodole"
         mc:Ignorable="d"
-        Title="MainWindow" Height="212.834" Width="300">
+        Title="Pomodole" Height="212.834" Width="300">
     <Window.Background>
-        <LinearGradientBrush EndPoint="0,0" StartPoint="0,0">
-            <GradientStop Color="Black"/>
-            <GradientStop Color="White" Offset="1"/>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="{Binding BackgroundGradiationEndpoint}">
+            <GradientStop Color="{Binding BackgroundEndColor}" Offset="1"/>
+            <GradientStop Color="{Binding BackgroundStartColor}" Offset="1"/>
         </LinearGradientBrush>
     </Window.Background>
     <Window.TaskbarItemInfo>

@@ -34,10 +34,12 @@ namespace Pomodole
         MainButtonStartmessage,
         MainButtonStopMessage,
         MainButtonResumeMessage,
-        LeftPomodoroSetMessage,
-        RightPomodoroSetMessage,
+        DisplayPomodoroSetMessage,
         AlmostLongBreakMessage,
         LongBreakMessage,
+        StartTaskMessage,
+        StartBreakMessage,
+        StartLongBreakMessage,
     }
 
     public enum ServiceProviderType
