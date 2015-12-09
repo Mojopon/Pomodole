@@ -25,6 +25,7 @@ namespace Pomodole
             }
         }
 
+        public abstract object GetView(ViewFor view);
         public abstract IMainWindowViewModel GetMainWindowViewModel();
     }
 }

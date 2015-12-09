@@ -14,12 +14,14 @@ namespace Pomodole
 {
     public class MainWindowViewModel : IMainWindowViewModel
     {
+        public event Action ActivateWindowEvent;
+        public bool TimerRunning { get; private set; }
+
         private Color backgroundColorForTaskMode = Colors.White;
         private Color backgroundColorForBreakMode = Colors.PeachPuff;
 
         private IPomodoro pomodoro;
         private ITickTimer tickTimer;
-        public bool TimerRunning { get; private set; }
 
         public MainWindowViewModel(IPomodoro pomodoro)
         {
@@ -187,6 +189,7 @@ namespace Pomodole
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void NotifyPropertyChanged(string info)
         {
             if (PropertyChanged != null)

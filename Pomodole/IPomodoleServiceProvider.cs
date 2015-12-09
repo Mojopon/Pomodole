@@ -8,6 +8,7 @@ namespace Pomodole
 {
     public interface IPomodoleServiceProvider
     {
+        object GetView(ViewFor viewFor);
         IMainWindowViewModel GetMainWindowViewModel();
     }
 }

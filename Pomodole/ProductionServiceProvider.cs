@@ -10,6 +10,22 @@ namespace Pomodole
     {
         public ProductionServiceProvider() { }
 
+        private MainWindow mainWindow;
+        public override object GetView(ViewFor view)
+        {
+            switch(view)
+            {
+                case ViewFor.MainWindow:
+                    {
+                        if (mainWindow == null)
+                            mainWindow = new MainWindow();
+                        return mainWindow;
+                    }
+                default:
+                    return null;
+            }
+        }
+
         public override IMainWindowViewModel GetMainWindowViewModel()
         {
             var newPomodoro = new Pomodoro();

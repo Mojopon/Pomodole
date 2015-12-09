@@ -47,4 +47,9 @@ namespace Pomodole
         Production,
         Test,
     }
+
+    public enum ViewFor
+    {
+        MainWindow,
+    }
 }

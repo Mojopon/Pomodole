@@ -58,6 +58,25 @@ namespace Pomodole
             viewModels.Add(mainWindowViewModel);
         }
 
+        private MainWindow mainWindow;
+        public object GetView(ViewFor view)
+        {
+            switch (view)
+            {
+                case ViewFor.MainWindow:
+                    {
+                        if (mainWindow == null)
+                        {
+                            mainWindow = (MainWindow)serviceProvider.GetView(ViewFor.MainWindow);
+                            mainWindow.DataContext = mainWindowViewModel;
+                        }
+                        return mainWindow;
+                    }
+                default:
+                    return null;
+            }
+        }
+
         public object GetViewModel(ViewModelFor viewModel)
         {
             switch(viewModel)

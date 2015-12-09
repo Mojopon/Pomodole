@@ -9,6 +9,12 @@ namespace Pomodole
     public class TestServiceProvider : ServiceProvider
     {
         private IMainWindowViewModel mainWindowViewModel;
+
+        public override object GetView(ViewFor view)
+        {
+            return null;
+        }
+
         public void SetMainWindowViewModel(IMainWindowViewModel mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
