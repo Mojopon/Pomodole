@@ -16,9 +16,10 @@ namespace Pomodole
 
         public void Execute(IViewModel target)
         {
-            if(target.GetType() == typeof(IConfigurable))
+            var configurable = target as IConfigurable;
+            if (configurable != null)
             {
-                (target as IConfigurable).Configure(configManager);
+                configurable.Configure(configManager);
             }
         }
     }

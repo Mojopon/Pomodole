@@ -22,6 +22,10 @@ namespace Pomodole
             }
             return applicationController;
         }
+        public static void ResetInstance()
+        {
+            applicationController = null;
+        }
 
         private IPomodoleServiceProvider serviceProvider;
 
@@ -35,15 +39,19 @@ namespace Pomodole
 
         private void Initialize()
         {
+            SetupConfigManager();
+            SetupViewModelForMainWindow();
+        }
+
+        private void SetupConfigManager()
+        {
             configManager = new ConfigManager();
             configManager.SetupPomodoroConfig(25, 5, 3, 15);
-
-            SetupViewModelForMainWindow();
         }
 
 
         private IMainWindowViewModel mainWindowViewModel;
-        void SetupViewModelForMainWindow()
+        private void SetupViewModelForMainWindow()
         {
             mainWindowViewModel = serviceProvider.GetMainWindowViewModel();
             mainWindowViewModel.Configure(configManager);
