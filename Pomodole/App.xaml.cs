@@ -13,5 +13,16 @@ namespace Pomodole
     /// </summary>
     public partial class App : Application
     {
+        private IApplicationController applicationController;
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            applicationController = ApplicationController.GetInstance();
+            var mainWindowViewModel = applicationController.GetViewModel(ViewModelFor.MainWindow);
+            var mainWindow = new MainWindow
+            {
+                DataContext = mainWindowViewModel
+            };
+            mainWindow.Show();
+        }
     }
 }

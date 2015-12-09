@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Shell;
+using System.Windows.Input;
 
 namespace Pomodole
 {
@@ -22,5 +23,6 @@ namespace Pomodole
         string PomodoroSetMessage { get; }
         string MainButtonMessage { get; }
 
+        ICommand StartCommand { get; }
     }
 }

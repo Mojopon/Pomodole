@@ -21,14 +21,9 @@ namespace Pomodole
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IApplicationController applicationController;
         public MainWindow()
         {
             InitializeComponent();
-
-            applicationController = ApplicationController.GetInstance();
-            var viewModel = applicationController.GetViewModel(ViewModelFor.MainWindow);
-            DataContext = viewModel;
         }
     }
 }
