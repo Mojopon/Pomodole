@@ -14,7 +14,6 @@ namespace Pomodole
 {
     public class MainWindowViewModel : IMainWindowViewModel
     {
-        public event Action ActivateWindowEvent;
         public bool TimerRunning { get; private set; }
 
         private Color backgroundColorForTaskMode = Colors.White;
@@ -44,6 +43,17 @@ namespace Pomodole
             _backgroundEndColor = backgroundColorForBreakMode;
         }
 
+        private IMainWindowService mainWindowService;
+        public void RegisterMainWindowService(IMainWindowService mainWindowService)
+        {
+            this.mainWindowService = mainWindowService;
+        }
+
+        private void ActivateWindow()
+        {
+            if (mainWindowService != null) mainWindowService.ActivateWindow();
+        }
+
         public void Start()
         {
             tickTimer.Start();
@@ -65,6 +75,7 @@ namespace Pomodole
             itWillSwitchColor = true;
             Stop();
             UpdatePropeties();
+            ActivateWindow();
         }
 
         void OnSwitchToBreakEvent()
@@ -72,6 +83,7 @@ namespace Pomodole
             itWillSwitchColor = true;
             Stop();
             UpdatePropeties();
+            ActivateWindow();
         }
 
         void OnSwitchToLongBreakEvent()
@@ -79,6 +91,7 @@ namespace Pomodole
             itWillSwitchColor = true;
             Stop();
             UpdatePropeties();
+            ActivateWindow();
         }
 
         void OnCompletePomodoroEvent()
@@ -87,6 +100,7 @@ namespace Pomodole
             Stop();
             UpdatePropeties();
             ProgressState = TaskbarItemProgressState.Paused;
+            ActivateWindow();
         }
 
         private bool itWillSwitchColor = false;

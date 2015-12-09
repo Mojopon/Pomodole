@@ -68,6 +68,8 @@ namespace Pomodole
                         if (mainWindow == null)
                         {
                             mainWindow = (MainWindow)serviceProvider.GetView(ViewFor.MainWindow);
+                            var mainWindowService = new MainWindowService(mainWindow);
+                            mainWindowViewModel.RegisterMainWindowService(mainWindowService);
                             mainWindow.DataContext = mainWindowViewModel;
                         }
                         return mainWindow;

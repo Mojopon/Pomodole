@@ -12,7 +12,7 @@ namespace Pomodole
 {
     public interface IMainWindowViewModel : IViewModel, INotifyPropertyChanged, IConfigurable
     {
-        event Action ActivateWindowEvent;
+        void RegisterMainWindowService(IMainWindowService mainWindowService);
 
         double Progress { get; }
         TaskbarItemProgressState ProgressState { get; }

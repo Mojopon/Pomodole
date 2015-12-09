@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6C505CD9-B11D-4CE5-A2F6-81F9846D24A8}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Pomodole</RootNamespace>
     <AssemblyName>Pomodole</AssemblyName>
@@ -66,11 +66,13 @@
     <Compile Include="IApplicationMessage.cs" />
     <Compile Include="IConfigManager.cs" />
     <Compile Include="IConfigurable.cs" />
+    <Compile Include="IMainWindowService.cs" />
     <Compile Include="IMainWindowViewModel.cs" />
     <Compile Include="IPomodoroConfigUser.cs" />
     <Compile Include="IPomodoleServiceProvider.cs" />
     <Compile Include="ITickTimer.cs" />
     <Compile Include="IViewModel.cs" />
+    <Compile Include="MainWindowService.cs" />
     <Compile Include="MessageResource.cs" />
     <Compile Include="PomodoleHelper.cs" />
     <Compile Include="ProductionServiceProvider.cs" />
