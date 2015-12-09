@@ -14,6 +14,9 @@ namespace Pomodole
 {
     public class MainWindowViewModel : IMainWindowViewModel
     {
+        private Color backgroundColorForTaskMode = Colors.White;
+        private Color backgroundColorForBreakMode = Colors.PeachPuff;
+
         private IPomodoro pomodoro;
         private ITickTimer tickTimer;
         public bool TimerRunning { get; private set; }
@@ -30,8 +33,13 @@ namespace Pomodole
             tickTimer.OnTick += new Action(OnTick);
             StartCommand = new StartCommandImpl(this);
 
-            _backgroundStartColor = Colors.White;
-            _backgroundEndColor = Colors.PeachPuff;
+            InitializeBackgroundColor();
+        }
+
+        private void InitializeBackgroundColor()
+        {
+            _backgroundStartColor = backgroundColorForTaskMode;
+            _backgroundEndColor = backgroundColorForBreakMode;
         }
 
         public void Start()
@@ -142,22 +150,19 @@ namespace Pomodole
         {
             get
             {
-                // display pomodoro set time left
-                if (pomodoro.GetRepeatTimeLeft() > 0)
-                    return string.Format("{0} {1} {2}", MessageResource.GetMessageFor(Message.LeftPomodoroSetMessage),
-                                                          pomodoro.GetRepeatTimeLeft().ToString(),
-                                                          MessageResource.GetMessageFor(Message.RightPomodoroSetMessage));
-
-                // return AlmostLongBreak message or LongBreakMessage when pomodoro set is 0
-                switch (pomodoro.CurrentPhase)
+                switch(pomodoro.CurrentPhase)
                 {
-                    case PomodoroPhase.RunningTask:
+                    case PomodoroPhase.NotRunning:
+                    case PomodoroPhase.WaitingSwitchToTask:
+                        return MessageResource.GetMessageFor(Message.StartTaskMessage);
+                    case PomodoroPhase.WaitingSwitchToBreak:
+                        return MessageResource.GetMessageFor(Message.StartBreakMessage);
                     case PomodoroPhase.WaitingSwitchToLongBreak:
-                        return MessageResource.GetMessageFor(Message.AlmostLongBreakMessage);
+                        return MessageResource.GetMessageFor(Message.StartLongBreakMessage);
                     case PomodoroPhase.RunningLongBreak:
                         return MessageResource.GetMessageFor(Message.LongBreakMessage);
                     default:
-                        return "";
+                        return MessageResource.GetMessageFor(Message.DisplayPomodoroSetMessage, pomodoro.GetRepeatTimeLeft().ToString());
                 }
             }
         }
