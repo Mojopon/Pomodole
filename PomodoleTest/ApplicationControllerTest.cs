@@ -14,6 +14,7 @@ namespace PomodoleTest
     {
         private TestServiceProvider serviceProvider;
         private IMainWindowViewModel mainWindowViewModelMock;
+        private IConfigWindowViewModel configWindowViewModelMock;
         private IApplicationController controller;
         [SetUp]
         public void SetUpApplicationController()
@@ -27,15 +28,28 @@ namespace PomodoleTest
 
             serviceProvider = (TestServiceProvider)ServiceProvider.GetInstance(ServiceProviderType.Test);
             mainWindowViewModelMock = Substitute.For<IMainWindowViewModel>();
+            configWindowViewModelMock = Substitute.For<IConfigWindowViewModel>();
             serviceProvider.SetMainWindowViewModel(mainWindowViewModelMock);
+            serviceProvider.SetConfigWindowViewModel(configWindowViewModelMock);
 
             controller = ApplicationController.GetInstance(serviceProvider);
         }
 
         [Test]
-        public void ShouldInitializeWithGivenServiceProviderWhenGetInstance()
+        public void ShouldReturnViewModel()
         {
-            mainWindowViewModelMock.Received().Configure(Arg.Any<IConfigManager>());
+            var mainWindowViewModel = controller.GetViewModel(ViewModelFor.MainWindow);
+            Assert.AreEqual(mainWindowViewModelMock, mainWindowViewModel);
+            var configWindowViewModel = controller.GetViewModel(ViewModelFor.ConfigWindow);
+            Assert.AreEqual(configWindowViewModelMock, configWindowViewModel);
+
+        }
+
+        [Test]
+        public void ShouldDelegateSendMessageEvent()
+        {
+            mainWindowViewModelMock.Received().SendMessage += Arg.Any<Action<IApplicationMessage>>();
+            configWindowViewModelMock.Received().SendMessage += Arg.Any<Action<IApplicationMessage>>();
         }
 
         [Test]
@@ -69,8 +83,19 @@ namespace PomodoleTest
             IConfigManager configManagerMock = Substitute.For<IConfigManager>();
             var changeConfigurationMessage = new ChangeConfigurationMessage(configManagerMock);
 
+            mainWindowViewModelMock.DidNotReceive().Configure(configManagerMock);
             controller.SendMessage(changeConfigurationMessage);
             mainWindowViewModelMock.Received().Configure(configManagerMock);
+        }
+
+        [Test]
+        public void ShouldExecuteOpenConfigWindow()
+        {
+            var openConfigWindowApplicationMessage = new OpenConfigWindowApplicationMessage();
+
+            configWindowViewModelMock.DidNotReceive().Open();
+            controller.SendMessage(openConfigWindowApplicationMessage);
+            configWindowViewModelMock.Received().Open();
         }
     }
 }

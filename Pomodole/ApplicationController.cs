@@ -30,7 +30,6 @@ namespace Pomodole
         private IPomodoleServiceProvider serviceProvider;
 
         private List<IViewModel> viewModels;
-        private ConfigManager configManager;
         private ApplicationController(IPomodoleServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
@@ -39,23 +38,33 @@ namespace Pomodole
 
         private void Initialize()
         {
-            SetupConfigManager();
             SetupViewModelForMainWindow();
+            SetupViewModelForConfigWindow();
         }
-
-        private void SetupConfigManager()
-        {
-            configManager = new ConfigManager();
-            configManager.SetupPomodoroConfig(25, 5, 3, 15);
-        }
-
 
         private IMainWindowViewModel mainWindowViewModel;
         private void SetupViewModelForMainWindow()
         {
             mainWindowViewModel = serviceProvider.GetMainWindowViewModel();
-            mainWindowViewModel.Configure(configManager);
-            viewModels.Add(mainWindowViewModel);
+            RegisterViewModel(mainWindowViewModel);
+        }
+
+        private IConfigWindowViewModel configWindowViewModel;
+        private void SetupViewModelForConfigWindow()
+        {
+            configWindowViewModel = serviceProvider.GetConfigWindowViewModel();
+            configWindowViewModel.OpenConfigWindow += (() => 
+            {
+                var configWindow = GetView(ViewFor.ConfigWindow) as ConfigWindow;
+                configWindow.Show();
+            });
+            RegisterViewModel(configWindowViewModel);
+        }
+
+        private void RegisterViewModel(IViewModel viewModel)
+        {
+            viewModels.Add(viewModel);
+            viewModel.SendMessage += ((IApplicationMessage message) => SendMessage(message));
         }
 
         private MainWindow mainWindow;
@@ -74,6 +83,11 @@ namespace Pomodole
                         }
                         return mainWindow;
                     }
+                case ViewFor.ConfigWindow:
+                    {
+                        var configWindow = serviceProvider.GetView(ViewFor.ConfigWindow);
+                        return configWindow;
+                    }
                 default:
                     return null;
             }
@@ -85,6 +99,8 @@ namespace Pomodole
             {
                 case ViewModelFor.MainWindow:
                     return mainWindowViewModel;
+                case ViewModelFor.ConfigWindow:
+                    return configWindowViewModel;
                 default:
                     return null;
             }

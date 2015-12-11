@@ -10,5 +10,6 @@ namespace Pomodole
     {
         object GetView(ViewFor viewFor);
         IMainWindowViewModel GetMainWindowViewModel();
+        IConfigWindowViewModel GetConfigWindowViewModel();
     }
 }

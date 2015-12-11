@@ -9,6 +9,7 @@ namespace Pomodole
     public enum ViewModelFor
     {
         MainWindow,
+        ConfigWindow,
     }
 
     public enum Language
@@ -51,5 +52,6 @@ namespace Pomodole
     public enum ViewFor
     {
         MainWindow,
+        ConfigWindow,
     }
 }

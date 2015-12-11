@@ -26,5 +26,6 @@ namespace Pomodole
         string MainButtonMessage { get; }
 
         ICommand StartCommand { get; }
+        ICommand ConfigButtonCommand { get; }
     }
 }

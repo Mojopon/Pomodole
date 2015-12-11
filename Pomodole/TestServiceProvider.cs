@@ -9,6 +9,9 @@ namespace Pomodole
     public class TestServiceProvider : ServiceProvider
     {
         private IMainWindowViewModel mainWindowViewModel;
+        private IConfigWindowViewModel configWindowViewModel;
+
+        public TestServiceProvider() : base() { }
 
         public override object GetView(ViewFor view)
         {
@@ -20,9 +23,19 @@ namespace Pomodole
             this.mainWindowViewModel = mainWindowViewModel;
         }
 
+        public void SetConfigWindowViewModel(IConfigWindowViewModel configWindowViewModel)
+        {
+            this.configWindowViewModel = configWindowViewModel;
+        }
+
         public override IMainWindowViewModel GetMainWindowViewModel()
         {
             return mainWindowViewModel;
+        }
+
+        public override IConfigWindowViewModel GetConfigWindowViewModel()
+        {
+            return configWindowViewModel;
         }
     }
 }

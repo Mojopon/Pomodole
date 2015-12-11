@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
-    public interface IViewModel
+    public class OpenConfigWindowMessage : IApplicationMessage
     {
-        event Action<IApplicationMessage> SendMessage;
+        public void Execute(IViewModel target)
+        {
+        }
     }
 }

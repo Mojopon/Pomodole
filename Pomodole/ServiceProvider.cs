@@ -8,6 +8,17 @@ namespace Pomodole
 {
     public abstract class ServiceProvider : IPomodoleServiceProvider
     {
+        protected IPomodoro pomodoro;
+        protected IConfigManager configManager;
+        public ServiceProvider()
+        {
+            var newConfigManager = new ConfigManager();
+            newConfigManager.SetupPomodoroConfig(25, 5, 3, 15);
+            configManager = newConfigManager;
+            pomodoro = new Pomodoro();
+            pomodoro.Configure(configManager);
+        }
+
         public static IPomodoleServiceProvider GetInstance()
         {
             return GetInstance(ServiceProviderType.Production);
@@ -27,5 +38,6 @@ namespace Pomodole
 
         public abstract object GetView(ViewFor view);
         public abstract IMainWindowViewModel GetMainWindowViewModel();
+        public abstract IConfigWindowViewModel GetConfigWindowViewModel();
     }
 }

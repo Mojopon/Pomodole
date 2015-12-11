@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6C505CD9-B11D-4CE5-A2F6-81F9846D24A8}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Pomodole</RootNamespace>
     <AssemblyName>Pomodole</AssemblyName>
@@ -40,6 +40,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,11 +63,13 @@
     <Compile Include="ApplicationController.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="ChangeConfigurationMessage.cs" />
+    <Compile Include="ConfigWindowViewModel.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="IApplicationController.cs" />
     <Compile Include="IApplicationMessage.cs" />
     <Compile Include="IConfigManager.cs" />
     <Compile Include="IConfigurable.cs" />
+    <Compile Include="IConfigWindowViewModel.cs" />
     <Compile Include="IMainWindowService.cs" />
     <Compile Include="IMainWindowViewModel.cs" />
     <Compile Include="IPomodoroConfigUser.cs" />
@@ -74,11 +78,19 @@
     <Compile Include="IViewModel.cs" />
     <Compile Include="MainWindowService.cs" />
     <Compile Include="MessageResource.cs" />
+    <Compile Include="OpenConfigWindowApplicationMessage.cs" />
+    <Compile Include="OpenConfigWindowMessage.cs" />
     <Compile Include="PomodoleHelper.cs" />
     <Compile Include="ProductionServiceProvider.cs" />
     <Compile Include="ServiceProvider.cs" />
     <Compile Include="TestServiceProvider.cs" />
     <Compile Include="TickTimer.cs" />
+    <Compile Include="PomodoroConfigControl.xaml.cs">
+      <DependentUpon>PomodoroConfigControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigWindow.xaml.cs">
+      <DependentUpon>ConfigWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -95,6 +107,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PomodoroConfigControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pomodoro.cs" />
