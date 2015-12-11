@@ -44,7 +44,7 @@ namespace Pomodole
 
         private void InvokeConfigOpen()
         {
-            SendMessage(new OpenConfigWindowApplicationMessage());
+            if(SendMessage != null) SendMessage(new OpenConfigWindowApplicationMessage());
         }
 
         private void InitializeBackgroundColor()
