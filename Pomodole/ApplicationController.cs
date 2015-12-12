@@ -85,7 +85,8 @@ namespace Pomodole
                     }
                 case ViewFor.ConfigWindow:
                     {
-                        var configWindow = serviceProvider.GetView(ViewFor.ConfigWindow);
+                        var configWindow = (ConfigWindow)serviceProvider.GetView(ViewFor.ConfigWindow);
+                        configWindow.DataContext = configWindowViewModel;
                         return configWindow;
                     }
                 default:

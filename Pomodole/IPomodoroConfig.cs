@@ -8,9 +8,9 @@ namespace Pomodole
 {
     public interface IPomodoroConfig
     {
-        int TaskTime { get; }
-        int BreakTime { get; }
-        int RepeatTime { get; }
-        int LongBreakTime { get; }
+        int TaskTime { get; set; }
+        int BreakTime { get; set; }
+        int RepeatTime { get; set; }
+        int LongBreakTime { get; set; }
     }
 }

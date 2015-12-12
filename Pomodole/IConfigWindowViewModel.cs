@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Pomodole
 {
-    public interface IConfigWindowViewModel : IViewModel
+    public interface IConfigWindowViewModel : IViewModel, IPomodoroConfig
     {
         event Action OpenConfigWindow;
-
         void Open();
+
+        UIElement Child { get; }
     }
 }

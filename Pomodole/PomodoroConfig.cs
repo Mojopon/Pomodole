@@ -8,10 +8,10 @@ namespace Pomodole
 {
     public class PomodoroConfig : IPomodoroConfig
     {
-        public int TaskTime { get; private set; }
-        public int BreakTime { get; private set; }
-        public int RepeatTime { get; private set; }
-        public int LongBreakTime { get; private set; }
+        public int TaskTime { get; set; }
+        public int BreakTime { get; set; }
+        public int RepeatTime { get; set; }
+        public int LongBreakTime { get; set; }
 
         public PomodoroConfig(int task, int shortBreak, int repeatTime, int longBreak)
         {
