@@ -217,6 +217,7 @@ namespace Pomodole
         public void Configure(IConfigManager configManager)
         {
             pomodoro.Configure(configManager);
+            UpdatePropeties();
         }
 
         public ICommand StartCommand { get; private set; }

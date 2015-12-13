@@ -11,6 +11,6 @@
             <local:PomodoroConfigControl HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"/>
 
         </Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Center" Height="21" Margin="0,0,0,0" VerticalAlignment="Center" Width="74"/>
+        <Button x:Name="button" Content="OK" HorizontalAlignment="Center" Height="21" Margin="0,0,0,0" VerticalAlignment="Center" Width="74" Command="{Binding OkButtonCommand}"/>
     </StackPanel>
 </Window>
