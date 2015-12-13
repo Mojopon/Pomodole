@@ -14,17 +14,16 @@ namespace Pomodole
 {
     public class MainWindowViewModel : IMainWindowViewModel
     {
-        public event Action<IApplicationMessage> SendMessage;
-
         public bool TimerRunning { get; private set; }
 
         private Color backgroundColorForTaskMode = Colors.White;
         private Color backgroundColorForBreakMode = Colors.PeachPuff;
 
+        private IApplicationController applicationController;
         private IPomodoro pomodoro;
         private ITickTimer tickTimer;
 
-        public MainWindowViewModel(IPomodoro pomodoro)
+        public MainWindowViewModel(IApplicationController applicationController, IPomodoro pomodoro)
         {
             this.pomodoro = pomodoro;
             pomodoro.OnSwitchToBreak += new Action(OnSwitchToBreakEvent);
@@ -35,16 +34,9 @@ namespace Pomodole
             tickTimer = new TickTimer(50);
             tickTimer.OnTick += new Action(OnTick);
             StartCommand = new StartCommandImpl(this);
-            var newConfigButtonCommand = new ConfigButtonCommandImpl();
-            newConfigButtonCommand.InvokeConfigOpen += InvokeConfigOpen;
-            ConfigButtonCommand = newConfigButtonCommand;
+            ConfigButtonCommand = new ConfigButtonCommandImpl(applicationController);
 
             InitializeBackgroundColor();
-        }
-
-        private void InvokeConfigOpen()
-        {
-            if(SendMessage != null) SendMessage(new OpenConfigWindowApplicationMessage());
         }
 
         private void InitializeBackgroundColor()
@@ -252,8 +244,11 @@ namespace Pomodole
         public ICommand ConfigButtonCommand { get; private set; }
         class ConfigButtonCommandImpl : ICommand
         {
-            public event Action InvokeConfigOpen;
-            public ConfigButtonCommandImpl() { }
+            private IApplicationController applicationController;
+            public ConfigButtonCommandImpl(IApplicationController applicationController)
+            {
+                this.applicationController = applicationController;
+            }
 
             public event EventHandler CanExecuteChanged;
             public bool CanExecute(object parameter)
@@ -263,7 +258,7 @@ namespace Pomodole
 
             public void Execute(object parameter)
             {
-                InvokeConfigOpen();
+                applicationController.SendMessage(new OpenConfigWindowApplicationMessage());
             }
         }
     }

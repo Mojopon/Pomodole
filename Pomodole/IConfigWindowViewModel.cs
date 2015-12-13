@@ -13,6 +13,6 @@ namespace Pomodole
         event Action OpenConfigWindow;
         void Open();
 
-        UIElement Child { get; }
+        ICommand OkButtonCommand { get; }
     }
 }

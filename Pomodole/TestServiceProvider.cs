@@ -28,12 +28,12 @@ namespace Pomodole
             this.configWindowViewModel = configWindowViewModel;
         }
 
-        public override IMainWindowViewModel GetMainWindowViewModel()
+        public override IMainWindowViewModel GetMainWindowViewModel(IApplicationController applicationController)
         {
             return mainWindowViewModel;
         }
 
-        public override IConfigWindowViewModel GetConfigWindowViewModel()
+        public override IConfigWindowViewModel GetConfigWindowViewModel(IApplicationController applicationController)
         {
             return configWindowViewModel;
         }

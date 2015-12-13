@@ -45,26 +45,27 @@ namespace Pomodole
         private IMainWindowViewModel mainWindowViewModel;
         private void SetupViewModelForMainWindow()
         {
-            mainWindowViewModel = serviceProvider.GetMainWindowViewModel();
+            mainWindowViewModel = serviceProvider.GetMainWindowViewModel(this);
             RegisterViewModel(mainWindowViewModel);
         }
 
         private IConfigWindowViewModel configWindowViewModel;
         private void SetupViewModelForConfigWindow()
         {
-            configWindowViewModel = serviceProvider.GetConfigWindowViewModel();
-            configWindowViewModel.OpenConfigWindow += (() => 
-            {
-                var configWindow = GetView(ViewFor.ConfigWindow) as ConfigWindow;
-                configWindow.Show();
-            });
+            configWindowViewModel = serviceProvider.GetConfigWindowViewModel(this);
+            configWindowViewModel.OpenConfigWindow += (() => OpenConfigWindow());
             RegisterViewModel(configWindowViewModel);
         }
 
         private void RegisterViewModel(IViewModel viewModel)
         {
             viewModels.Add(viewModel);
-            viewModel.SendMessage += ((IApplicationMessage message) => SendMessage(message));
+        }
+
+        private void OpenConfigWindow()
+        {
+            var configWindow = GetView(ViewFor.ConfigWindow) as ConfigWindow;
+            configWindow.Show();
         }
 
         private MainWindow mainWindow;

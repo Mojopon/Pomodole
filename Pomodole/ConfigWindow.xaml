@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="Config" Height="250" Width="350" Name="ConfigMainWindow">
     <StackPanel>
-    <Grid Name="ConfigWindowMainGrid" HorizontalAlignment="Center" VerticalAlignment="Top" Width="{Binding ElementName=ConfigMainWindow, Path=Width}" Height="175">
-        <Popup AllowsTransparency="True" Placement="Center" Child="{Binding Child}" IsOpen="True"></Popup>
-    </Grid>
-    <Button x:Name="button" Content="Button" HorizontalAlignment="Center" Height="21" Margin="0,0,0,0" VerticalAlignment="Center" Width="74"/>
+        <Grid x:Name="ConfigWindowMainGrid" HorizontalAlignment="Center" VerticalAlignment="Top" Width="{Binding Width, ElementName=ConfigMainWindow}" Height="175" Margin="-4,0">
+            <local:PomodoroConfigControl HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"/>
+
+        </Grid>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Center" Height="21" Margin="0,0,0,0" VerticalAlignment="Center" Width="74"/>
     </StackPanel>
 </Window>

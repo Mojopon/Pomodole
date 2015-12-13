@@ -6,19 +6,22 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using NSubstitute;
 using Pomodole;
+using System.Windows.Input;
 
 namespace PomodoleTest
 {
     [TestFixture]
     public class MainWindowViewModelTest
     {
+        private IApplicationController applicationController;
         private IPomodoro pomodoro;
         private IMainWindowViewModel mainWindowViewModel;
         [SetUp]
         public void SetUpMainWindowViewModel()
         {
             pomodoro = Substitute.For<IPomodoro>();
-            mainWindowViewModel = new MainWindowViewModel(pomodoro);
+            applicationController = Substitute.For<IApplicationController>();
+            mainWindowViewModel = new MainWindowViewModel(applicationController, pomodoro);
         }
 
         [Test]
@@ -29,6 +32,14 @@ namespace PomodoleTest
 
             mainWindowViewModel.Configure(configManager);
             pomodoro.Received().Configure(configManager);
+        }
+
+        [Test]
+        public void ShouldSendOpenConfigApplicationMessage()
+        {
+            ICommand command = mainWindowViewModel.ConfigButtonCommand;
+            command.Execute(null);
+            applicationController.Received().SendMessage(Arg.Any<OpenConfigWindowApplicationMessage>());
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Pomodole
         }
 
 
+        private IPomodoroConfig pomodoroConfig;
         public ConfigManager()
         {
             pomodoroConfig = new PomodoroConfig(20, 3, 2, 10);
@@ -39,7 +40,6 @@ namespace Pomodole
             target.ConfigurePomodoroRelatives(pomodoroConfig);
         }
 
-        private IPomodoroConfig pomodoroConfig;
         public void SetupPomodoroConfig(int taskTime, int breakTime, int repeatTime, int longBreakTime)
         {
             pomodoroConfig = new PomodoroConfig(taskTime, breakTime, repeatTime, longBreakTime);

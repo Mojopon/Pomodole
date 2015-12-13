@@ -34,11 +34,12 @@ namespace PomodoleTest
             TestServiceProvider testServiceProvider = (TestServiceProvider)ServiceProvider.GetInstance(ServiceProviderType.Test);
             IMainWindowViewModel mainWindowViewModelMock = Substitute.For<IMainWindowViewModel>();
             testServiceProvider.SetMainWindowViewModel(mainWindowViewModelMock);
-            Assert.AreEqual(mainWindowViewModelMock, testServiceProvider.GetMainWindowViewModel());
+            var applicationController = Substitute.For<IApplicationController>();
+            Assert.AreEqual(mainWindowViewModelMock, testServiceProvider.GetMainWindowViewModel(applicationController));
 
             IConfigWindowViewModel configWindowViewModelMock = Substitute.For<IConfigWindowViewModel>();
             testServiceProvider.SetConfigWindowViewModel(configWindowViewModelMock);
-            Assert.AreEqual(configWindowViewModelMock, testServiceProvider.GetConfigWindowViewModel());
+            Assert.AreEqual(configWindowViewModelMock, testServiceProvider.GetConfigWindowViewModel(applicationController));
         }
     }
 }

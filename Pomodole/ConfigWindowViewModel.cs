@@ -5,17 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Pomodole
 {
     public class ConfigWindowViewModel : IConfigWindowViewModel, INotifyPropertyChanged
     {
         public event Action OpenConfigWindow;
-        public event Action<IApplicationMessage> SendMessage;
-
-        private IConfigManager configManager;
-
-        public UIElement Child { get; private set; }
 
         public int TaskTime
         {
@@ -38,11 +34,14 @@ namespace Pomodole
             set { configManager.LongBreakTime = value; }
         }
 
-        public ConfigWindowViewModel(IConfigManager configManager)
+        private IApplicationController applicationController;
+        private IConfigManager configManager;
+        public ConfigWindowViewModel(IApplicationController applicationController, IConfigManager configManager)
         {
+            this.applicationController = applicationController;
             this.configManager = configManager;
 
-            Child = new PomodoroConfigControl();
+            OkButtonCommand = new OkButtonCommandImpl(applicationController, configManager);
         }
 
         public void Open()
@@ -58,6 +57,30 @@ namespace Pomodole
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        public ICommand OkButtonCommand { get; private set; }
+
+        class OkButtonCommandImpl : ICommand
+        {
+            private IApplicationController applicationController;
+            private IConfigManager configManager;
+            public OkButtonCommandImpl(IApplicationController applicationController, IConfigManager configManager)
+            {
+                this.applicationController = applicationController;
+                this.configManager = configManager;
+            }
+
+            public event EventHandler CanExecuteChanged;
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public void Execute(object parameter)
+            {
+                applicationController.SendMessage(new ChangeConfigurationMessage(configManager));
             }
         }
     }

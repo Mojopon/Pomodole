@@ -28,14 +28,14 @@ namespace Pomodole
             }
         }
 
-        public override IMainWindowViewModel GetMainWindowViewModel()
+        public override IMainWindowViewModel GetMainWindowViewModel(IApplicationController applicationController)
         {
-            return new MainWindowViewModel(pomodoro);
+            return new MainWindowViewModel(applicationController, pomodoro);
         }
 
-        public override IConfigWindowViewModel GetConfigWindowViewModel()
+        public override IConfigWindowViewModel GetConfigWindowViewModel(IApplicationController applicationController)
         {
-            return new ConfigWindowViewModel(configManager);
+            return new ConfigWindowViewModel(applicationController, configManager);
         }
     }
 }

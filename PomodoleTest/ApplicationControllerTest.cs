@@ -46,13 +46,6 @@ namespace PomodoleTest
         }
 
         [Test]
-        public void ShouldDelegateSendMessageEvent()
-        {
-            mainWindowViewModelMock.Received().SendMessage += Arg.Any<Action<IApplicationMessage>>();
-            configWindowViewModelMock.Received().SendMessage += Arg.Any<Action<IApplicationMessage>>();
-        }
-
-        [Test]
         public void ShouldSendApplicationMessageToAllViewModels()
         {
             var sendApplicationMessageTest = new SendApplicationMessageTest();

@@ -37,7 +37,7 @@ namespace Pomodole
         }
 
         public abstract object GetView(ViewFor view);
-        public abstract IMainWindowViewModel GetMainWindowViewModel();
-        public abstract IConfigWindowViewModel GetConfigWindowViewModel();
+        public abstract IMainWindowViewModel GetMainWindowViewModel(IApplicationController applicationController);
+        public abstract IConfigWindowViewModel GetConfigWindowViewModel(IApplicationController applicationController);
     }
 }

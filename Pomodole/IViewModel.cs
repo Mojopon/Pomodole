@@ -8,6 +8,6 @@ namespace Pomodole
 {
     public interface IViewModel
     {
-        event Action<IApplicationMessage> SendMessage;
+
     }
 }
