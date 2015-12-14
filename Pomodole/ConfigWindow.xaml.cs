@@ -22,6 +22,9 @@ namespace Pomodole
         public ConfigWindow()
         {
             InitializeComponent();
+
+            var pomodoroConfigControl = new PomodoroConfigControl();
+            ConfigWindowMainGrid.Children.Add(pomodoroConfigControl);
         }
     }
 }

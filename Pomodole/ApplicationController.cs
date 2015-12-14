@@ -54,6 +54,7 @@ namespace Pomodole
         {
             configWindowViewModel = serviceProvider.GetConfigWindowViewModel(this);
             configWindowViewModel.OpenConfigWindow += (() => OpenConfigWindow());
+            configWindowViewModel.CloseConfigWindow += (() => CloseConfigWindow());
             RegisterViewModel(configWindowViewModel);
         }
 
@@ -62,10 +63,16 @@ namespace Pomodole
             viewModels.Add(viewModel);
         }
 
+        private ConfigWindow configWindow;
         private void OpenConfigWindow()
         {
-            var configWindow = GetView(ViewFor.ConfigWindow) as ConfigWindow;
+            configWindow = GetView(ViewFor.ConfigWindow) as ConfigWindow;
             configWindow.Show();
+        }
+
+        private void CloseConfigWindow()
+        {
+            configWindow.Close();
         }
 
         private MainWindow mainWindow;

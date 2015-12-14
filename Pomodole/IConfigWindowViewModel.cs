@@ -12,6 +12,8 @@ namespace Pomodole
     {
         event Action OpenConfigWindow;
         void Open();
+        event Action CloseConfigWindow;
+        void Close();
 
         ICommand OkButtonCommand { get; }
     }

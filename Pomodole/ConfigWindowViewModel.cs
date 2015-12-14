@@ -5,13 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Pomodole
 {
-    public class ConfigWindowViewModel : IConfigWindowViewModel, INotifyPropertyChanged
+    public class ConfigWindowViewModel : IConfigWindowViewModel, INotifyPropertyChanged, IDataErrorInfo
     {
         public event Action OpenConfigWindow;
+        public event Action CloseConfigWindow;
 
         public int TaskTime
         {
@@ -41,7 +43,7 @@ namespace Pomodole
             this.applicationController = applicationController;
             this.configManager = configManager;
 
-            OkButtonCommand = new OkButtonCommandImpl(applicationController, configManager);
+            OkButtonCommand = new OkButtonCommandImpl(applicationController, configManager, this);
         }
 
         public void Open()
@@ -49,6 +51,10 @@ namespace Pomodole
             if (OpenConfigWindow != null) OpenConfigWindow();
         }
 
+        public void Close()
+        {
+            if (CloseConfigWindow != null) CloseConfigWindow();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -66,10 +72,12 @@ namespace Pomodole
         {
             private IApplicationController applicationController;
             private IConfigManager configManager;
-            public OkButtonCommandImpl(IApplicationController applicationController, IConfigManager configManager)
+            private IConfigWindowViewModel viewModel;
+            public OkButtonCommandImpl(IApplicationController applicationController, IConfigManager configManager, IConfigWindowViewModel viewModel)
             {
                 this.applicationController = applicationController;
                 this.configManager = configManager;
+                this.viewModel = viewModel;
             }
 
             public event EventHandler CanExecuteChanged;
@@ -81,6 +89,27 @@ namespace Pomodole
             public void Execute(object parameter)
             {
                 applicationController.SendMessage(new ChangeConfigurationMessage(configManager));
+                viewModel.Close();
+            }
+        }
+
+        public string Error { get { return null; } }
+
+        public string this[string propertyName]
+        {
+            get
+            {
+                string result = null;
+
+                switch (propertyName)
+                {
+                    case "TaskTime":
+                        if (TaskTime <= 0)
+                            result = "Task time cannot be 0 or minus";
+                        break;
+                }
+
+                return result;
             }
         }
     }
