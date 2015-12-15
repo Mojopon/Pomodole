@@ -15,6 +15,11 @@ namespace Pomodole
         public event Action OpenConfigWindow;
         public event Action CloseConfigWindow;
 
+        #region IApplicationMessageUser method group
+        public IApplicationMessageEvent ApplicationMessageEvent { get; private set; }
+        public Action<IApplicationMessage> Subject { get; private set; }
+        #endregion
+
         public int TaskTime
         {
             get { return configManager.TaskTime; }
@@ -44,6 +49,8 @@ namespace Pomodole
             this.configManager = configManager;
 
             OkButtonCommand = new OkButtonCommandImpl(applicationController, configManager, this);
+
+            Subject += ((IApplicationMessage m) => m.Execute(this));
         }
 
         public void Open()
@@ -88,7 +95,7 @@ namespace Pomodole
 
             public void Execute(object parameter)
             {
-                applicationController.SendMessage(new ChangeConfigurationMessage(configManager));
+                applicationController.Trigger(new ChangeConfigurationMessage(configManager));
                 viewModel.Close();
             }
         }

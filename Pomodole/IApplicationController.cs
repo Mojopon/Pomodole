@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
-    public interface IApplicationController
+    public interface IApplicationController : IApplicationMessageEvent
     {
         object GetView(ViewFor view);
         object GetViewModel(ViewModelFor viewModel);
-        void SendMessage(IApplicationMessage message);
     }
 }

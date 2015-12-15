@@ -10,7 +10,7 @@ namespace Pomodole
     {
         public OpenConfigWindowApplicationMessage() { }
 
-        public void Execute(IViewModel target)
+        public void Execute(object target)
         {
             var configWindowViewModel = target as IConfigWindowViewModel;
             if(configWindowViewModel != null)

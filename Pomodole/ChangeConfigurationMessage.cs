@@ -14,7 +14,7 @@ namespace Pomodole
             this.configManager = configManager;
         }
 
-        public void Execute(IViewModel target)
+        public void Execute(object target)
         {
             var configurable = target as IConfigurable;
             if (configurable != null)

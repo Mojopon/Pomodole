@@ -28,11 +28,11 @@ namespace PomodoleTest
         public void ShouldSendChangeConfigurationEvent()
         {
             var target = Substitute.For<IMainWindowViewModel>();
-            applicationController.SendMessage(Arg.Do<ChangeConfigurationMessage>(x => x.Execute(target)));
+            applicationController.Trigger(Arg.Do<ChangeConfigurationMessage>(x => x.Execute(target)));
 
             ICommand command = viewModel.OkButtonCommand;
             command.Execute(null);
-            applicationController.Received().SendMessage(Arg.Any<ChangeConfigurationMessage>());
+            applicationController.Received().Trigger(Arg.Any<ChangeConfigurationMessage>());
             target.Received().Configure(configManager);
         }
     }

@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Pomodole
 {
-    public interface IConfigWindowViewModel : IViewModel, IPomodoroConfig
+    public interface IConfigWindowViewModel : IViewModel, IPomodoroConfig, IApplicationMessageUser
     {
         event Action OpenConfigWindow;
         void Open();

@@ -8,6 +8,6 @@ namespace Pomodole
 {
     public interface IApplicationMessage
     {
-        void Execute(IViewModel target);
+        void Execute(object target);
     }
 }

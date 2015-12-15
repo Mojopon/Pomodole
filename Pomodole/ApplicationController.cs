@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
+
     public class ApplicationController : IApplicationController
     {
         private static ApplicationController applicationController;
@@ -29,12 +30,24 @@ namespace Pomodole
 
         private IPomodoleServiceProvider serviceProvider;
 
-        private List<IViewModel> viewModels;
         private ApplicationController(IPomodoleServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
-            viewModels = new List<IViewModel>();
+            applicationMessageEvent = new ApplicationMessageEvent();
         }
+
+        #region IApplicationMessageEvent Method Group
+        private ApplicationMessageEvent applicationMessageEvent;
+        public void Trigger(IApplicationMessage message)
+        {
+            applicationMessageEvent.Trigger(message);
+        }
+
+        public void Register(IApplicationMessageSubscriber subscriber)
+        {
+            applicationMessageEvent.Register(subscriber);
+        }
+        #endregion
 
         private void Initialize()
         {
@@ -46,7 +59,7 @@ namespace Pomodole
         private void SetupViewModelForMainWindow()
         {
             mainWindowViewModel = serviceProvider.GetMainWindowViewModel(this);
-            RegisterViewModel(mainWindowViewModel);
+            Register(mainWindowViewModel);
         }
 
         private IConfigWindowViewModel configWindowViewModel;
@@ -55,12 +68,7 @@ namespace Pomodole
             configWindowViewModel = serviceProvider.GetConfigWindowViewModel(this);
             configWindowViewModel.OpenConfigWindow += (() => OpenConfigWindow());
             configWindowViewModel.CloseConfigWindow += (() => CloseConfigWindow());
-            RegisterViewModel(configWindowViewModel);
-        }
-
-        private void RegisterViewModel(IViewModel viewModel)
-        {
-            viewModels.Add(viewModel);
+            Register(configWindowViewModel);
         }
 
         private ConfigWindow configWindow;
@@ -76,6 +84,7 @@ namespace Pomodole
         }
 
         private MainWindow mainWindow;
+
         public object GetView(ViewFor view)
         {
             switch (view)
@@ -112,14 +121,6 @@ namespace Pomodole
                     return configWindowViewModel;
                 default:
                     return null;
-            }
-        }
-
-        public void SendMessage(IApplicationMessage message)
-        {
-            foreach(IViewModel viewModel in viewModels)
-            {
-                message.Execute(viewModel);
             }
         }
     }

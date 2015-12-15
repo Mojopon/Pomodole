@@ -23,8 +23,14 @@ namespace Pomodole
         private IPomodoro pomodoro;
         private ITickTimer tickTimer;
 
+        #region IApplicationMessageUser method group
+        public IApplicationMessageEvent ApplicationMessageEvent { get; private set; }
+        public Action<IApplicationMessage> Subject { get; private set; }
+        #endregion
+
         public MainWindowViewModel(IApplicationController applicationController, IPomodoro pomodoro)
         {
+            this.applicationController = applicationController;
             this.pomodoro = pomodoro;
             pomodoro.OnSwitchToBreak += new Action(OnSwitchToBreakEvent);
             pomodoro.OnSwitchToTask += new Action(OnSwitchToTaskEvent);
@@ -37,6 +43,7 @@ namespace Pomodole
             ConfigButtonCommand = new ConfigButtonCommandImpl(applicationController);
 
             InitializeBackgroundColor();
+            Subject += ((IApplicationMessage m) => m.Execute(this));
         }
 
         private void InitializeBackgroundColor()
@@ -259,7 +266,7 @@ namespace Pomodole
 
             public void Execute(object parameter)
             {
-                applicationController.SendMessage(new OpenConfigWindowApplicationMessage());
+                applicationController.Trigger(new OpenConfigWindowApplicationMessage());
             }
         }
     }

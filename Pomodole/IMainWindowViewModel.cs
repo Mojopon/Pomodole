@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace Pomodole
 {
-    public interface IMainWindowViewModel : IViewModel, INotifyPropertyChanged, IConfigurable
+    public interface IMainWindowViewModel : IViewModel, INotifyPropertyChanged, IConfigurable , IApplicationMessageUser
     {
         void RegisterMainWindowService(IMainWindowService mainWindowService);
 

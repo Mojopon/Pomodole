@@ -39,7 +39,7 @@ namespace PomodoleTest
         {
             ICommand command = mainWindowViewModel.ConfigButtonCommand;
             command.Execute(null);
-            applicationController.Received().SendMessage(Arg.Any<OpenConfigWindowApplicationMessage>());
+            applicationController.Received().Trigger(Arg.Any<OpenConfigWindowApplicationMessage>());
         }
     }
 }

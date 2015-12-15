@@ -28,7 +28,11 @@ namespace PomodoleTest
 
             serviceProvider = (TestServiceProvider)ServiceProvider.GetInstance(ServiceProviderType.Test);
             mainWindowViewModelMock = Substitute.For<IMainWindowViewModel>();
+            mainWindowViewModelMock.Subject
+                                   .Returns(new Action<IApplicationMessage>((IApplicationMessage message) => message.Execute(mainWindowViewModelMock)));
             configWindowViewModelMock = Substitute.For<IConfigWindowViewModel>();
+            configWindowViewModelMock.Subject
+                                     .Returns(new Action<IApplicationMessage>((IApplicationMessage message) => message.Execute(configWindowViewModelMock)));
             serviceProvider.SetMainWindowViewModel(mainWindowViewModelMock);
             serviceProvider.SetConfigWindowViewModel(configWindowViewModelMock);
 
@@ -50,21 +54,21 @@ namespace PomodoleTest
         {
             var sendApplicationMessageTest = new SendApplicationMessageTest();
             
-            controller.SendMessage(sendApplicationMessageTest);
+            controller.Trigger(sendApplicationMessageTest);
             Assert.IsTrue(sendApplicationMessageTest.HasExecutedTo(mainWindowViewModelMock));
         }
 
         internal class SendApplicationMessageTest : IApplicationMessage
         {
-            private List<IViewModel> messageTargets = new List<IViewModel>();
+            private List<IApplicationMessageSubscriber> messageTargets = new List<IApplicationMessageSubscriber>();
 
-            public void Execute(IViewModel target)
+            public void Execute(object target)
             {
                 if(!messageTargets.Contains(target))
-                    messageTargets.Add(target);
+                    messageTargets.Add(target as IApplicationMessageSubscriber);
             }
 
-            public bool HasExecutedTo(IViewModel target)
+            public bool HasExecutedTo(IApplicationMessageSubscriber target)
             {
                 return messageTargets.Contains(target);
             }
@@ -77,7 +81,7 @@ namespace PomodoleTest
             var changeConfigurationMessage = new ChangeConfigurationMessage(configManagerMock);
 
             mainWindowViewModelMock.DidNotReceive().Configure(configManagerMock);
-            controller.SendMessage(changeConfigurationMessage);
+            controller.Trigger(changeConfigurationMessage);
             mainWindowViewModelMock.Received().Configure(configManagerMock);
         }
 
@@ -87,7 +91,7 @@ namespace PomodoleTest
             var openConfigWindowApplicationMessage = new OpenConfigWindowApplicationMessage();
 
             configWindowViewModelMock.DidNotReceive().Open();
-            controller.SendMessage(openConfigWindowApplicationMessage);
+            controller.Trigger(openConfigWindowApplicationMessage);
             configWindowViewModelMock.Received().Open();
         }
     }

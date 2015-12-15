@@ -8,7 +8,7 @@ namespace Pomodole
 {
     public class OpenConfigWindowMessage : IApplicationMessage
     {
-        public void Execute(IViewModel target)
+        public void Execute(object target)
         {
         }
     }

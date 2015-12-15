@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationControllerTest.cs" />
+    <Compile Include="ApplicationMessageEventTest.cs" />
     <Compile Include="ConfigManagerTest.cs" />
     <Compile Include="ConfigWindowViewModelTest.cs" />
     <Compile Include="CountdownTest.cs" />
