@@ -77,14 +77,16 @@ namespace PomodoleTest
             mainWindowViewModelMock.Received().Configure(configManagerMock);
         }
 
-        [Test]
-        public void ShouldExecuteOpenConfigWindow()
-        {
-            var openConfigWindowApplicationMessage = new OpenConfigWindowApplicationMessage();
 
-            configWindowViewModelMock.DidNotReceive().Open();
-            controller.Trigger(openConfigWindowApplicationMessage);
-            configWindowViewModelMock.Received().Open();
+        [Test]
+        public void ShouldShowConfigWindow()
+        {
+            var configWindowMock = Substitute.For<IConfigWindow>();
+            serviceProvider.SetView(ViewFor.ConfigWindow, configWindowMock);
+
+            configWindowMock.DidNotReceive().Show();
+            controller.Show(ViewFor.ConfigWindow);
+            configWindowMock.Received().Show();
         }
     }
 }

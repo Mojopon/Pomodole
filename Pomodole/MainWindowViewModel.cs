@@ -19,7 +19,6 @@ namespace Pomodole
         private Color backgroundColorForTaskMode = Colors.White;
         private Color backgroundColorForBreakMode = Colors.PeachPuff;
 
-        private IApplicationController applicationController;
         private IPomodoro pomodoro;
         private ITickTimer tickTimer;
 
@@ -28,9 +27,12 @@ namespace Pomodole
         public Action<IApplicationMessage> Subject { get; private set; }
         #endregion
 
-        public MainWindowViewModel(IApplicationController applicationController, IPomodoro pomodoro)
+        public MainWindowViewModel(IApplicationMessageEvent applicationMessageEvent, IPomodoro pomodoro)
         {
-            this.applicationController = applicationController;
+            // setup for ApplicationMessageEvent to communicate with other viewmodels and views
+            ApplicationMessageEvent = applicationMessageEvent;
+            Subject += ((IApplicationMessage m) => m.Execute(this));
+
             this.pomodoro = pomodoro;
             pomodoro.OnSwitchToBreak += new Action(OnSwitchToBreakEvent);
             pomodoro.OnSwitchToTask += new Action(OnSwitchToTaskEvent);
@@ -40,10 +42,9 @@ namespace Pomodole
             tickTimer = new TickTimer(50);
             tickTimer.OnTick += new Action(OnTick);
             StartCommand = new StartCommandImpl(this);
-            ConfigButtonCommand = new ConfigButtonCommandImpl(applicationController);
+            ConfigButtonCommand = new ConfigButtonCommandImpl(applicationMessageEvent);
 
             InitializeBackgroundColor();
-            Subject += ((IApplicationMessage m) => m.Execute(this));
         }
 
         private void InitializeBackgroundColor()
@@ -52,15 +53,9 @@ namespace Pomodole
             _backgroundEndColor = backgroundColorForBreakMode;
         }
 
-        private IMainWindowService mainWindowService;
-        public void RegisterMainWindowService(IMainWindowService mainWindowService)
-        {
-            this.mainWindowService = mainWindowService;
-        }
-
         private void ActivateWindow()
         {
-            if (mainWindowService != null) mainWindowService.ActivateWindow();
+            ApplicationMessageEvent.Trigger(new ActivateMainWindowMessage());
         }
 
         public void Start()
@@ -127,6 +122,7 @@ namespace Pomodole
                 _backgroundGradiationEndPoint = new Point(pomodoro.Progress, 0);
             }
             UpdatePropeties();
+            ActivateWindow();
         }
 
         // Properties for Data binding
@@ -252,10 +248,10 @@ namespace Pomodole
         public ICommand ConfigButtonCommand { get; private set; }
         class ConfigButtonCommandImpl : ICommand
         {
-            private IApplicationController applicationController;
-            public ConfigButtonCommandImpl(IApplicationController applicationController)
+            private IApplicationMessageEvent applicationMessageEvent;
+            public ConfigButtonCommandImpl(IApplicationMessageEvent applicationMessageEvent)
             {
-                this.applicationController = applicationController;
+                this.applicationMessageEvent = applicationMessageEvent;
             }
 
             public event EventHandler CanExecuteChanged;
@@ -266,7 +262,7 @@ namespace Pomodole
 
             public void Execute(object parameter)
             {
-                applicationController.Trigger(new OpenConfigWindowApplicationMessage());
+                applicationMessageEvent.Trigger(new OpenConfigWindowApplicationMessage());
             }
         }
     }

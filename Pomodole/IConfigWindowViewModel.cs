@@ -10,11 +10,6 @@ namespace Pomodole
 {
     public interface IConfigWindowViewModel : IViewModel, IPomodoroConfig, IApplicationMessageUser
     {
-        event Action OpenConfigWindow;
-        void Open();
-        event Action CloseConfigWindow;
-        void Close();
-
         ICommand OkButtonCommand { get; }
     }
 }

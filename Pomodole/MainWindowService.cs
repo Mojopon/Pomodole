@@ -7,10 +7,10 @@ using System.Windows;
 
 namespace Pomodole
 {
-    public class MainWindowService : IMainWindowService
+    public class MainWindowServiceController : IMainWindowService
     {
         private Window window;
-        public MainWindowService(Window window)
+        public MainWindowServiceController(Window window)
         {
             this.window = window;
         }

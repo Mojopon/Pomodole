@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ActivateMainWindowMessage.cs" />
     <Compile Include="ApplicationController.cs" />
     <Compile Include="ApplicationMessageEvent.cs" />
     <Compile Include="ConfigManager.cs" />
@@ -70,17 +71,19 @@
     <Compile Include="IApplicationMessage.cs" />
     <Compile Include="IConfigManager.cs" />
     <Compile Include="IConfigurable.cs" />
+    <Compile Include="IConfigWindow.cs" />
     <Compile Include="IConfigWindowViewModel.cs" />
+    <Compile Include="IMainWindow.cs" />
     <Compile Include="IMainWindowService.cs" />
     <Compile Include="IMainWindowViewModel.cs" />
     <Compile Include="IPomodoroConfigUser.cs" />
     <Compile Include="IPomodoleServiceProvider.cs" />
     <Compile Include="ITickTimer.cs" />
     <Compile Include="IViewModel.cs" />
+    <Compile Include="IWindow.cs" />
     <Compile Include="MainWindowService.cs" />
     <Compile Include="MessageResource.cs" />
     <Compile Include="OpenConfigWindowApplicationMessage.cs" />
-    <Compile Include="OpenConfigWindowMessage.cs" />
     <Compile Include="PomodoleHelper.cs" />
     <Compile Include="ProductionServiceProvider.cs" />
     <Compile Include="ServiceProvider.cs" />

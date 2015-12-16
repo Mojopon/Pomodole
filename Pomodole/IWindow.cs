@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
-    public class OpenConfigWindowMessage : IApplicationMessage
+    public interface IWindow
     {
-        public void Execute(object target)
-        {
-        }
+        void Show();
+        void Close();
     }
 }

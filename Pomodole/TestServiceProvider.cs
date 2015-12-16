@@ -13,9 +13,15 @@ namespace Pomodole
 
         public TestServiceProvider(IApplicationController applicationController) : base() { }
 
+        private Dictionary<ViewFor, object> views = new Dictionary<ViewFor, object>();
+        public void SetView(ViewFor viewType, object view)
+        {
+            views.Add(viewType, view);
+        }
+
         public override object GetView(ViewFor view)
         {
-            return null;
+            return views[view];
         }
 
         public void SetMainWindowViewModel(IMainWindowViewModel mainWindowViewModel)

@@ -41,14 +41,14 @@ namespace Pomodole
             set { configManager.LongBreakTime = value; }
         }
 
-        private IApplicationController applicationController;
+        private IApplicationMessageEvent applicationMessageEvent;
         private IConfigManager configManager;
-        public ConfigWindowViewModel(IApplicationController applicationController, IConfigManager configManager)
+        public ConfigWindowViewModel(IApplicationMessageEvent applicationMessageEvent, IConfigManager configManager)
         {
-            this.applicationController = applicationController;
+            this.applicationMessageEvent = applicationMessageEvent;
             this.configManager = configManager;
 
-            OkButtonCommand = new OkButtonCommandImpl(applicationController, configManager, this);
+            OkButtonCommand = new OkButtonCommandImpl(applicationMessageEvent, configManager, this);
 
             Subject += ((IApplicationMessage m) => m.Execute(this));
         }
@@ -77,14 +77,12 @@ namespace Pomodole
 
         class OkButtonCommandImpl : ICommand
         {
-            private IApplicationController applicationController;
+            private IApplicationMessageEvent applicationMessageEvent;
             private IConfigManager configManager;
-            private IConfigWindowViewModel viewModel;
-            public OkButtonCommandImpl(IApplicationController applicationController, IConfigManager configManager, IConfigWindowViewModel viewModel)
+            public OkButtonCommandImpl(IApplicationMessageEvent applicationMessageEvent, IConfigManager configManager, IConfigWindowViewModel viewModel)
             {
-                this.applicationController = applicationController;
+                this.applicationMessageEvent = applicationMessageEvent;
                 this.configManager = configManager;
-                this.viewModel = viewModel;
             }
 
             public event EventHandler CanExecuteChanged;
@@ -95,8 +93,7 @@ namespace Pomodole
 
             public void Execute(object parameter)
             {
-                applicationController.Trigger(new ChangeConfigurationMessage(configManager));
-                viewModel.Close();
+                applicationMessageEvent.Trigger(new ChangeConfigurationMessage(configManager));
             }
         }
 

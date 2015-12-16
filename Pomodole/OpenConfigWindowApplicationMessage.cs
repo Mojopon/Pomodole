@@ -12,10 +12,10 @@ namespace Pomodole
 
         public void Execute(object target)
         {
-            var configWindowViewModel = target as IConfigWindowViewModel;
-            if(configWindowViewModel != null)
+            var applicationController = target as IApplicationController;
+            if(applicationController != null)
             {
-                configWindowViewModel.Open();
+                applicationController.Show(ViewFor.ConfigWindow);
             }
         }
     }

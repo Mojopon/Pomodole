@@ -17,8 +17,10 @@ namespace Pomodole
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class ConfigWindow : Window
+    public partial class ConfigWindow : Window, IConfigWindow
     {
+        public Action<IApplicationMessage> Subject { get; private set; }
+
         public ConfigWindow()
         {
             InitializeComponent();

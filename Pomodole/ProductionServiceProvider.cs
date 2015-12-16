@@ -21,23 +21,7 @@ namespace Pomodole
         private void SetupViewModels()
         {
             mainWindowViewModel = new MainWindowViewModel(applicationController, pomodoro);
-
             configWindowViewModel = new ConfigWindowViewModel(applicationController, configManager);
-            configWindowViewModel.OpenConfigWindow += (() => OpenConfigWindow());
-            configWindowViewModel.CloseConfigWindow += (() => CloseConfigWindow());
-
-        }
-
-        private ConfigWindow configWindow;
-        private void OpenConfigWindow()
-        {
-            configWindow = GetView(ViewFor.ConfigWindow) as ConfigWindow;
-            configWindow.Show();
-        }
-
-        private void CloseConfigWindow()
-        {
-            configWindow.Close();
         }
 
         private MainWindow mainWindow;
@@ -49,8 +33,6 @@ namespace Pomodole
                     {
                         if (mainWindow == null)
                             mainWindow = new MainWindow();
-                        var mainWindowService = new MainWindowService(mainWindow);
-                        mainWindowViewModel.RegisterMainWindowService(mainWindowService);
                         mainWindow.DataContext = mainWindowViewModel;
                         return mainWindow;
                     }

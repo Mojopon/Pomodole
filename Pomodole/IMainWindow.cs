@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
-    public interface IApplicationController : IApplicationMessageEvent
+    public interface IMainWindow : IWindow, IMainWindowService, IApplicationMessageSubscriber
     {
-        void Show(ViewFor view);
-        void Close(ViewFor view);
     }
 }

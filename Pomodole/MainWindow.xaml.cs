@@ -19,11 +19,22 @@ namespace Pomodole
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IMainWindow
     {
+        public Action<IApplicationMessage> Subject { get; private set; }
+
+        private MainWindowServiceController mainWindowServiceController;
         public MainWindow()
         {
             InitializeComponent();
+            mainWindowServiceController = new MainWindowServiceController(this);
+            Subject += ((IApplicationMessage message) => message.Execute(this));
+        }
+
+
+        public void ActivateWindow()
+        {
+            mainWindowServiceController.ActivateWindow();
         }
     }
 }

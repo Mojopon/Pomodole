@@ -76,6 +76,17 @@ namespace PomodoleTest
             Assert.IsTrue(messageReceived);
         }
 
+        [Test]
+        public void ShouldSendActivateWindowMessageToMainWindow()
+        {
+            var mainWindow = Substitute.For<IMainWindow>();
+            mainWindow.Subject.Returns ((IApplicationMessage message) => message.Execute(mainWindow));
+            applicationMessageEvent.Register(mainWindow);
+            mainWindow.DidNotReceive().ActivateWindow();
+            applicationMessageEvent.Trigger(new ActivateMainWindowMessage());
+            mainWindow.Received().ActivateWindow();
+        }
+
         public class TestApplicationMessagePublisher : IApplicationMessagePublisher
         {
             public IApplicationMessageEvent ApplicationMessageEvent { get; private set; }

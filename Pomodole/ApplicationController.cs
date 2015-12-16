@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Pomodole
 {
 
-    public class ApplicationController : IApplicationController
+    public class ApplicationController : IApplicationController, IApplicationMessageSubscriber
     {
         private static ApplicationController applicationController;
         public static ApplicationController Create()
@@ -31,9 +31,12 @@ namespace Pomodole
             applicationController = null;
         }
 
+        public Action<IApplicationMessage> Subject { get; private set; }
         private ApplicationController()
         {
             applicationMessageEvent = new ApplicationMessageEvent();
+            Subject += ((IApplicationMessage message) => message.Execute(this));
+            Register(this);
         }
 
         private IPomodoleServiceProvider serviceProvider;
@@ -47,9 +50,51 @@ namespace Pomodole
 
         public void Start()
         {
-            var mainWindow = (MainWindow)serviceProvider.GetView(ViewFor.MainWindow);
-            mainWindow.Show();
+            Show(ViewFor.MainWindow);
         }
+
+        #region IApplicationController Method Group
+        private IMainWindow mainWindow;
+        private IConfigWindow configWindow;
+        public void Show(ViewFor view)
+        {
+            switch(view)
+            {
+                case ViewFor.MainWindow:
+                    {
+                        mainWindow = (IMainWindow)serviceProvider.GetView(ViewFor.MainWindow);
+                        Register(mainWindow);
+                        mainWindow.Show();
+                    }
+                    break;
+                case ViewFor.ConfigWindow:
+                    {
+                        configWindow = (IConfigWindow)serviceProvider.GetView(ViewFor.ConfigWindow);
+                        Register(configWindow);
+                        configWindow.Show();
+                    }
+                    break;
+            }
+        }
+
+        public void Close(ViewFor view)
+        {
+            switch (view)
+            {
+                case ViewFor.MainWindow:
+                    {
+                        mainWindow.Close();
+                    }
+                    break;
+                case ViewFor.ConfigWindow:
+                    {
+                        configWindow.Close();
+                        configWindow = null;
+                    }
+                    break;
+            }
+        }
+        #endregion
 
         #region IApplicationMessageEvent Method Group
         private ApplicationMessageEvent applicationMessageEvent;
@@ -72,6 +117,7 @@ namespace Pomodole
         }
 
         private IConfigWindowViewModel configWindowViewModel;
+
         private void SetupViewModelForConfigWindow()
         {
             configWindowViewModel = serviceProvider.GetConfigWindowViewModel();

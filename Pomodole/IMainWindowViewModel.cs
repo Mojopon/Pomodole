@@ -12,8 +12,6 @@ namespace Pomodole
 {
     public interface IMainWindowViewModel : IViewModel, INotifyPropertyChanged, IConfigurable , IApplicationMessageUser
     {
-        void RegisterMainWindowService(IMainWindowService mainWindowService);
-
         double Progress { get; }
         TaskbarItemProgressState ProgressState { get; }
         Point BackgroundGradiationEndpoint { get; }
