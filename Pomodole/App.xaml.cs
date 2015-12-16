@@ -14,13 +14,13 @@ namespace Pomodole
     public partial class App : Application
     {
         private IPomodoleServiceProvider serviceProvider;
-        private IApplicationController applicationController;
+        private ApplicationController applicationController;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            serviceProvider = ServiceProvider.GetInstance(ServiceProviderType.Production);
-            applicationController = ApplicationController.GetInstance(serviceProvider);
-            var mainWindow = (MainWindow)applicationController.GetView(ViewFor.MainWindow);
-            mainWindow.Show();
+            applicationController = ApplicationController.Create();
+            serviceProvider = ServiceProvider.Create(applicationController, ServiceProviderType.Production);
+            applicationController.Initialize(serviceProvider);
+            applicationController.Start();
         }
     }
 }

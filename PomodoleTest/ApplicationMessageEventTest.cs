@@ -16,10 +16,14 @@ namespace PomodoleTest
         private IApplicationMessageEvent applicationMessageEvent;
         private TestApplicationMessagePublisher publisher;
         private TestApplicationMessageSubscriber subscriber;
+        private ApplicationController applicationController;
 
         [SetUp]
         public void Setup()
         {
+            ApplicationController.ResetInstance();
+            applicationController = ApplicationController.Create();
+
             applicationMessageEvent = new ApplicationMessageEvent();
             publisher = new TestApplicationMessagePublisher();
             subscriber = new TestApplicationMessageSubscriber();
@@ -52,8 +56,7 @@ namespace PomodoleTest
         [Test]
         public void ApplicationControllerShouldDelegateToApplicationMessageEvent()
         {
-            var testServiceProvider = new TestServiceProvider();
-            var applicationController = ApplicationController.GetInstance(testServiceProvider);
+            var testServiceProvider = new TestServiceProvider(applicationController);
             publisher.Register(applicationController);
 
             var applicationMessageMock = Substitute.For<IApplicationMessage>();

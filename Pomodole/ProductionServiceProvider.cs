@@ -8,7 +8,37 @@ namespace Pomodole
 {
     public class ProductionServiceProvider : ServiceProvider
     {
-        public ProductionServiceProvider() : base() { }
+        private ProductionServiceProvider() { }
+        private IApplicationController applicationController;
+        public ProductionServiceProvider(IApplicationController applicationController) : base()
+        {
+            this.applicationController = applicationController;
+            SetupViewModels();
+        }
+
+        private IMainWindowViewModel mainWindowViewModel;
+        private IConfigWindowViewModel configWindowViewModel;
+        private void SetupViewModels()
+        {
+            mainWindowViewModel = new MainWindowViewModel(applicationController, pomodoro);
+
+            configWindowViewModel = new ConfigWindowViewModel(applicationController, configManager);
+            configWindowViewModel.OpenConfigWindow += (() => OpenConfigWindow());
+            configWindowViewModel.CloseConfigWindow += (() => CloseConfigWindow());
+
+        }
+
+        private ConfigWindow configWindow;
+        private void OpenConfigWindow()
+        {
+            configWindow = GetView(ViewFor.ConfigWindow) as ConfigWindow;
+            configWindow.Show();
+        }
+
+        private void CloseConfigWindow()
+        {
+            configWindow.Close();
+        }
 
         private MainWindow mainWindow;
         public override object GetView(ViewFor view)
@@ -19,23 +49,30 @@ namespace Pomodole
                     {
                         if (mainWindow == null)
                             mainWindow = new MainWindow();
+                        var mainWindowService = new MainWindowService(mainWindow);
+                        mainWindowViewModel.RegisterMainWindowService(mainWindowService);
+                        mainWindow.DataContext = mainWindowViewModel;
                         return mainWindow;
                     }
                 case ViewFor.ConfigWindow:
-                    return new ConfigWindow();
+                    {
+                        var configWindow = new ConfigWindow();
+                        configWindow.DataContext = configWindowViewModel;
+                        return configWindow;
+                    }
                 default:
                     return null;
             }
         }
 
-        public override IMainWindowViewModel GetMainWindowViewModel(IApplicationController applicationController)
+        public override IMainWindowViewModel GetMainWindowViewModel()
         {
-            return new MainWindowViewModel(applicationController, pomodoro);
+            return mainWindowViewModel;
         }
 
-        public override IConfigWindowViewModel GetConfigWindowViewModel(IApplicationController applicationController)
+        public override IConfigWindowViewModel GetConfigWindowViewModel()
         {
-            return new ConfigWindowViewModel(applicationController, configManager);
+            return configWindowViewModel;
         }
     }
 }

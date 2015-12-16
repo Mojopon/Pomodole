@@ -15,31 +15,25 @@ namespace PomodoleTest
         [Test]
         public void ShouldReturnCorrectServiceProvider()
         {
-            var production = ServiceProvider.GetInstance(ServiceProviderType.Production);
+            var applicationController = Substitute.For<IApplicationController>();
+            var production = ServiceProvider.Create(applicationController, ServiceProviderType.Production);
             Assert.AreEqual(typeof(ProductionServiceProvider), production.GetType());
-            var test = ServiceProvider.GetInstance(ServiceProviderType.Test);
+            var test = ServiceProvider.Create(applicationController, ServiceProviderType.Test);
             Assert.AreEqual(typeof(TestServiceProvider), test.GetType());
-        }
-
-        [Test]
-        public void ShouldReturnProductionServiceProviderByDefault()
-        {
-            var provider = ServiceProvider.GetInstance();
-            Assert.AreEqual(typeof(ProductionServiceProvider), provider.GetType());
         }
 
         [Test]
         public void TestServiceProviderShouldReturnServiceToBeSet()
         {
-            TestServiceProvider testServiceProvider = (TestServiceProvider)ServiceProvider.GetInstance(ServiceProviderType.Test);
+            var applicationController = Substitute.For<IApplicationController>();
+            TestServiceProvider testServiceProvider = (TestServiceProvider)ServiceProvider.Create(applicationController, ServiceProviderType.Test);
             IMainWindowViewModel mainWindowViewModelMock = Substitute.For<IMainWindowViewModel>();
             testServiceProvider.SetMainWindowViewModel(mainWindowViewModelMock);
-            var applicationController = Substitute.For<IApplicationController>();
-            Assert.AreEqual(mainWindowViewModelMock, testServiceProvider.GetMainWindowViewModel(applicationController));
+            Assert.AreEqual(mainWindowViewModelMock, testServiceProvider.GetMainWindowViewModel());
 
             IConfigWindowViewModel configWindowViewModelMock = Substitute.For<IConfigWindowViewModel>();
             testServiceProvider.SetConfigWindowViewModel(configWindowViewModelMock);
-            Assert.AreEqual(configWindowViewModelMock, testServiceProvider.GetConfigWindowViewModel(applicationController));
+            Assert.AreEqual(configWindowViewModelMock, testServiceProvider.GetConfigWindowViewModel());
         }
     }
 }

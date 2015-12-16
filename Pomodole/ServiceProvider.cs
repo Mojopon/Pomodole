@@ -19,25 +19,21 @@ namespace Pomodole
             pomodoro.Configure(configManager);
         }
 
-        public static IPomodoleServiceProvider GetInstance()
-        {
-            return GetInstance(ServiceProviderType.Production);
-        }
-
-        public static IPomodoleServiceProvider GetInstance(ServiceProviderType providerType)
+        public static IPomodoleServiceProvider Create(IApplicationController applicationController, ServiceProviderType providerType)
         {
             switch (providerType)
             {
                 case ServiceProviderType.Production:
                 default:
-                    return new ProductionServiceProvider();
+                    var productionServiceProvider = new ProductionServiceProvider(applicationController);
+                    return productionServiceProvider;
                 case ServiceProviderType.Test:
-                    return new TestServiceProvider();
+                    return new TestServiceProvider(applicationController);
             }
         }
 
         public abstract object GetView(ViewFor view);
-        public abstract IMainWindowViewModel GetMainWindowViewModel(IApplicationController applicationController);
-        public abstract IConfigWindowViewModel GetConfigWindowViewModel(IApplicationController applicationController);
+        public abstract IMainWindowViewModel GetMainWindowViewModel();
+        public abstract IConfigWindowViewModel GetConfigWindowViewModel();
     }
 }

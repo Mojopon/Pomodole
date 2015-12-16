@@ -25,8 +25,9 @@ namespace PomodoleTest
 
         void Initialize()
         {
+            var newController = ApplicationController.Create();
 
-            serviceProvider = (TestServiceProvider)ServiceProvider.GetInstance(ServiceProviderType.Test);
+            serviceProvider = (TestServiceProvider)ServiceProvider.Create(controller, ServiceProviderType.Test);
             mainWindowViewModelMock = Substitute.For<IMainWindowViewModel>();
             mainWindowViewModelMock.Subject
                                    .Returns(new Action<IApplicationMessage>((IApplicationMessage message) => message.Execute(mainWindowViewModelMock)));
@@ -36,17 +37,8 @@ namespace PomodoleTest
             serviceProvider.SetMainWindowViewModel(mainWindowViewModelMock);
             serviceProvider.SetConfigWindowViewModel(configWindowViewModelMock);
 
-            controller = ApplicationController.GetInstance(serviceProvider);
-        }
-
-        [Test]
-        public void ShouldReturnViewModel()
-        {
-            var mainWindowViewModel = controller.GetViewModel(ViewModelFor.MainWindow);
-            Assert.AreEqual(mainWindowViewModelMock, mainWindowViewModel);
-            var configWindowViewModel = controller.GetViewModel(ViewModelFor.ConfigWindow);
-            Assert.AreEqual(configWindowViewModelMock, configWindowViewModel);
-
+            newController.Initialize(serviceProvider);
+            controller = newController;
         }
 
         [Test]

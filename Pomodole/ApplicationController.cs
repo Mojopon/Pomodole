@@ -10,30 +10,45 @@ namespace Pomodole
     public class ApplicationController : IApplicationController
     {
         private static ApplicationController applicationController;
-        public static IApplicationController GetInstance()
-        {
-            return GetInstance(ServiceProvider.GetInstance());
-        }
-        public static IApplicationController GetInstance(IPomodoleServiceProvider serviceProvider)
+        public static ApplicationController Create()
         {
             if(applicationController == null)
             {
-                applicationController = new ApplicationController(serviceProvider);
-                applicationController.Initialize();
+                applicationController = new ApplicationController();
+                return applicationController;
             }
+            Console.WriteLine("Application controller has been already created!");
+            return null;
+        }
+
+        public static IApplicationController GetInstance()
+        {
             return applicationController;
         }
+
         public static void ResetInstance()
         {
             applicationController = null;
         }
 
-        private IPomodoleServiceProvider serviceProvider;
+        private ApplicationController()
+        {
+            applicationMessageEvent = new ApplicationMessageEvent();
+        }
 
-        private ApplicationController(IPomodoleServiceProvider serviceProvider)
+        private IPomodoleServiceProvider serviceProvider;
+        // it needs to be initialized first 
+        public void Initialize(IPomodoleServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
-            applicationMessageEvent = new ApplicationMessageEvent();
+            SetupViewModelForMainWindow();
+            SetupViewModelForConfigWindow();
+        }
+
+        public void Start()
+        {
+            var mainWindow = (MainWindow)serviceProvider.GetView(ViewFor.MainWindow);
+            mainWindow.Show();
         }
 
         #region IApplicationMessageEvent Method Group
@@ -49,79 +64,18 @@ namespace Pomodole
         }
         #endregion
 
-        private void Initialize()
-        {
-            SetupViewModelForMainWindow();
-            SetupViewModelForConfigWindow();
-        }
-
         private IMainWindowViewModel mainWindowViewModel;
         private void SetupViewModelForMainWindow()
         {
-            mainWindowViewModel = serviceProvider.GetMainWindowViewModel(this);
+            mainWindowViewModel = serviceProvider.GetMainWindowViewModel();
             Register(mainWindowViewModel);
         }
 
         private IConfigWindowViewModel configWindowViewModel;
         private void SetupViewModelForConfigWindow()
         {
-            configWindowViewModel = serviceProvider.GetConfigWindowViewModel(this);
-            configWindowViewModel.OpenConfigWindow += (() => OpenConfigWindow());
-            configWindowViewModel.CloseConfigWindow += (() => CloseConfigWindow());
+            configWindowViewModel = serviceProvider.GetConfigWindowViewModel();
             Register(configWindowViewModel);
-        }
-
-        private ConfigWindow configWindow;
-        private void OpenConfigWindow()
-        {
-            configWindow = GetView(ViewFor.ConfigWindow) as ConfigWindow;
-            configWindow.Show();
-        }
-
-        private void CloseConfigWindow()
-        {
-            configWindow.Close();
-        }
-
-        private MainWindow mainWindow;
-
-        public object GetView(ViewFor view)
-        {
-            switch (view)
-            {
-                case ViewFor.MainWindow:
-                    {
-                        if (mainWindow == null)
-                        {
-                            mainWindow = (MainWindow)serviceProvider.GetView(ViewFor.MainWindow);
-                            var mainWindowService = new MainWindowService(mainWindow);
-                            mainWindowViewModel.RegisterMainWindowService(mainWindowService);
-                            mainWindow.DataContext = mainWindowViewModel;
-                        }
-                        return mainWindow;
-                    }
-                case ViewFor.ConfigWindow:
-                    {
-                        var configWindow = (ConfigWindow)serviceProvider.GetView(ViewFor.ConfigWindow);
-                        configWindow.DataContext = configWindowViewModel;
-                        return configWindow;
-                    }
-                default:
-                    return null;
-            }
-        }
-
-        public object GetViewModel(ViewModelFor viewModel)
-        {
-            switch(viewModel)
-            {
-                case ViewModelFor.MainWindow:
-                    return mainWindowViewModel;
-                case ViewModelFor.ConfigWindow:
-                    return configWindowViewModel;
-                default:
-                    return null;
-            }
         }
     }
 }

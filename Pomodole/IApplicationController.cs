@@ -8,7 +8,5 @@ namespace Pomodole
 {
     public interface IApplicationController : IApplicationMessageEvent
     {
-        object GetView(ViewFor view);
-        object GetViewModel(ViewModelFor viewModel);
     }
 }

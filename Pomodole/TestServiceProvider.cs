@@ -11,7 +11,7 @@ namespace Pomodole
         private IMainWindowViewModel mainWindowViewModel;
         private IConfigWindowViewModel configWindowViewModel;
 
-        public TestServiceProvider() : base() { }
+        public TestServiceProvider(IApplicationController applicationController) : base() { }
 
         public override object GetView(ViewFor view)
         {
@@ -28,12 +28,12 @@ namespace Pomodole
             this.configWindowViewModel = configWindowViewModel;
         }
 
-        public override IMainWindowViewModel GetMainWindowViewModel(IApplicationController applicationController)
+        public override IMainWindowViewModel GetMainWindowViewModel()
         {
             return mainWindowViewModel;
         }
 
-        public override IConfigWindowViewModel GetConfigWindowViewModel(IApplicationController applicationController)
+        public override IConfigWindowViewModel GetConfigWindowViewModel()
         {
             return configWindowViewModel;
         }
