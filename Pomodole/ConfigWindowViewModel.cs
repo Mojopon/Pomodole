@@ -66,10 +66,12 @@ namespace Pomodole
         {
             private IApplicationMessageEvent applicationMessageEvent;
             private IConfigManager configManager;
+            private IConfigWindowViewModel viewModel;
             public OkButtonCommandImpl(IApplicationMessageEvent applicationMessageEvent, IConfigManager configManager, IConfigWindowViewModel viewModel)
             {
                 this.applicationMessageEvent = applicationMessageEvent;
                 this.configManager = configManager;
+                this.viewModel = viewModel;
             }
 
             public event EventHandler CanExecuteChanged;
@@ -81,6 +83,8 @@ namespace Pomodole
             public void Execute(object parameter)
             {
                 applicationMessageEvent.Trigger(new ChangeConfigurationMessage(configManager));
+                var command = ToggleConfigWindowApplicationMessage.CommandType.Close;
+                applicationMessageEvent.Trigger(new ToggleConfigWindowApplicationMessage(command));
             }
         }
 
@@ -96,7 +100,12 @@ namespace Pomodole
                 {
                     case "TaskTime":
                         if (TaskTime <= 0)
+                        {
+                            
+                            Console.WriteLine("error occured");
                             result = "Task time cannot be 0 or minus";
+                            
+                        }
                         break;
                 }
 

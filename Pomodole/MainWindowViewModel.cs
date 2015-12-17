@@ -262,7 +262,8 @@ namespace Pomodole
 
             public void Execute(object parameter)
             {
-                applicationMessageEvent.Trigger(new OpenConfigWindowApplicationMessage());
+                var command = ToggleConfigWindowApplicationMessage.CommandType.Show;
+                applicationMessageEvent.Trigger(new ToggleConfigWindowApplicationMessage(command));
             }
         }
     }

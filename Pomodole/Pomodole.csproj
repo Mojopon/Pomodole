@@ -83,7 +83,7 @@
     <Compile Include="IWindow.cs" />
     <Compile Include="MainWindowService.cs" />
     <Compile Include="MessageResource.cs" />
-    <Compile Include="OpenConfigWindowApplicationMessage.cs" />
+    <Compile Include="ToggleConfigWindowApplicationMessage.cs" />
     <Compile Include="PomodoleHelper.cs" />
     <Compile Include="ProductionServiceProvider.cs" />
     <Compile Include="ServiceProvider.cs" />

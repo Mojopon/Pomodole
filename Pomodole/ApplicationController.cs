@@ -69,6 +69,7 @@ namespace Pomodole
                     break;
                 case ViewFor.ConfigWindow:
                     {
+                        if (configWindow != null) return;
                         configWindow = (IConfigWindow)serviceProvider.GetView(ViewFor.ConfigWindow);
                         Register(configWindow);
                         configWindow.Show();

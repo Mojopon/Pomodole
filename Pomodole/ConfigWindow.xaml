@@ -4,13 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pomodole"
-        mc:Ignorable="d"
         Title="Config" Height="250" Width="350" Name="ConfigMainWindow">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:ConfigWindow.SubmitCommand}" Executed="Submit_Executed" CanExecute="CanExecute_Submit" />
+    </Window.CommandBindings>
     <StackPanel>
         <Grid x:Name="ConfigWindowMainGrid" HorizontalAlignment="Center" VerticalAlignment="Top" Width="{Binding Width, ElementName=ConfigMainWindow}" Height="175" Margin="-4,0">
-            
-
+        
         </Grid>
-        <Button x:Name="button" Content="OK" HorizontalAlignment="Center" Height="21" Margin="0,0,0,0" VerticalAlignment="Center" Width="74" Command="New"/>
+        <Button x:Name="button" Content="OK" HorizontalAlignment="Center" Height="21" Margin="0,0,0,0" VerticalAlignment="Center" Width="74" Command="{x:Static local:ConfigWindow.SubmitCommand}"/>
     </StackPanel>
 </Window>

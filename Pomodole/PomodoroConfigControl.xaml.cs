@@ -20,9 +20,21 @@ namespace Pomodole
     /// </summary>
     public partial class PomodoroConfigControl : UserControl
     {
-        public PomodoroConfigControl()
+        private ConfigWindow parent;
+        public PomodoroConfigControl(ConfigWindow parent)
         {
             InitializeComponent();
+            this.parent = parent;
+        }
+
+        private void Validation_Error(object sender, ValidationErrorEventArgs e)
+        {
+            if(e.Action == ValidationErrorEventAction.Added)
+                parent.NumberOfErrors++;
+            else
+                parent.NumberOfErrors--;
+
+            Console.WriteLine(parent.NumberOfErrors);
         }
     }
 }

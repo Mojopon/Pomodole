@@ -11,28 +11,40 @@
         <Label x:Name="label1" Content="休憩" HorizontalAlignment="Left" Margin="48,57,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label2" Content="セット数" HorizontalAlignment="Left" Margin="48,90,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label3" Content="小休止" HorizontalAlignment="Left" Margin="48,121,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TaskTimeTextBox" HorizontalAlignment="Left" Height="23" Margin="226,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40">
+        <TextBox x:Name="TaskTimeTextBox" HorizontalAlignment="Left" Height="23" Margin="226,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Validation.Error="Validation_Error">
             <TextBox.Text>
-                <Binding Path="TaskTime" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                <Binding Path="TaskTime" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                     <Binding.ValidationRules>
                         <ExceptionValidationRule />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox x:Name="BreakTimeTextBox" HorizontalAlignment="Left" Height="23" Margin="226,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40">
+        <TextBox x:Name="BreakTimeTextBox" HorizontalAlignment="Left" Height="23" Margin="226,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Validation.Error="Validation_Error">
             <TextBox.Text>
-                <Binding Path="BreakTime"></Binding>
+                <Binding Path="BreakTime" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox x:Name="RepeatTimeTextBox" HorizontalAlignment="Left" Height="23" Margin="226,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40">
+        <TextBox x:Name="RepeatTimeTextBox" HorizontalAlignment="Left" Height="23" Margin="226,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Validation.Error="Validation_Error">
             <TextBox.Text>
-                <Binding Path="RepeatTime"></Binding>
+                <Binding Path="RepeatTime" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox x:Name="LongBreakTimeTextBox" HorizontalAlignment="Left" Height="23" Margin="226,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40">
+        <TextBox x:Name="LongBreakTimeTextBox" HorizontalAlignment="Left" Height="23" Margin="226,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Validation.Error="Validation_Error">
             <TextBox.Text>
-                <Binding Path="LongBreakTime"></Binding>
+                <Binding Path="LongBreakTime" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
             </TextBox.Text>
         </TextBox>
     </Grid>
