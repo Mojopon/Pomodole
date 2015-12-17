@@ -12,9 +12,6 @@ namespace Pomodole
 {
     public class ConfigWindowViewModel : IConfigWindowViewModel, INotifyPropertyChanged, IDataErrorInfo
     {
-        public event Action OpenConfigWindow;
-        public event Action CloseConfigWindow;
-
         #region IApplicationMessageUser method group
         public IApplicationMessageEvent ApplicationMessageEvent { get; private set; }
         public Action<IApplicationMessage> Subject { get; private set; }
@@ -51,16 +48,6 @@ namespace Pomodole
             OkButtonCommand = new OkButtonCommandImpl(applicationMessageEvent, configManager, this);
 
             Subject += ((IApplicationMessage m) => m.Execute(this));
-        }
-
-        public void Open()
-        {
-            if (OpenConfigWindow != null) OpenConfigWindow();
-        }
-
-        public void Close()
-        {
-            if (CloseConfigWindow != null) CloseConfigWindow();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
