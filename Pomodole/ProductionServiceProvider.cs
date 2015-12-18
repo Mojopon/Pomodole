@@ -47,6 +47,11 @@ namespace Pomodole
             }
         }
 
+        public override IConfigManager GetConfigManager()
+        {
+            return configManager;
+        }
+
         public override IMainWindowViewModel GetMainWindowViewModel()
         {
             return mainWindowViewModel;

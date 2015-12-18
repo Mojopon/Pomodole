@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
-    public interface IConfigManager : IPomodoroConfig
+    public interface IConfigManager : IPomodoroConfig, IApplicationMessageSubscriber
     {
         void ExecuteConfigurationFor(IPomodoroConfigUser target);
     }

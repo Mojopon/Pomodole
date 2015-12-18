@@ -24,6 +24,11 @@ namespace Pomodole
             return views[view];
         }
 
+        public void SetConfigManager(IConfigManager configManager)
+        {
+            this.configManager = configManager;
+        }
+
         public void SetMainWindowViewModel(IMainWindowViewModel mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
@@ -32,6 +37,11 @@ namespace Pomodole
         public void SetConfigWindowViewModel(IConfigWindowViewModel configWindowViewModel)
         {
             this.configWindowViewModel = configWindowViewModel;
+        }
+
+        public override IConfigManager GetConfigManager()
+        {
+            return configManager;
         }
 
         public override IMainWindowViewModel GetMainWindowViewModel()

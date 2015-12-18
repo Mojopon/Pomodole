@@ -14,8 +14,19 @@ namespace Pomodole
         private static IConfigurationFileManager instance;
         public static IConfigurationFileManager GetInstance()
         {
-            instance = new ConfigurationFileManager();
+            if (instance == null)
+            {
+                if (App.ServiceType == ServiceType.Production)
+                {
+                    instance = new ConfigurationFileManager();
+                }
+            }
             return instance;
+        }
+
+        public static void SetInstance(IConfigurationFileManager configurationFileManager)
+        {
+            instance = configurationFileManager;
         }
 
 

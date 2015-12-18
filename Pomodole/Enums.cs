@@ -43,7 +43,7 @@ namespace Pomodole
         StartLongBreakMessage,
     }
 
-    public enum ServiceProviderType
+    public enum ServiceType
     {
         Production,
         Test,

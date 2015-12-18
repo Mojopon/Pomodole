@@ -83,6 +83,7 @@ namespace Pomodole
             public void Execute(object parameter)
             {
                 applicationMessageEvent.Trigger(new ChangeConfigurationMessage(configManager));
+                
                 var command = ToggleConfigWindowApplicationMessage.CommandType.Close;
                 applicationMessageEvent.Trigger(new ToggleConfigWindowApplicationMessage(command));
             }

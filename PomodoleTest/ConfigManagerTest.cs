@@ -16,6 +16,7 @@ namespace PomodoleTest
         [SetUp]
         public void SetupConfigManager()
         {
+            App.ServiceType = ServiceType.Test;
             configManager = new ConfigManager();
         }
 
@@ -37,6 +38,32 @@ namespace PomodoleTest
 
             configManager.SetupPomodoroConfig(25, 5, 3, 15);
             configManager.ExecuteConfigurationFor(pomodoroMock);
+
+            Assert.AreEqual(25, taskTime);
+            Assert.AreEqual(5, breakTime);
+            Assert.AreEqual(3, repeatTime);
+            Assert.AreEqual(15, longBreakTime);
+        }
+
+        [Test]
+        public void ShouldSaveConfigurations()
+        {
+            configManager.SetupPomodoroConfig(25, 5, 3, 15);
+
+            var configurationFileManager = Substitute.For<IConfigurationFileManager>();
+            int taskTime = -1;
+            int breakTime = -1;
+            int repeatTime = -1;
+            int longBreakTime = -1;
+            configurationFileManager.Save(Arg.Do((ConfigManager.Configurations c) => {
+                taskTime = c.pomodoroConfig.TaskTime;
+                breakTime = c.pomodoroConfig.BreakTime;
+                repeatTime = c.pomodoroConfig.RepeatTime;
+                longBreakTime = c.pomodoroConfig.LongBreakTime;
+            }), App.ConfigurationFileName);
+            ConfigurationFileManager.SetInstance(configurationFileManager);
+            configManager.SaveConfigurationToFile();
+            configurationFileManager.Received().Save(Arg.Any<ConfigManager.Configurations>(), App.ConfigurationFileName);
 
             Assert.AreEqual(25, taskTime);
             Assert.AreEqual(5, breakTime);

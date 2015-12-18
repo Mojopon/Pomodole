@@ -9,6 +9,7 @@ namespace Pomodole
     public interface IPomodoleServiceProvider
     {
         object GetView(ViewFor viewFor);
+        IConfigManager GetConfigManager();
         IMainWindowViewModel GetMainWindowViewModel();
         IConfigWindowViewModel GetConfigWindowViewModel();
     }

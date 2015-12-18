@@ -28,11 +28,13 @@ namespace Pomodole
             set { pomodoroConfig.LongBreakTime = value; }
         }
 
+        public Action<IApplicationMessage> Subject { get; private set; }
 
         private IPomodoroConfig pomodoroConfig;
         public ConfigManager()
         {
             pomodoroConfig = new PomodoroConfig(25, 5, 3, 15);
+            Subject += ((IApplicationMessage m) => m.Execute(this));
         }
 
         public void ExecuteConfigurationFor(IPomodoroConfigUser target)
@@ -45,7 +47,7 @@ namespace Pomodole
             pomodoroConfig = new PomodoroConfig(taskTime, breakTime, repeatTime, longBreakTime);
         }
 
-        public void Save()
+        public void SaveConfigurationToFile()
         {
             var configurationFileManager = ConfigurationFileManager.GetInstance();
             var configurations = new Configurations();
@@ -54,7 +56,7 @@ namespace Pomodole
             configurationFileManager.Save(configurations, App.ConfigurationFileName);
         }
 
-        public void Load()
+        public void LoadConfigurationFromFile()
         {
             var configurationFileManager = ConfigurationFileManager.GetInstance();
             var configurations = configurationFileManager.Load<Configurations>(App.ConfigurationFileName);

@@ -20,7 +20,7 @@ namespace Pomodole
             Console.WriteLine("Application controller has been already created!");
             return null;
         }
-
+        
         public static IApplicationController GetInstance()
         {
             return applicationController;

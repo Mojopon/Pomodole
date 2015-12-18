@@ -16,9 +16,9 @@ namespace PomodoleTest
         public void ShouldReturnCorrectServiceProvider()
         {
             var applicationController = Substitute.For<IApplicationController>();
-            var production = ServiceProvider.Create(applicationController, ServiceProviderType.Production);
+            var production = ServiceProvider.Create(applicationController, ServiceType.Production);
             Assert.AreEqual(typeof(ProductionServiceProvider), production.GetType());
-            var test = ServiceProvider.Create(applicationController, ServiceProviderType.Test);
+            var test = ServiceProvider.Create(applicationController, ServiceType.Test);
             Assert.AreEqual(typeof(TestServiceProvider), test.GetType());
         }
 
@@ -26,7 +26,7 @@ namespace PomodoleTest
         public void TestServiceProviderShouldReturnServiceToBeSet()
         {
             var applicationController = Substitute.For<IApplicationController>();
-            TestServiceProvider testServiceProvider = (TestServiceProvider)ServiceProvider.Create(applicationController, ServiceProviderType.Test);
+            TestServiceProvider testServiceProvider = (TestServiceProvider)ServiceProvider.Create(applicationController, ServiceType.Test);
             IMainWindowViewModel mainWindowViewModelMock = Substitute.For<IMainWindowViewModel>();
             testServiceProvider.SetMainWindowViewModel(mainWindowViewModelMock);
             Assert.AreEqual(mainWindowViewModelMock, testServiceProvider.GetMainWindowViewModel());

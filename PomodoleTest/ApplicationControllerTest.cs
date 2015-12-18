@@ -27,7 +27,7 @@ namespace PomodoleTest
         {
             var newController = ApplicationController.Create();
 
-            serviceProvider = (TestServiceProvider)ServiceProvider.Create(controller, ServiceProviderType.Test);
+            serviceProvider = (TestServiceProvider)ServiceProvider.Create(controller, ServiceType.Test);
             mainWindowViewModelMock = Substitute.For<IMainWindowViewModel>();
             mainWindowViewModelMock.Subject
                                    .Returns(new Action<IApplicationMessage>((IApplicationMessage message) => message.Execute(mainWindowViewModelMock)));
