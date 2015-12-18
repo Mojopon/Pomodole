@@ -13,6 +13,8 @@ namespace Pomodole
         public int RepeatTime { get; set; }
         public int LongBreakTime { get; set; }
 
+        public PomodoroConfig() { }
+
         public PomodoroConfig(int task, int shortBreak, int repeatTime, int longBreak)
         {
             TaskTime = task;

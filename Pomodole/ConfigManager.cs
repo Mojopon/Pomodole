@@ -32,7 +32,7 @@ namespace Pomodole
         private IPomodoroConfig pomodoroConfig;
         public ConfigManager()
         {
-            pomodoroConfig = new PomodoroConfig(20, 3, 2, 10);
+            pomodoroConfig = new PomodoroConfig(25, 5, 3, 15);
         }
 
         public void ExecuteConfigurationFor(IPomodoroConfigUser target)
@@ -43,6 +43,27 @@ namespace Pomodole
         public void SetupPomodoroConfig(int taskTime, int breakTime, int repeatTime, int longBreakTime)
         {
             pomodoroConfig = new PomodoroConfig(taskTime, breakTime, repeatTime, longBreakTime);
+        }
+
+        public void Save()
+        {
+            var configurationFileManager = ConfigurationFileManager.GetInstance();
+            var configurations = new Configurations();
+            configurations.pomodoroConfig = (PomodoroConfig)pomodoroConfig;
+
+            configurationFileManager.Save(configurations, App.ConfigurationFileName);
+        }
+
+        public void Load()
+        {
+            var configurationFileManager = ConfigurationFileManager.GetInstance();
+            var configurations = configurationFileManager.Load<Configurations>(App.ConfigurationFileName);
+            pomodoroConfig = configurations.pomodoroConfig;
+        }
+
+        public class Configurations
+        {
+            public PomodoroConfig pomodoroConfig;
         }
     }
 }

@@ -13,7 +13,6 @@ namespace Pomodole
         public ServiceProvider()
         {
             var newConfigManager = new ConfigManager();
-            newConfigManager.SetupPomodoroConfig(25, 5, 3, 15);
             configManager = newConfigManager;
             pomodoro = new Pomodoro();
             pomodoro.Configure(configManager);

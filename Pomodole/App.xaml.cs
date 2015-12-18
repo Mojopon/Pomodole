@@ -13,6 +13,8 @@ namespace Pomodole
     /// </summary>
     public partial class App : Application
     {
+        public static string ConfigurationFileName { get { return "configurations.xml"; } }
+
         private IPomodoleServiceProvider serviceProvider;
         private ApplicationController applicationController;
         private void Application_Startup(object sender, StartupEventArgs e)
