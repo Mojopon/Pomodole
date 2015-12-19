@@ -44,8 +44,11 @@ namespace Pomodole
         public void Initialize(IPomodoleServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
+            Register(serviceProvider.GetConfigManager());
             SetupViewModelForMainWindow();
             SetupViewModelForConfigWindow();
+
+            Trigger(new ConfigurationDataManagingMessage(this, ConfigurationDataManagingMessage.ActionType.Load));
         }
 
         public void Start()

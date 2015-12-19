@@ -9,7 +9,7 @@ namespace Pomodole
 {
     public interface IApplicationMessagePublisher
     {
-        IApplicationMessageEvent ApplicationMessageEvent { get; }
+        IApplicationMessageEvent Messenger { get; }
     }
 
     public interface IApplicationMessageSubscriber

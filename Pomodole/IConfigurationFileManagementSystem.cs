@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
-    public interface IConfigurationFileManager
+    public interface IConfigurationFileManagementSystem
     {
         void Save<T>(T obj, string fileName);
         T Load<T>(string fileName);

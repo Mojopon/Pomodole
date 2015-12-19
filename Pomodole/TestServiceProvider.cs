@@ -11,7 +11,7 @@ namespace Pomodole
         private IMainWindowViewModel mainWindowViewModel;
         private IConfigWindowViewModel configWindowViewModel;
 
-        public TestServiceProvider(IApplicationController applicationController) : base() { }
+        public TestServiceProvider(IApplicationController applicationController) { }
 
         private Dictionary<ViewFor, object> views = new Dictionary<ViewFor, object>();
         public void SetView(ViewFor viewType, object view)
@@ -27,6 +27,11 @@ namespace Pomodole
         public void SetConfigManager(IConfigManager configManager)
         {
             this.configManager = configManager;
+        }
+
+        public void SetPomodoro(IPomodoro pomodoro)
+        {
+            this.pomodoro = pomodoro;
         }
 
         public void SetMainWindowViewModel(IMainWindowViewModel mainWindowViewModel)

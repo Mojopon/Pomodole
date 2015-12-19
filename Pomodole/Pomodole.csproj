@@ -63,14 +63,15 @@
     <Compile Include="ActivateMainWindowMessage.cs" />
     <Compile Include="ApplicationController.cs" />
     <Compile Include="ApplicationMessageEvent.cs" />
-    <Compile Include="ConfigurationFileManager.cs" />
+    <Compile Include="ConfigurationFileManagementSystem.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="ChangeConfigurationMessage.cs" />
+    <Compile Include="ConfigurationDataManagingMessage.cs" />
     <Compile Include="ConfigWindowViewModel.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="IApplicationController.cs" />
     <Compile Include="IApplicationMessage.cs" />
-    <Compile Include="IConfigurationFileManager.cs" />
+    <Compile Include="IConfigurationFileManagementSystem.cs" />
     <Compile Include="IConfigManager.cs" />
     <Compile Include="IConfigurable.cs" />
     <Compile Include="IConfigWindow.cs" />

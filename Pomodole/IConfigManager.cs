@@ -9,5 +9,7 @@ namespace Pomodole
     public interface IConfigManager : IPomodoroConfig, IApplicationMessageSubscriber
     {
         void ExecuteConfigurationFor(IPomodoroConfigUser target);
+        void SaveConfigurationToFile();
+        void LoadConfigurationFromFile();
     }
 }

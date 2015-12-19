@@ -89,16 +89,16 @@ namespace PomodoleTest
 
         public class TestApplicationMessagePublisher : IApplicationMessagePublisher
         {
-            public IApplicationMessageEvent ApplicationMessageEvent { get; private set; }
+            public IApplicationMessageEvent Messenger { get; private set; }
 
             public void Register(IApplicationMessageEvent ev)
             {
-                ApplicationMessageEvent = ev;
+                Messenger = ev;
             }
 
             public void Trigger(IApplicationMessage applicationMessage)
             {
-                ApplicationMessageEvent.Trigger(applicationMessage);
+                Messenger.Trigger(applicationMessage);
             }
         }
 

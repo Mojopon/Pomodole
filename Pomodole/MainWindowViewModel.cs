@@ -23,14 +23,14 @@ namespace Pomodole
         private ITickTimer tickTimer;
 
         #region IApplicationMessageUser method group
-        public IApplicationMessageEvent ApplicationMessageEvent { get; private set; }
+        public IApplicationMessageEvent Messenger { get; private set; }
         public Action<IApplicationMessage> Subject { get; private set; }
         #endregion
 
         public MainWindowViewModel(IApplicationMessageEvent applicationMessageEvent, IPomodoro pomodoro)
         {
             // setup for ApplicationMessageEvent to communicate with other viewmodels and views
-            ApplicationMessageEvent = applicationMessageEvent;
+            Messenger = applicationMessageEvent;
             Subject += ((IApplicationMessage m) => m.Execute(this));
 
             this.pomodoro = pomodoro;
@@ -55,7 +55,7 @@ namespace Pomodole
 
         private void ActivateWindow()
         {
-            ApplicationMessageEvent.Trigger(new ActivateMainWindowMessage());
+            Messenger.Trigger(new ActivateMainWindowMessage());
         }
 
         public void Start()

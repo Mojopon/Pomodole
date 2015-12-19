@@ -8,25 +8,30 @@ using System.Threading.Tasks;
 
 namespace Pomodole
 {
-    public class ConfigurationFileManager : IConfigurationFileManager
+    public class ConfigurationFileManagementSystem : IConfigurationFileManagementSystem
     {
-        private ConfigurationFileManager() { }
-        private static IConfigurationFileManager instance;
-        public static IConfigurationFileManager GetInstance()
+        private ConfigurationFileManagementSystem() { }
+        private static IConfigurationFileManagementSystem instance;
+        public static IConfigurationFileManagementSystem GetInstance()
         {
             if (instance == null)
             {
                 if (App.ServiceType == ServiceType.Production)
                 {
-                    instance = new ConfigurationFileManager();
+                    instance = new ConfigurationFileManagementSystem();
                 }
             }
             return instance;
         }
 
-        public static void SetInstance(IConfigurationFileManager configurationFileManager)
+        public static void SetInstance(IConfigurationFileManagementSystem configurationFileManager)
         {
             instance = configurationFileManager;
+        }
+
+        public static void ResetInstance()
+        {
+            instance = null;
         }
 
 

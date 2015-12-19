@@ -13,7 +13,7 @@ namespace Pomodole
     public class ConfigWindowViewModel : IConfigWindowViewModel, INotifyPropertyChanged, IDataErrorInfo
     {
         #region IApplicationMessageUser method group
-        public IApplicationMessageEvent ApplicationMessageEvent { get; private set; }
+        public IApplicationMessageEvent Messenger { get; private set; }
         public Action<IApplicationMessage> Subject { get; private set; }
         #endregion
 
@@ -38,11 +38,10 @@ namespace Pomodole
             set { configManager.LongBreakTime = value; }
         }
 
-        private IApplicationMessageEvent applicationMessageEvent;
         private IConfigManager configManager;
         public ConfigWindowViewModel(IApplicationMessageEvent applicationMessageEvent, IConfigManager configManager)
         {
-            this.applicationMessageEvent = applicationMessageEvent;
+            Messenger = applicationMessageEvent;
             this.configManager = configManager;
 
             OkButtonCommand = new OkButtonCommandImpl(applicationMessageEvent, configManager, this);
@@ -64,12 +63,12 @@ namespace Pomodole
 
         class OkButtonCommandImpl : ICommand
         {
-            private IApplicationMessageEvent applicationMessageEvent;
+            private IApplicationMessageEvent messenger;
             private IConfigManager configManager;
             private IConfigWindowViewModel viewModel;
-            public OkButtonCommandImpl(IApplicationMessageEvent applicationMessageEvent, IConfigManager configManager, IConfigWindowViewModel viewModel)
+            public OkButtonCommandImpl(IApplicationMessageEvent messenger, IConfigManager configManager, IConfigWindowViewModel viewModel)
             {
-                this.applicationMessageEvent = applicationMessageEvent;
+                this.messenger = messenger;
                 this.configManager = configManager;
                 this.viewModel = viewModel;
             }
@@ -82,10 +81,11 @@ namespace Pomodole
 
             public void Execute(object parameter)
             {
-                applicationMessageEvent.Trigger(new ChangeConfigurationMessage(configManager));
-                
+                messenger.Trigger(new ChangeConfigurationMessage(configManager));
+                messenger.Trigger(new ConfigurationDataManagingMessage(messenger, ConfigurationDataManagingMessage.ActionType.Save));
+
                 var command = ToggleConfigWindowApplicationMessage.CommandType.Close;
-                applicationMessageEvent.Trigger(new ToggleConfigWindowApplicationMessage(command));
+                messenger.Trigger(new ToggleConfigWindowApplicationMessage(command));
             }
         }
 

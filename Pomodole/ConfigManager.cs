@@ -49,23 +49,27 @@ namespace Pomodole
 
         public void SaveConfigurationToFile()
         {
-            var configurationFileManager = ConfigurationFileManager.GetInstance();
+            var configurationFileManager = ConfigurationFileManagementSystem.GetInstance();
+
             var configurations = new Configurations();
-            configurations.pomodoroConfig = (PomodoroConfig)pomodoroConfig;
+            configurations.PomodoroConfig = (PomodoroConfig)pomodoroConfig;
 
             configurationFileManager.Save(configurations, App.ConfigurationFileName);
         }
 
         public void LoadConfigurationFromFile()
         {
-            var configurationFileManager = ConfigurationFileManager.GetInstance();
+            var configurationFileManager = ConfigurationFileManagementSystem.GetInstance();
             var configurations = configurationFileManager.Load<Configurations>(App.ConfigurationFileName);
-            pomodoroConfig = configurations.pomodoroConfig;
+
+            if (configurations == null) return;
+
+            pomodoroConfig = configurations.PomodoroConfig;
         }
 
         public class Configurations
         {
-            public PomodoroConfig pomodoroConfig;
+            public PomodoroConfig PomodoroConfig { get; set; }
         }
     }
 }
