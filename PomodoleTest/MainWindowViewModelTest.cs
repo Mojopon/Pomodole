@@ -35,6 +35,20 @@ namespace PomodoleTest
         }
 
         [Test]
+        public void ShouldStopTickingOnConfiguration()
+        {
+            var configManager = new ConfigManager();
+            configManager.SetupPomodoroConfig(25, 5, 3, 15);
+            ICommand startCommand = mainWindowViewModel.StartCommand;
+            startCommand.Execute(null);
+            Assert.IsTrue(mainWindowViewModel.TimerRunning);
+
+            mainWindowViewModel.Configure(configManager);
+            pomodoro.Received().Configure(configManager);
+            Assert.IsFalse(mainWindowViewModel.TimerRunning);
+        }
+
+        [Test]
         public void ShouldSendOpenConfigApplicationMessage()
         {
             ICommand command = mainWindowViewModel.ConfigButtonCommand;

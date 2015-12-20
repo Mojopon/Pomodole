@@ -36,5 +36,10 @@ namespace Pomodole
         {
             mainWindowServiceController.ActivateWindow();
         }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

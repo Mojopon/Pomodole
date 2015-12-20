@@ -10,6 +10,8 @@ namespace Pomodole
     public class TickTimer : ITickTimer
     {
         public event Action OnTick;
+        private bool isTicking = false;
+        public bool IsTicking { get { return isTicking; } private set { isTicking = value; } }
 
         private DispatcherTimer dispatcherTimer;
         public TickTimer(int updateFrequensyMS)
@@ -21,6 +23,7 @@ namespace Pomodole
 
         public void Start()
         {
+            IsTicking = true;
             lastUpdate = DateTime.Now;
             dispatcherTimer.Start();
             if(OnTick != null) OnTick();
@@ -29,6 +32,7 @@ namespace Pomodole
         public void Stop()
         {
             dispatcherTimer.Stop();
+            IsTicking = false;
         }
 
         private DateTime lastUpdate;

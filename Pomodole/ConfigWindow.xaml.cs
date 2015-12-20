@@ -19,6 +19,12 @@ namespace Pomodole
     /// </summary>
     public partial class ConfigWindow : Window, IConfigWindow
     {
+        private static bool isOpened = false;
+        public static bool IsOpened
+        {
+            get { return isOpened; }
+            private set { isOpened = value; }
+        }
         public static RoutedCommand SubmitCommand = new RoutedCommand();
 
         public Action<IApplicationMessage> Subject { get; private set; }
@@ -28,6 +34,7 @@ namespace Pomodole
         {
             InitializeComponent();
 
+            IsOpened = true;
             var pomodoroConfigControl = new PomodoroConfigControl(this);
             ConfigWindowMainGrid.Children.Add(pomodoroConfigControl);
         }
@@ -48,6 +55,11 @@ namespace Pomodole
             {
                 e.CanExecute = true;
             }
+        }
+
+        private void ConfigMainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            IsOpened = false;
         }
     }
 }

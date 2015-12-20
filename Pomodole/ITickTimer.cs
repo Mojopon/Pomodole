@@ -9,6 +9,7 @@ namespace Pomodole
     public interface ITickTimer
     {
         event Action OnTick;
+        bool IsTicking { get; }
         void Start();
         void Stop();
     }

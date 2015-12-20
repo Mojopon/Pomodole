@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Pomodole
 {
@@ -38,6 +41,8 @@ namespace Pomodole
                     }
                 case ViewFor.ConfigWindow:
                     {
+                        if (ConfigWindow.IsOpened) return null;
+
                         var configWindow = new ConfigWindow();
                         configWindow.DataContext = configWindowViewModel;
                         return configWindow;

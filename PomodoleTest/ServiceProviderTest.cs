@@ -35,5 +35,21 @@ namespace PomodoleTest
             testServiceProvider.SetConfigWindowViewModel(configWindowViewModelMock);
             Assert.AreEqual(configWindowViewModelMock, testServiceProvider.GetConfigWindowViewModel());
         }
+
+        [Test, RequiresSTA]
+        public void ProductionServiceProviderShouldReturnNullWhenConfigWindowIsOpened()
+        {
+            var applicationController = Substitute.For<IApplicationController>();
+            var production = ServiceProvider.Create(applicationController, ServiceType.Production);
+
+            var newConfigWindow = (IConfigWindow)production.GetView(ViewFor.ConfigWindow);
+            Assert.IsNotNull(newConfigWindow);
+            var shouldBeNull = production.GetView(ViewFor.ConfigWindow);
+            Assert.IsNull(shouldBeNull);
+
+            newConfigWindow.Close();
+            var shouldBeNewConfigWindow = production.GetView(ViewFor.ConfigWindow);
+            Assert.IsNotNull(shouldBeNewConfigWindow);
+        }
     }
 }

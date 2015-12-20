@@ -14,7 +14,10 @@ namespace Pomodole
 {
     public class MainWindowViewModel : IMainWindowViewModel
     {
-        public bool TimerRunning { get; private set; }
+        public bool TimerRunning
+        {
+            get { return tickTimer.IsTicking; }
+        }
 
         private Color backgroundColorForTaskMode = Colors.White;
         private Color backgroundColorForBreakMode = Colors.PeachPuff;
@@ -61,7 +64,6 @@ namespace Pomodole
         public void Start()
         {
             tickTimer.Start();
-            TimerRunning = true;
             ProgressState = TaskbarItemProgressState.Normal;
             UpdatePropeties();
         }
@@ -69,7 +71,6 @@ namespace Pomodole
         public void Stop()
         {
             tickTimer.Stop();
-            TimerRunning = false;
             ProgressState = TaskbarItemProgressState.Paused;
             UpdatePropeties();
         }
@@ -122,7 +123,6 @@ namespace Pomodole
                 _backgroundGradiationEndPoint = new Point(pomodoro.Progress, 0);
             }
             UpdatePropeties();
-            ActivateWindow();
         }
 
         // Properties for Data binding
@@ -219,6 +219,7 @@ namespace Pomodole
 
         public void Configure(IConfigManager configManager)
         {
+            Stop();
             pomodoro.Configure(configManager);
             UpdatePropeties();
         }

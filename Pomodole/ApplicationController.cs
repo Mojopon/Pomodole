@@ -72,10 +72,11 @@ namespace Pomodole
                     break;
                 case ViewFor.ConfigWindow:
                     {
-                        if (configWindow != null) return;
-                        configWindow = (IConfigWindow)serviceProvider.GetView(ViewFor.ConfigWindow);
-                        Register(configWindow);
-                        configWindow.Show();
+                        var newConfigWindow = (IConfigWindow)serviceProvider.GetView(ViewFor.ConfigWindow);
+                        if (newConfigWindow == null) return;
+                        Register(newConfigWindow);
+                        newConfigWindow.Show();
+                        configWindow = newConfigWindow;
                     }
                     break;
             }

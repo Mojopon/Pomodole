@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pomodole"
-        Title="Config" Height="250" Width="350" Name="ConfigMainWindow">
+        Title="Config" Height="250" Width="350" Name="ConfigMainWindow" Closing="ConfigMainWindow_Closing">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:ConfigWindow.SubmitCommand}" Executed="Submit_Executed" CanExecute="CanExecute_Submit" />
     </Window.CommandBindings>
