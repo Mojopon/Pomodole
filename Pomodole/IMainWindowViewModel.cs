@@ -24,7 +24,7 @@ namespace Pomodole
         string PomodoroSetMessage { get; }
         string MainButtonMessage { get; }
 
-        ICommand StartCommand { get; }
+        ICommand MainButtonCommand { get; }
         ICommand ConfigButtonCommand { get; }
     }
 }

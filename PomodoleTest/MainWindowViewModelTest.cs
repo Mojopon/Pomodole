@@ -39,12 +39,24 @@ namespace PomodoleTest
         {
             var configManager = new ConfigManager();
             configManager.SetupPomodoroConfig(25, 5, 3, 15);
-            ICommand startCommand = mainWindowViewModel.StartCommand;
+            ICommand startCommand = mainWindowViewModel.MainButtonCommand;
             startCommand.Execute(null);
             Assert.IsTrue(mainWindowViewModel.TimerRunning);
 
             mainWindowViewModel.Configure(configManager);
             pomodoro.Received().Configure(configManager);
+            Assert.IsFalse(mainWindowViewModel.TimerRunning);
+        }
+
+        [Test]
+        public void ShouldSwitchStartCommandToStopCommand()
+        {
+            ICommand startCommand = mainWindowViewModel.MainButtonCommand;
+            startCommand.Execute(null);
+            Assert.IsTrue(mainWindowViewModel.TimerRunning);
+
+            ICommand stopCommand = mainWindowViewModel.MainButtonCommand;
+            stopCommand.Execute(null);
             Assert.IsFalse(mainWindowViewModel.TimerRunning);
         }
 

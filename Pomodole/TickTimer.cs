@@ -25,6 +25,7 @@ namespace Pomodole
         {
             IsTicking = true;
             lastUpdate = DateTime.Now;
+            progress = 0;
             dispatcherTimer.Start();
             if(OnTick != null) OnTick();
         }

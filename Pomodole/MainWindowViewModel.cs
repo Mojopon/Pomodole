@@ -44,7 +44,7 @@ namespace Pomodole
 
             tickTimer = new TickTimer(50);
             tickTimer.OnTick += new Action(OnTick);
-            StartCommand = new StartCommandImpl(this);
+            MainButtonCommand = new StartCommand(this);
             ConfigButtonCommand = new ConfigButtonCommandImpl(applicationMessageEvent);
 
             InitializeBackgroundColor();
@@ -64,6 +64,8 @@ namespace Pomodole
         public void Start()
         {
             tickTimer.Start();
+            MainButtonCommand = new StopCommand(this);
+            NotifyPropertyChanged("MainButtonCommand");
             ProgressState = TaskbarItemProgressState.Normal;
             UpdatePropeties();
         }
@@ -71,6 +73,8 @@ namespace Pomodole
         public void Stop()
         {
             tickTimer.Stop();
+            MainButtonCommand = new StartCommand(this);
+            NotifyPropertyChanged("MainButtonCommand");
             ProgressState = TaskbarItemProgressState.Paused;
             UpdatePropeties();
         }
@@ -224,12 +228,12 @@ namespace Pomodole
             UpdatePropeties();
         }
 
-        public ICommand StartCommand { get; private set; }
+        public ICommand MainButtonCommand { get; private set; }
 
-        class StartCommandImpl : ICommand
+        private class StartCommand : ICommand
         {
             private MainWindowViewModel viewModel;
-            public StartCommandImpl(MainWindowViewModel viewModel)
+            public StartCommand(MainWindowViewModel viewModel)
             {
                 this.viewModel = viewModel;
             }
@@ -243,6 +247,26 @@ namespace Pomodole
             public void Execute(object parameter)
             {
                 viewModel.Start();
+            }
+        }
+
+        private class StopCommand : ICommand
+        {
+            private MainWindowViewModel viewModel;
+            public StopCommand(MainWindowViewModel viewModel)
+            {
+                this.viewModel = viewModel;
+            }
+
+            public event EventHandler CanExecuteChanged;
+            public bool CanExecute(object parameter)
+            {
+                return viewModel.TimerRunning;
+            }
+
+            public void Execute(object parameter)
+            {
+                viewModel.Stop();
             }
         }
 
