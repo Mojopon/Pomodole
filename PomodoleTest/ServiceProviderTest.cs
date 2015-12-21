@@ -48,8 +48,9 @@ namespace PomodoleTest
             Assert.IsNull(shouldBeNull);
 
             newConfigWindow.Close();
-            var shouldBeNewConfigWindow = production.GetView(ViewFor.ConfigWindow);
+            var shouldBeNewConfigWindow = (IConfigWindow)production.GetView(ViewFor.ConfigWindow);
             Assert.IsNotNull(shouldBeNewConfigWindow);
+            shouldBeNewConfigWindow.Close();
         }
     }
 }
