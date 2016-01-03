@@ -25,14 +25,15 @@ namespace Pomodole
     public interface IApplicationMessageEvent
     {
         void Trigger(IApplicationMessage message);
-        void Register(IApplicationMessageSubscriber subscriber);
+        void Subscribe(IApplicationMessageSubscriber subscriber);
+        void UnSubscribe(IApplicationMessageSubscriber subscriber);
     }
 
     public class ApplicationMessageEvent : IApplicationMessageEvent
     {
         private Action<IApplicationMessage> Events = (IApplicationMessage message) => { };
 
-        public void Register(IApplicationMessageSubscriber subscriber)
+        public void Subscribe(IApplicationMessageSubscriber subscriber)
         {
             Events += subscriber.Subject;
         }
@@ -40,6 +41,11 @@ namespace Pomodole
         public void Trigger(IApplicationMessage message)
         {
             Events(message);
+        }
+
+        public void UnSubscribe(IApplicationMessageSubscriber subscriber)
+        {
+            Events -= subscriber.Subject;
         }
     }
 }

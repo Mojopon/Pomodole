@@ -38,7 +38,7 @@ namespace Pomodole
         {
             applicationMessageEvent = new ApplicationMessageEvent();
             Subject += ((IApplicationMessage message) => message.Execute(this));
-            Register(this);
+            Subscribe(this);
         }
 
         private IPomodoleServiceProvider serviceProvider;
@@ -46,7 +46,7 @@ namespace Pomodole
         public void Initialize(IPomodoleServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
-            Register(serviceProvider.GetConfigManager());
+            Subscribe(serviceProvider.GetConfigManager());
             SetupViewModelForMainWindow();
             SetupViewModelForConfigWindow();
 
@@ -68,7 +68,7 @@ namespace Pomodole
                 case ViewFor.MainWindow:
                     {
                         mainWindow = (IMainWindow)serviceProvider.GetView(ViewFor.MainWindow);
-                        Register(mainWindow);
+                        Subscribe(mainWindow);
                         mainWindow.Show();
                     }
                     break;
@@ -77,7 +77,7 @@ namespace Pomodole
                         var newConfigWindow = (IConfigWindow)serviceProvider.GetView(ViewFor.ConfigWindow);
                         // service provider returns null when configwindow is already opened so it returns if the given object is null
                         if (newConfigWindow == null) return;
-                        Register(newConfigWindow);
+                        Subscribe(newConfigWindow);
                         newConfigWindow.Show();
                         configWindow = newConfigWindow;
                     }
@@ -96,6 +96,7 @@ namespace Pomodole
                     break;
                 case ViewFor.ConfigWindow:
                     {
+                        UnSubscribe(configWindow);
                         configWindow.Close();
                         configWindow = null;
                     }
@@ -111,9 +112,14 @@ namespace Pomodole
             applicationMessageEvent.Trigger(message);
         }
 
-        public void Register(IApplicationMessageSubscriber subscriber)
+        public void Subscribe(IApplicationMessageSubscriber subscriber)
         {
-            applicationMessageEvent.Register(subscriber);
+            applicationMessageEvent.Subscribe(subscriber);
+        }
+
+        public void UnSubscribe(IApplicationMessageSubscriber subscriber)
+        {
+            applicationMessageEvent.UnSubscribe(subscriber);
         }
         #endregion
 
@@ -121,7 +127,7 @@ namespace Pomodole
         private void SetupViewModelForMainWindow()
         {
             mainWindowViewModel = serviceProvider.GetMainWindowViewModel();
-            Register(mainWindowViewModel);
+            Subscribe(mainWindowViewModel);
         }
 
         private IConfigWindowViewModel configWindowViewModel;
@@ -129,7 +135,7 @@ namespace Pomodole
         private void SetupViewModelForConfigWindow()
         {
             configWindowViewModel = serviceProvider.GetConfigWindowViewModel();
-            Register(configWindowViewModel);
+            Subscribe(configWindowViewModel);
         }
     }
 }

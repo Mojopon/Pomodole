@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pomodole"
         mc:Ignorable="d"
-        Title="Pomodole" Height="212.834" Width="300" Closing="Window_Closing">
+        Title="Pomodole" Height="212.834" Width="300" Closing="Window_Closing" ResizeMode="CanMinimize">
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="{Binding BackgroundGradiationEndpoint}">
             <GradientStop Color="{Binding BackgroundEndColor}" Offset="1"/>

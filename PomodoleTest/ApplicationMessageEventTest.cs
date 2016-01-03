@@ -47,10 +47,36 @@ namespace PomodoleTest
                 }
             });
 
-            applicationMessageEvent.Register(subscriber);
+            applicationMessageEvent.Subscribe(subscriber);
 
             publisher.Trigger(applicationMessageMock);
             Assert.IsTrue(messageReceived);
+        }
+        
+        [Test]
+        public void ShouldUnSubscribeEvent()
+        {
+            applicationMessageEvent.Trigger(null);
+
+            var applicationMessageMock = Substitute.For<IApplicationMessage>();
+            bool messageReceived = false;
+
+            subscriber.Subject += ((IApplicationMessage message) =>
+            {
+                if (message == applicationMessageMock)
+                {
+                    messageReceived = true;
+                }
+            });
+
+            applicationMessageEvent.Subscribe(subscriber);
+            publisher.Trigger(applicationMessageMock);
+            Assert.IsTrue(messageReceived);
+
+            messageReceived = false;
+            applicationMessageEvent.UnSubscribe(subscriber);
+            publisher.Trigger(applicationMessageMock);
+            Assert.IsFalse(messageReceived);
         }
 
         [Test]
@@ -70,7 +96,7 @@ namespace PomodoleTest
                 }
             });
 
-            applicationController.Register(subscriber);
+            applicationController.Subscribe(subscriber);
 
             publisher.Trigger(applicationMessageMock);
             Assert.IsTrue(messageReceived);
@@ -81,7 +107,7 @@ namespace PomodoleTest
         {
             var mainWindow = Substitute.For<IMainWindow>();
             mainWindow.Subject.Returns ((IApplicationMessage message) => message.Execute(mainWindow));
-            applicationMessageEvent.Register(mainWindow);
+            applicationMessageEvent.Subscribe(mainWindow);
             mainWindow.DidNotReceive().ActivateWindow();
             applicationMessageEvent.Trigger(new ActivateMainWindowMessage());
             mainWindow.Received().ActivateWindow();

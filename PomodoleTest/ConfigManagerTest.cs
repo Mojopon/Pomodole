@@ -88,7 +88,7 @@ namespace PomodoleTest
             }), App.ConfigurationFileName);
 
             var messenger = new ApplicationMessageEvent();
-            messenger.Register(configManager);
+            messenger.Subscribe(configManager);
 
             configurationFileManager.DidNotReceive().Save(Arg.Any<ConfigManager.Configurations>(), App.ConfigurationFileName);
             messenger.Trigger(new ConfigurationDataManagingMessage(messenger, ConfigurationDataManagingMessage.ActionType.Save));
