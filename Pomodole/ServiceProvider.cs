@@ -12,8 +12,7 @@ namespace Pomodole
         protected IConfigManager configManager;
         public ServiceProvider()
         {
-            var newConfigManager = new ConfigManager();
-            configManager = newConfigManager;
+            configManager = new ConfigManager();
             pomodoro = new Pomodoro();
             pomodoro.Configure(configManager);
         }

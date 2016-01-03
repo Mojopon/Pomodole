@@ -28,7 +28,9 @@ namespace Pomodole
 
         public static void ResetInstance()
         {
+#if DEBUG
             applicationController = null;
+#endif
         }
 
         public Action<IApplicationMessage> Subject { get; private set; }
@@ -73,6 +75,7 @@ namespace Pomodole
                 case ViewFor.ConfigWindow:
                     {
                         var newConfigWindow = (IConfigWindow)serviceProvider.GetView(ViewFor.ConfigWindow);
+                        // service provider returns null when configwindow is already opened so it returns if the given object is null
                         if (newConfigWindow == null) return;
                         Register(newConfigWindow);
                         newConfigWindow.Show();
